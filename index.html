@@ -1,0 +1,1467 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Outlet Check-In ✨</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+            background-color: #f8fafc;
+            background-image: 
+                radial-gradient(at 0% 0%, hsla(253,16%,7%,0.03) 0, transparent 50%), 
+                radial-gradient(at 50% 0%, hsla(225,39%,30%,0.03) 0, transparent 50%), 
+                radial-gradient(at 100% 0%, hsla(339,49%,30%,0.03) 0, transparent 50%);
+        }
+
+        .page-enter { animation: slideUpFade 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        
+        @keyframes slideUpFade {
+            0% { opacity: 0; transform: translateY(30px) scale(0.98); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 10px 40px -10px rgba(0,0,0,0.05);
+        }
+
+        .toggle-btn:active { transform: scale(0.95); }
+        input[type="radio"]:checked + div.match-btn {
+            background-color: #10b981; color: white; border-color: #10b981;
+            box-shadow: 0 5px 10px -3px rgba(16, 185, 129, 0.3); transform: scale(1.02);
+        }
+        input[type="radio"]:checked + div.miss-btn {
+            background-color: #f43f5e; color: white; border-color: #f43f5e;
+            box-shadow: 0 5px 10px -3px rgba(244, 63, 94, 0.3); transform: scale(1.02);
+        }
+
+        .pulse-dot {
+            box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+            animation: pulse-green 1.5s infinite cubic-bezier(0.66, 0, 0, 1);
+        }
+        @keyframes pulse-green { to { box-shadow: 0 0 0 15px rgba(16, 185, 129, 0); } }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; height: 6px; background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-tab.active { color: #6366f1; position: relative; }
+        /* Mobile Active Indicator */
+        @media (max-width: 767px) {
+            .nav-tab.active::after {
+                content: ''; position: absolute; bottom: -8px; left: 50%; transform: translateX(-50%);
+                width: 4px; height: 4px; border-radius: 50%; background-color: #6366f1;
+            }
+        }
+        /* Desktop Active Indicator */
+        @media (min-width: 768px) {
+            .nav-tab.active::before {
+                content: ''; position: absolute; left: -16px; top: 50%; transform: translateY(-50%);
+                width: 6px; height: 24px; border-radius: 4px; background-color: #6366f1;
+            }
+            .nav-tab.active { background-color: rgba(99, 102, 241, 0.08); }
+        }
+
+        /* Shine efek untuk ATM Card */
+        .atm-card::before {
+            content: ""; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
+            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0) 100%);
+            transform: skewX(-25deg); animation: shine 6s infinite; pointer-events: none;
+        }
+        @keyframes shine { 0% { left: -100%; } 20% { left: 200%; } 100% { left: 200%; } }
+
+        /* Floating 3D Glow Effects */
+        @keyframes float3dGreen {
+            0% { transform: translateY(0px) scale(1) translateZ(0); box-shadow: 0 5px 15px rgba(16, 185, 129, 0.4), inset 0 1px 1px rgba(255,255,255,0.4); }
+            50% { transform: translateY(-6px) scale(1.05) translateZ(20px); box-shadow: 0 15px 25px rgba(16, 185, 129, 0.9), 0 0 25px rgba(16, 185, 129, 0.7), inset 0 1px 2px rgba(255,255,255,0.9); }
+            100% { transform: translateY(0px) scale(1) translateZ(0); box-shadow: 0 5px 15px rgba(16, 185, 129, 0.4), inset 0 1px 1px rgba(255,255,255,0.4); }
+        }
+        @keyframes float3dRed {
+            0% { transform: translateY(0px) scale(1) translateZ(0); box-shadow: 0 5px 15px rgba(244, 63, 94, 0.4), inset 0 1px 1px rgba(255,255,255,0.4); }
+            50% { transform: translateY(-6px) scale(1.05) translateZ(20px); box-shadow: 0 15px 25px rgba(244, 63, 94, 0.9), 0 0 25px rgba(244, 63, 94, 0.7), inset 0 1px 2px rgba(255,255,255,0.9); }
+            100% { transform: translateY(0px) scale(1) translateZ(0); box-shadow: 0 5px 15px rgba(244, 63, 94, 0.4), inset 0 1px 1px rgba(255,255,255,0.4); }
+        }
+        .animate-float-green { animation: float3dGreen 3s ease-in-out infinite; transform-style: preserve-3d; perspective: 1000px; z-index: 50; }
+        .animate-float-red { animation: float3dRed 3s ease-in-out infinite; transform-style: preserve-3d; perspective: 1000px; z-index: 50; }
+        
+        /* Spin Animation for Sync */
+        .sync-spin { animation: spin 1s linear infinite; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+
+<!-- Tambahan pl-24 (tablet) & pl-[260px] (desktop) agar body tidak tertutup sidebar -->
+<body class="text-slate-800 min-h-screen pb-24 md:pb-6 md:pl-28 lg:pl-[280px] selection:bg-indigo-100 relative">
+
+    <!-- Top Navigation Bar (Menyesuaikan margin di Desktop) -->
+    <nav class="sticky top-0 z-50 glass-card border-b border-white/40 px-5 py-4 mb-6 flex justify-between items-center md:mx-6 md:mt-6 md:rounded-3xl md:border md:shadow-sm">
+        <div class="flex items-center gap-3">
+            <div class="bg-gradient-to-br from-indigo-500 to-purple-600 w-10 h-10 rounded-2xl flex items-center justify-center shadow-lg shadow-indigo-200 transition-all" id="navIconBg">
+                <span class="text-white text-xl" id="navIcon">✨</span>
+            </div>
+            <div>
+                <h1 class="text-xl font-extrabold tracking-tight text-slate-800 leading-tight" id="navTitle">Check<span class="gradient-text">In</span></h1>
+                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest" id="navSubtitle">SPV Daily App</p>
+            </div>
+        </div>
+        <button onclick="backgroundSync()" id="btnSync" class="bg-white p-2.5 rounded-full shadow-sm border border-slate-100 text-slate-400 hover:text-indigo-500 hover:scale-105 active:scale-95 transition-all">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
+        </button>
+    </nav>
+
+    <!-- Bottom Navigation Bar (Mobile) -> Menjadi Sidebar Kiri (Desktop) -->
+    <div class="fixed bottom-0 left-0 right-0 z-50 px-4 pb-6 pt-2 pointer-events-none md:top-0 md:bottom-0 md:w-28 lg:w-[280px] md:h-screen md:px-5 md:py-6 md:right-auto md:border-r md:border-slate-200/50 md:bg-white/60 md:backdrop-blur-2xl">
+        <div class="glass-card mx-auto max-w-md md:max-w-none md:w-full md:h-full rounded-[2rem] p-2 md:p-6 md:pt-10 flex flex-row md:flex-col justify-between md:justify-start items-center md:items-stretch md:gap-4 shadow-2xl shadow-indigo-500/10 border border-white md:border-none pointer-events-auto md:bg-transparent md:shadow-none">
+            
+            <!-- Logo Sidebar khusus Desktop -->
+            <div class="hidden md:block mb-8 px-2 text-center lg:text-left">
+                <h1 class="text-2xl font-black tracking-tighter text-slate-800">SPV<span class="text-indigo-600">APP</span></h1>
+                <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-1">Management</p>
+            </div>
+
+            <button onclick="switchTab('checkin')" id="tabCheckin" class="nav-tab active flex flex-col lg:flex-row items-center lg:justify-start gap-1 lg:gap-4 p-3 lg:px-5 lg:py-4 rounded-2xl lg:rounded-xl transition-all w-1/4 md:w-full text-slate-400 hover:text-indigo-600 hover:bg-white/80">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 lg:h-5 lg:w-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                <span class="text-[9px] md:text-[10px] lg:text-[13px] font-bold tracking-wide mt-1 lg:mt-0">Check-In</span>
+            </button>
+            <button onclick="switchTab('trend')" id="tabTrend" class="nav-tab flex flex-col lg:flex-row items-center lg:justify-start gap-1 lg:gap-4 p-3 lg:px-5 lg:py-4 rounded-2xl lg:rounded-xl transition-all w-1/4 md:w-full text-slate-400 hover:text-indigo-600 hover:bg-white/80">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 lg:h-5 lg:w-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z" /></svg>
+                <span class="text-[9px] md:text-[10px] lg:text-[13px] font-bold tracking-wide mt-1 lg:mt-0">Profile</span>
+            </button>
+            <button onclick="switchTab('dashboard')" id="tabDashboard" class="nav-tab flex flex-col lg:flex-row items-center lg:justify-start gap-1 lg:gap-4 p-3 lg:px-5 lg:py-4 rounded-2xl lg:rounded-xl transition-all w-1/4 md:w-full text-slate-400 hover:text-indigo-600 hover:bg-white/80">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 lg:h-5 lg:w-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg>
+                <span class="text-[9px] md:text-[10px] lg:text-[13px] font-bold tracking-wide mt-1 lg:mt-0">Rank</span>
+            </button>
+            <button onclick="switchTab('history')" id="tabHistory" class="nav-tab flex flex-col lg:flex-row items-center lg:justify-start gap-1 lg:gap-4 p-3 lg:px-5 lg:py-4 rounded-2xl lg:rounded-xl transition-all w-1/4 md:w-full text-slate-400 hover:text-indigo-600 hover:bg-white/80">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 lg:h-5 lg:w-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                <span class="text-[9px] md:text-[10px] lg:text-[13px] font-bold tracking-wide mt-1 lg:mt-0">Riwayat</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- POPUP ATM CARD -->
+    <div id="atmPopup" class="fixed inset-0 z-[100] hidden items-center justify-center p-4">
+        <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity opacity-0" id="atmPopupOverlay" onclick="closeAtmPopup()"></div>
+        <div id="atmPopupCard" class="w-full max-w-[340px] md:max-w-[420px] aspect-[1.58] rounded-3xl p-6 md:p-8 relative z-10 scale-90 opacity-0 transition-all duration-300 shadow-2xl border flex flex-col justify-between overflow-hidden atm-card">
+            <div class="absolute -right-10 -top-10 w-40 h-40 md:w-56 md:h-56 bg-white/10 rounded-full blur-2xl pointer-events-none"></div>
+            <div class="flex justify-between items-start relative z-10">
+                <div class="w-11 h-8 md:w-14 md:h-10 border border-yellow-500/50 rounded-md bg-gradient-to-br from-yellow-200/50 to-yellow-600/50 flex flex-col justify-evenly px-0.5 shadow-sm">
+                   <div class="w-full h-[1px] bg-yellow-500/50"></div><div class="w-full h-[1px] bg-yellow-500/50"></div>
+                </div>
+                <div class="text-right">
+                    <span id="popupTier" class="font-black text-sm md:text-base italic tracking-widest uppercase drop-shadow-md leading-tight"></span>
+                    <p id="popupTierLabel" class="text-[7px] md:text-[9px] uppercase tracking-widest opacity-80 mt-0.5">Membership</p>
+                </div>
+            </div>
+            <div class="relative z-10 mt-2">
+                <p id="popupPointsLabel" class="text-[8px] md:text-[10px] uppercase tracking-widest mb-0.5 md:mb-1 opacity-80">Reward Poin Aktif</p>
+                <p id="popupPoints" class="text-[32px] md:text-[42px] font-black tracking-widest drop-shadow-md leading-none" style="font-family: 'Courier New', Courier, monospace;"></p>
+            </div>
+            <div class="flex justify-between items-end relative z-10">
+                <div class="flex-1 pr-2">
+                    <p id="popupNameLabel" class="text-[7px] md:text-[9px] uppercase tracking-widest mb-1 opacity-80">Card Holder / Outlet</p>
+                    <p id="popupName" class="text-sm md:text-base font-bold tracking-wider uppercase drop-shadow-md truncate"></p>
+                    <p id="popupSpvName" class="text-[9px] md:text-[11px] font-semibold tracking-wider uppercase opacity-75 mt-0.5"></p>
+                </div>
+                <div class="text-right shrink-0 perspective-[1000px]">
+                    <div id="popupGrowthBadge" class="flex flex-col items-end justify-center px-3 py-2 md:px-4 md:py-3 rounded-xl md:rounded-2xl backdrop-blur-md border border-white/40 text-right transform">
+                        <div class="flex items-center gap-1">
+                            <svg class="w-3.5 h-3.5 md:w-5 md:h-5 drop-shadow-md" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+                                <path id="popupGrowthIcon" stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                            </svg>
+                            <span id="popupGrowthPercent" class="text-[17px] md:text-xl font-black drop-shadow-lg tracking-tighter"></span>
+                        </div>
+                        <span id="popupGrowthValue" class="text-[8.5px] md:text-[10px] font-extrabold tracking-widest opacity-95 mt-0.5 drop-shadow-md"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- POPUP HISTORY DETAIL -->
+    <div id="historyPopup" class="fixed inset-0 z-[100] hidden items-center justify-center p-4">
+        <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity opacity-0" id="historyPopupOverlay" onclick="closeHistoryPopup()"></div>
+        <!-- Diperbesar max-width nya untuk Desktop -->
+        <div id="historyPopupCard" class="w-full max-w-sm md:max-w-3xl bg-white rounded-3xl p-5 md:p-6 relative z-10 scale-90 opacity-0 transition-all duration-300 shadow-2xl flex flex-col max-h-[85vh] overflow-hidden">
+            <!-- Header -->
+            <div class="flex justify-between items-center mb-4 pb-3 border-b border-slate-100 shrink-0">
+                <div class="flex-1 pr-2 min-w-0">
+                    <h3 id="histPopupOutlet" class="font-extrabold text-slate-800 text-base md:text-xl uppercase leading-tight truncate"></h3>
+                    <p id="histPopupSpv" class="text-[10px] md:text-xs font-bold text-rose-500 uppercase truncate mt-0.5 md:mt-1"></p>
+                </div>
+                <div class="text-right shrink-0">
+                    <span id="histPopupDate" class="text-[10px] md:text-xs font-bold text-slate-500 bg-slate-100 px-2.5 md:px-3 py-1.5 md:py-2 rounded-lg border border-slate-200"></span>
+                </div>
+            </div>
+
+            <!-- Scrollable Content: Dibagi 2 Kolom di Desktop -->
+            <div class="flex-1 overflow-y-auto pr-1 pb-2 md:grid md:grid-cols-12 md:gap-8">
+                
+                <div class="md:col-span-5 space-y-4">
+                    <!-- GPS -->
+                    <div class="flex items-center gap-2.5 bg-slate-50 p-2.5 md:p-3 rounded-xl border border-slate-100">
+                        <span class="text-lg md:text-xl bg-white p-1.5 rounded-lg shadow-sm">📍</span>
+                        <p id="histPopupGps" class="text-[11px] md:text-xs font-bold text-slate-600 leading-snug"></p>
+                    </div>
+
+                    <!-- 3 Photos -->
+                    <div>
+                        <p class="text-[10px] md:text-xs font-extrabold text-slate-400 mb-2 uppercase tracking-wider">Foto Bukti Visit</p>
+                        <div class="flex gap-2">
+                            <div class="flex-1 aspect-square rounded-xl bg-slate-100 overflow-hidden relative border border-slate-200 shadow-sm cursor-pointer hover:opacity-80 transition" onclick="window.open(document.getElementById('histPopupImgDepan').src, '_blank')">
+                                <span class="absolute bottom-0 left-0 right-0 text-center text-[8px] md:text-[9px] font-black text-white drop-shadow-md bg-gradient-to-t from-black/60 to-transparent pt-3 pb-1 z-10">DEPAN</span>
+                                <img id="histPopupImgDepan" class="w-full h-full object-cover">
+                            </div>
+                            <div class="flex-1 aspect-square rounded-xl bg-slate-100 overflow-hidden relative border border-slate-200 shadow-sm cursor-pointer hover:opacity-80 transition" onclick="window.open(document.getElementById('histPopupImgBranding').src, '_blank')">
+                                <span class="absolute bottom-0 left-0 right-0 text-center text-[8px] md:text-[9px] font-black text-white drop-shadow-md bg-gradient-to-t from-black/60 to-transparent pt-3 pb-1 z-10">BRANDING</span>
+                                <img id="histPopupImgBranding" class="w-full h-full object-cover">
+                            </div>
+                            <div class="flex-1 aspect-square rounded-xl bg-slate-100 overflow-hidden relative border border-slate-200 shadow-sm cursor-pointer hover:opacity-80 transition" onclick="window.open(document.getElementById('histPopupImgEtalase').src, '_blank')">
+                                <span class="absolute bottom-0 left-0 right-0 text-center text-[8px] md:text-[9px] font-black text-white drop-shadow-md bg-gradient-to-t from-black/60 to-transparent pt-3 pb-1 z-10">ETALASE</span>
+                                <img id="histPopupImgEtalase" class="w-full h-full object-cover">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Checklist -->
+                <div class="md:col-span-7 mt-4 md:mt-0">
+                    <p class="text-[10px] md:text-xs font-extrabold text-slate-400 mb-2 uppercase tracking-wider">Penilaian Kriteria</p>
+                    <div id="histPopupChecklist" class="space-y-3">
+                        <!-- Checklist Dinamis masuk ke sini -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Close Button -->
+            <button onclick="closeHistoryPopup()" class="mt-4 md:mt-6 w-full bg-slate-100 text-slate-600 font-extrabold py-3.5 md:py-4 rounded-xl hover:bg-slate-200 transition-colors shrink-0 active:scale-95">Tutup Detail</button>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT CONTAINER (Lebar membesar di Desktop) -->
+    <div class="max-w-md md:max-w-7xl mx-auto px-4 md:px-6 lg:px-8 relative pt-2 md:pt-0">
+        
+        <div id="notificationArea" class="fixed top-20 left-4 right-4 md:max-w-sm md:left-auto md:right-8 z-50 hidden transition-all duration-300 transform -translate-y-4 opacity-0"></div>
+
+        <div id="globalLoader" class="flex flex-col justify-center items-center h-[50vh] bg-white rounded-[2rem] shadow-xl shadow-slate-200/40 border border-slate-100 page-enter">
+            <div class="relative w-20 h-20 mb-6">
+                <div class="absolute inset-0 border-4 border-slate-100 rounded-full"></div>
+                <div class="absolute inset-0 border-4 border-indigo-500 rounded-full border-t-transparent animate-spin"></div>
+                <div class="absolute inset-0 flex items-center justify-center text-2xl">🚀</div>
+            </div>
+            <span class="text-slate-800 font-extrabold text-lg" id="loadingText">Syncing Vibes...</span>
+        </div>
+
+        <!-- ================= VIEW 1: SELECTION (CHECK-IN) ================= -->
+        <div id="selectionArea" class="hidden">
+            <div class="bg-white rounded-[2rem] p-6 mb-6 shadow-xl shadow-slate-200/40 border border-slate-100 relative overflow-hidden md:max-w-2xl md:mx-auto">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-indigo-50 rounded-bl-[100px] -z-0"></div>
+                <h2 class="text-base font-bold text-slate-400 uppercase tracking-wider mb-2 relative z-10 flex items-center gap-2">👋 Who's Checking in?</h2>
+                <div class="relative z-10 mt-3">
+                    <select id="spvSelect" onchange="handleSpvChange()" class="w-full appearance-none bg-slate-50 border-2 border-slate-100 text-slate-800 font-bold text-lg md:text-xl rounded-2xl px-5 py-4 focus:outline-none focus:border-indigo-500 focus:bg-white transition-all cursor-pointer">
+                        <option value="">Pilih Profil Anda...</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="mb-4 flex justify-between items-end px-2 md:mt-10">
+                <h2 class="text-xl md:text-2xl font-extrabold text-slate-800">📍 Daftar Outlet</h2>
+                <span class="text-xs font-bold bg-slate-200 text-slate-500 px-3 py-1 rounded-full" id="outletCountBadge">0 lokasi</span>
+            </div>
+            <!-- GRID SYSTEM DI DESKTOP: Maksimal 3 Kolom -->
+            <div id="outletListContainer" class="space-y-4 md:space-y-0 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-5 pb-10"></div>
+        </div>
+
+        <!-- ================= VIEW 1.5: CHECKLIST FORM ================= -->
+        <form id="checklistForm" class="hidden pb-12" onsubmit="handleFormSubmit(event)">
+            <div class="bg-slate-900 text-white rounded-3xl p-5 md:p-8 mb-6 shadow-2xl shadow-slate-900/20 relative overflow-hidden page-enter">
+                <div class="flex justify-between items-center relative z-10">
+                    <div>
+                        <p class="text-xs font-bold text-indigo-300 uppercase tracking-wider mb-1">Target Lokasi Check-In</p>
+                        <h2 id="selectedOutletDisplay" class="text-2xl md:text-3xl font-extrabold tracking-tight">Nama Outlet</h2>
+                    </div>
+                    <button type="button" onclick="goBackToSelection()" class="bg-white/10 hover:bg-white/20 backdrop-blur-md text-white rounded-full p-3 md:p-4 transition-all active:scale-90 flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                        <span class="hidden md:block text-sm font-bold pr-2">Kembali</span>
+                    </button>
+                </div>
+            </div>
+
+            <input type="hidden" id="outletSelect" name="outlet" required>
+            <input type="hidden" id="spvHidden" name="spv" required>
+            
+            <!-- SPLIT SCREEN DESKTOP (Kiri GPS/Kamera, Kanan Form) -->
+            <div class="md:grid md:grid-cols-12 md:gap-8 md:items-start">
+                
+                <!-- KOLOM KIRI (GPS & Kamera) -->
+                <div class="md:col-span-5 lg:col-span-4 md:sticky md:top-24 space-y-6">
+                    <div id="locationCard" class="bg-white rounded-[2rem] p-5 shadow-xl border border-slate-100 flex items-center justify-between page-enter relative z-20">
+                        <div class="flex items-center gap-4">
+                            <div id="locationIconBg" class="w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-indigo-50 text-indigo-500 flex items-center justify-center text-2xl md:text-3xl transition-colors">⏳</div>
+                            <div>
+                                <h3 id="locationTitle" class="font-extrabold text-slate-800 text-base md:text-lg leading-tight">Melacak Sinyal GPS...</h3>
+                                <p id="locationDesc" class="text-xs font-semibold text-slate-400 mt-0.5">Mencari koordinat terbaik</p>
+                            </div>
+                        </div>
+                        <div id="locationStatusDot" class="w-4 h-4 rounded-full bg-slate-300 pulse-dot hidden"></div>
+
+                        <div id="matchMissBadge" class="hidden flex-col items-center justify-center p-3 px-4 rounded-2xl text-white shadow-2xl absolute -top-5 -right-2 z-50 border border-white/50 backdrop-blur-md transform transition-all perspective-[1000px]">
+                            <div class="flex items-center gap-1.5">
+                                <span id="matchMissIcon" class="text-xl drop-shadow-md"></span>
+                                <span id="matchMissText" class="font-black tracking-widest drop-shadow-md text-lg"></span>
+                            </div>
+                            <span id="matchMissDesc" class="text-[9px] uppercase tracking-widest font-extrabold opacity-90 mt-1 drop-shadow-sm"></span>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-[2rem] p-5 shadow-xl border border-slate-100 page-enter">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="bg-pink-100 text-pink-500 w-8 h-8 rounded-xl flex items-center justify-center font-bold">📸</div>
+                            <h3 class="font-extrabold text-slate-800 text-lg">Foto Bukti Visit</h3>
+                        </div>
+                        
+                        <div class="relative bg-slate-900 rounded-3xl overflow-hidden border-[6px] border-slate-50 flex justify-center items-center h-[280px] md:h-[320px]">
+                            <video id="cameraVideo" class="w-full h-full object-cover absolute inset-0" autoplay playsinline></video>
+                            <div id="liveGeotagOverlay" class="absolute top-4 left-4 right-4 bg-transparent text-white font-mono text-[10px] pointer-events-none drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)] z-10">
+                                <div class="flex items-center gap-2 mb-1">
+                                    <span class="w-2 h-2 rounded-full bg-red-500 animate-pulse shadow-[0_0_5px_red]"></span>
+                                    <span id="overlayTime" class="font-bold text-emerald-400 text-xs"></span>
+                                </div>
+                                <span id="overlayCoords" class="block text-slate-100 truncate mt-0.5">Sinyal GPS: Loading...</span>
+                                <span id="overlayAddress" class="block text-slate-200 mt-0.5 text-[8.5px] max-w-[95%] whitespace-normal leading-tight">Mencari alamat...</span>
+                                <span id="overlayOutlet" class="block text-amber-300 font-bold mt-1 truncate"></span>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-2 mt-4">
+                            <div class="flex-1 bg-slate-50 rounded-[1rem] aspect-square relative overflow-hidden border border-slate-200 flex flex-col items-center justify-center">
+                                <span class="text-[10px] font-bold text-slate-400 mb-1 z-10">DEPAN</span>
+                                <img id="thumb0" class="absolute inset-0 w-full h-full object-cover hidden">
+                                <div id="check0" class="absolute top-1 right-1 bg-emerald-500 text-white rounded-full p-0.5 hidden"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="3" d="M5 13l4 4L19 7"></path></svg></div>
+                            </div>
+                            <div class="flex-1 bg-slate-50 rounded-[1rem] aspect-square relative overflow-hidden border border-slate-200 flex flex-col items-center justify-center">
+                                <span class="text-[10px] font-bold text-slate-400 mb-1 z-10">BRANDING</span>
+                                <img id="thumb1" class="absolute inset-0 w-full h-full object-cover hidden">
+                                <div id="check1" class="absolute top-1 right-1 bg-emerald-500 text-white rounded-full p-0.5 hidden"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="3" d="M5 13l4 4L19 7"></path></svg></div>
+                            </div>
+                            <div class="flex-1 bg-slate-50 rounded-[1rem] aspect-square relative overflow-hidden border border-slate-200 flex flex-col items-center justify-center">
+                                <span class="text-[10px] font-bold text-slate-400 mb-1 z-10">ETALASE</span>
+                                <img id="thumb2" class="absolute inset-0 w-full h-full object-cover hidden">
+                                <div id="check2" class="absolute top-1 right-1 bg-emerald-500 text-white rounded-full p-0.5 hidden"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="3" d="M5 13l4 4L19 7"></path></svg></div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-4 flex gap-3">
+                            <button type="button" id="btnCapture" onclick="takePhoto()" class="flex-1 bg-gradient-to-r from-indigo-500 to-purple-500 text-white font-bold py-4 rounded-2xl transition-all active:scale-95 shadow-lg">
+                                <span>Ambil Foto Depan</span> 📸
+                            </button>
+                            <button type="button" id="btnRetake" onclick="retakePhoto()" class="hidden flex-1 bg-slate-100 text-slate-600 font-bold py-4 rounded-2xl transition-all active:scale-95 border">
+                                <span>Ulangi Foto</span> 🔄
+                            </button>
+                        </div>
+                        <canvas id="photoCanvas" class="hidden"></canvas>
+                    </div>
+                </div>
+
+                <!-- KOLOM KANAN (Checklist) -->
+                <div class="md:col-span-7 lg:col-span-8 mt-6 md:mt-0">
+                    <div id="dynamicChecklistArea" class="page-enter">
+                        <div class="flex items-center gap-3 mb-5 px-2">
+                            <div class="bg-amber-100 text-amber-500 w-8 h-8 rounded-xl flex items-center justify-center font-bold">📝</div>
+                            <h3 class="font-extrabold text-slate-800 text-xl">Penilaian Kriteria</h3>
+                        </div>
+                        
+                        <!-- Grid untuk checklist kategori di Desktop -->
+                        <div id="checklistItemsContainer" class="space-y-3 md:space-y-0 md:grid md:grid-cols-2 md:gap-4 lg:grid-cols-2"></div>
+                        
+                        <div class="sticky bottom-20 md:static md:mt-8 pt-4 pb-4 z-40">
+                            <button type="submit" id="submitBtn" disabled class="w-full bg-slate-200 text-slate-400 font-extrabold py-5 md:py-6 rounded-[2rem] text-lg md:text-xl transition-all duration-300 hover:shadow-2xl">
+                                <span id="submitBtnText">Mencari Lokasi... ⏳</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+
+        <!-- ================= VIEW 2: TREND OUTLET PROFILE ================= -->
+        <div id="trendArea" class="hidden pb-10">
+            <div class="bg-white rounded-[2rem] p-5 mb-6 md:mb-8 shadow-sm border border-slate-100 flex items-center justify-between relative overflow-hidden">
+                <div class="absolute -right-10 -top-10 w-32 h-32 bg-blue-50 rounded-full blur-2xl"></div>
+                <div class="flex items-center gap-4 relative z-10">
+                    <div class="w-12 h-12 bg-blue-100 text-blue-500 rounded-2xl flex items-center justify-center text-2xl shadow-inner">📊</div>
+                    <div>
+                        <h2 class="text-lg md:text-xl font-extrabold text-slate-800 leading-tight">Trading Dashboard</h2>
+                        <p class="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-widest mt-0.5" id="trendSpvNameDisplay">SPV Outlet</p>
+                    </div>
+                </div>
+            </div>
+            <!-- GRID SYSTEM DI DESKTOP: Maksimal 3 Kolom -->
+            <div id="trendContent" class="space-y-6 md:space-y-0 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-6"></div>
+        </div>
+
+        <!-- ================= VIEW 3: DASHBOARD GROWTH RANK GLOBAL ================= -->
+        <div id="dashboardArea" class="hidden pb-10">
+            <div class="bg-white rounded-[2rem] p-5 mb-6 md:mb-8 shadow-sm border border-slate-100 relative overflow-hidden">
+                <div class="absolute -right-10 -top-10 w-32 h-32 bg-amber-50 rounded-full blur-2xl"></div>
+                <div class="flex items-center gap-4 relative z-10 mb-5">
+                    <div class="w-12 h-12 bg-amber-100 text-amber-500 rounded-2xl flex items-center justify-center text-2xl shadow-inner shrink-0">🏆</div>
+                    <div>
+                        <h2 class="text-lg md:text-xl font-extrabold text-slate-800 leading-tight">Peringkat Growth</h2>
+                        <p class="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-widest mt-0.5">Top Global Outlet</p>
+                    </div>
+                </div>
+                
+                <!-- FILTER DIVISI & SEARCH SPV -->
+                <div class="relative z-10 space-y-3 border-t border-slate-100 pt-4">
+                    <!-- Tab Toggle Divisi -->
+                    <div class="flex gap-2 bg-slate-50 p-1.5 rounded-xl border border-slate-100">
+                        <button onclick="setRankDivisi('all')" id="btnDivAll" class="flex-1 py-2.5 rounded-lg text-[11px] font-extrabold bg-white text-amber-500 shadow-sm border border-slate-200 transition-all">🌍 Semua Divisi</button>
+                        <button onclick="setRankDivisi('direct')" id="btnDivDirect" class="flex-1 py-2.5 rounded-lg text-[11px] font-extrabold text-slate-400 hover:text-slate-600 transition-all">Direct</button>
+                        <button onclick="setRankDivisi('indirect')" id="btnDivIndirect" class="flex-1 py-2.5 rounded-lg text-[11px] font-extrabold text-slate-400 hover:text-slate-600 transition-all">Indirect</button>
+                    </div>
+                    <!-- Search SPV -->
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                            <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                        </div>
+                        <input type="text" id="rankSearchSpv" oninput="renderGlobalRanking()" placeholder="Cari Nama SPV..." class="w-full bg-slate-50 border border-slate-200 text-slate-800 text-[13px] font-bold rounded-xl pl-10 pr-4 py-3 focus:outline-none focus:border-amber-400 focus:bg-white focus:shadow-md transition-all placeholder:text-slate-300 placeholder:font-medium">
+                    </div>
+                </div>
+            </div>
+            <!-- GRID SYSTEM DI DESKTOP: Maksimal 3 Kolom -->
+            <div id="dashboardContent" class="space-y-3 md:space-y-0 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-5"></div>
+        </div>
+
+        <!-- ================= VIEW 4: HISTORY ================= -->
+        <div id="historyArea" class="hidden pb-10">
+            <div class="bg-white rounded-[2rem] p-5 mb-6 md:mb-8 shadow-sm border border-slate-100 flex items-center justify-between relative overflow-hidden">
+                <div class="absolute -right-10 -top-10 w-32 h-32 bg-indigo-50 rounded-full blur-2xl"></div>
+                <div class="flex items-center gap-4 relative z-10">
+                    <div class="w-12 h-12 bg-indigo-100 text-indigo-500 rounded-2xl flex items-center justify-center text-2xl shadow-inner">🕒</div>
+                    <div>
+                        <h2 class="text-lg md:text-xl font-extrabold text-slate-800 leading-tight">Riwayat Check-In</h2>
+                        <p class="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-widest mt-0.5">Data Kunjungan</p>
+                    </div>
+                </div>
+            </div>
+            <!-- GRID SYSTEM DI DESKTOP: Maksimal 3 Kolom -->
+            <div id="historyListContainer" class="space-y-3 md:space-y-0 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-5"></div>
+        </div>
+
+    </div>
+
+    <script>
+        const GAS_API_URL = "https://script.google.com/macros/s/AKfycbwllCrME9XjzLBIiYftHAt0HEWoOFZgDX8DZ0-5fXBecdsdaOhlZ7FapwzpS-FsPuJc/exec";
+
+        let spvDataMapping = {};
+        let checklistHeaders = [];
+        let omsetDataMapping = {}; 
+        let tiersDataStore = [];
+        let historyDataStore = [];
+        let latestPhotosMap = {}; 
+        
+        let currentUserLat = null, currentUserLng = null;
+        let currentOutletLat = null, currentOutletLng = null;
+        let isLocationValid = false;
+        
+        let cameraStream = null;
+        let geoInterval = null;
+        let watchId = null; // Menggantikan gpsSyncInterval untuk Real-Time tracking
+        let lastGeocodeLat = null;
+        let lastGeocodeLng = null;
+
+        let capturedPhotos = []; 
+        let popupDataStore = [];
+        let isSyncing = false; 
+        
+        let currentRankDivisi = 'all'; // State Filter Divisi
+
+        const selectionArea = document.getElementById('selectionArea');
+        const checklistForm = document.getElementById('checklistForm');
+        const trendArea = document.getElementById('trendArea');
+        const dashboardArea = document.getElementById('dashboardArea');
+        const historyArea = document.getElementById('historyArea');
+        const globalLoader = document.getElementById('globalLoader');
+        const spvSelect = document.getElementById('spvSelect');
+        const outletListContainer = document.getElementById('outletListContainer');
+        const dashboardContent = document.getElementById('dashboardContent');
+        const trendContent = document.getElementById('trendContent');
+        const historyListContainer = document.getElementById('historyListContainer');
+        
+        document.addEventListener('DOMContentLoaded', initializeApp);
+
+        // Auto Sync setiap 3 menit
+        setInterval(backgroundSync, 180000); 
+
+        function backgroundSync() {
+            if(isSyncing) return;
+            isSyncing = true;
+            
+            const btnIcon = document.querySelector('#btnSync svg');
+            btnIcon.classList.add('sync-spin');
+            
+            fetch(`${GAS_API_URL}?action=getInitialData`)
+                .then(response => { if (!response.ok) throw new Error("Gagal mengambil data."); return response.json(); })
+                .then(data => {
+                    if(data.status === 'success') {
+                        spvDataMapping = data.spvData || {};
+                        checklistHeaders = data.checklistItems || [];
+                        omsetDataMapping = data.omsetData || {};
+                        tiersDataStore = data.tiersData || [];
+                        historyDataStore = data.historyData || [];
+                        processLatestPhotos();
+                        
+                        if(spvSelect.value) handleSpvChange(); 
+                        if(document.getElementById('tabTrend').classList.contains('active')) renderTrendProfile();
+                        if(document.getElementById('tabDashboard').classList.contains('active')) renderGlobalRanking();
+                        if(document.getElementById('tabHistory').classList.contains('active')) renderHistory();
+                    }
+                })
+                .catch(error => console.warn('Background sync gagal.', error))
+                .finally(() => {
+                    isSyncing = false;
+                    setTimeout(() => btnIcon.classList.remove('sync-spin'), 500); 
+                });
+        }
+
+        function initializeApp() {
+            selectionArea.className = 'hidden'; checklistForm.className = 'hidden'; trendArea.className = 'hidden'; dashboardArea.className = 'hidden'; historyArea.className = 'hidden';
+            globalLoader.className = 'flex flex-col justify-center items-center h-[50vh] bg-white rounded-[2rem] shadow-xl border border-slate-100 page-enter';
+            document.getElementById('loadingText').innerText = "Syncing Vibes...";
+
+            fetch(`${GAS_API_URL}?action=getInitialData`)
+                .then(response => { if (!response.ok) throw new Error("Gagal mengambil data."); return response.json(); })
+                .then(data => {
+                    globalLoader.className = 'hidden';
+                    if(data.status === 'success') {
+                        spvDataMapping = data.spvData || {};
+                        checklistHeaders = data.checklistItems || [];
+                        omsetDataMapping = data.omsetData || {};
+                        tiersDataStore = data.tiersData || [];
+                        historyDataStore = data.historyData || [];
+                        processLatestPhotos();
+                        populateSpvDropdown();
+                        switchTab('checkin');
+                    } else throw new Error(data.message);
+                })
+                .catch(error => {
+                    console.warn('Mode Simulasi aktif.', error);
+                    globalLoader.className = 'hidden';
+                    showToast("Mode Offline (Data Simulasi) 📴", "error");
+                    
+                    spvDataMapping = {
+                        "AGUS SUPRIYANTO": [{ name: "WEDUS CELL 1", lat: -6.2215, lng: 106.8054, id: "3200018648", poinAktif: 12500, photoUrl: "", divisi: "Indirect" }],
+                        "WAHYU FIRMANSYAH": [{ name: "MAHKOTA CELL", lat: -6.1950, lng: 106.8227, id: "3200002786", poinAktif: 1200, photoUrl: "", divisi: "Direct" }]
+                    };
+                    checklistHeaders = ["Kebersihan - Kaca", "Staff - Seragam", "Promosi - Banner", "Promosi - Flyer"];
+                    omsetDataMapping = {
+                        "3200018648": { omsetBulanLalu: 15000000, omsetBulanIni: 14460000, sa: 50, vf: 200, linkaja: 1500000 },
+                        "3200002786": { omsetBulanLalu: 6000000, omsetBulanIni: 26970000, sa: 120, vf: 400, linkaja: 2500000 }
+                    };
+                    historyDataStore = [
+                        { 
+                            timestamp: new Date().toISOString(), spv: "AGUS SUPRIYANTO", outlet: "WEDUS CELL 1", 
+                            statusGps: "MATCH (Jarak: 15m)", fotoDepan: "https://via.placeholder.com/150/0000FF/808080 ?Text=Depan", 
+                            fotoBranding: "https://via.placeholder.com/150/FF0000/FFFFFF ?Text=Branding", fotoEtalase: "https://via.placeholder.com/150/FFFF00/000000 ?Text=Etalase",
+                            checklist: {"Kebersihan - Kaca": "Ada", "Staff - Seragam": "Tidak Ada", "Promosi - Banner": "Ada"}
+                        }
+                    ];
+                    processLatestPhotos();
+                    populateSpvDropdown();
+                    switchTab('checkin');
+                });
+        }
+
+        function processLatestPhotos() {
+            latestPhotosMap = {};
+            if (historyDataStore && historyDataStore.length > 0) {
+                // Diurutkan terlebih dahulu agar yang terbaru (teratas) yang diambil
+                let sortedHistory = [...historyDataStore].sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+                sortedHistory.forEach(h => {
+                    if(!latestPhotosMap[h.outlet] && h.fotoDepan && h.fotoDepan !== "Tidak Ada Foto" && h.fotoDepan !== "Error Upload") {
+                        latestPhotosMap[h.outlet] = h.fotoDepan;
+                    }
+                });
+            }
+        }
+
+        function switchTab(tabName) {
+            document.querySelectorAll('.nav-tab').forEach(el => el.classList.remove('active'));
+            document.getElementById('tab' + tabName.charAt(0).toUpperCase() + tabName.slice(1)).classList.add('active');
+            
+            selectionArea.className = 'hidden'; checklistForm.className = 'hidden'; trendArea.className = 'hidden'; dashboardArea.className = 'hidden'; historyArea.className = 'hidden';
+            if (cameraStream) { cameraStream.getTracks().forEach(track => track.stop()); cameraStream = null; }
+            if (watchId) { navigator.geolocation.clearWatch(watchId); watchId = null; } // Hentikan GPS Real-time saat ganti tab
+            popupDataStore = []; 
+
+            if (tabName === 'checkin') {
+                selectionArea.className = 'page-enter block';
+                document.getElementById('navIconBg').className = 'bg-gradient-to-br from-indigo-500 to-purple-600 w-10 h-10 rounded-2xl flex items-center justify-center shadow-lg shadow-indigo-200';
+                document.getElementById('navTitle').innerHTML = 'Check<span class="gradient-text">In</span>';
+            } else if (tabName === 'trend') {
+                trendArea.className = 'page-enter block';
+                document.getElementById('navIconBg').className = 'bg-gradient-to-br from-blue-500 to-cyan-500 w-10 h-10 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-200';
+                document.getElementById('navTitle').innerHTML = 'Trend<span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-cyan-500">Profil</span>';
+                renderTrendProfile();
+            } else if (tabName === 'dashboard') {
+                dashboardArea.className = 'page-enter block';
+                document.getElementById('navIconBg').className = 'bg-gradient-to-br from-amber-400 to-orange-500 w-10 h-10 rounded-2xl flex items-center justify-center shadow-lg shadow-amber-200';
+                document.getElementById('navTitle').innerHTML = 'Growth<span class="bg-clip-text text-transparent bg-gradient-to-r from-amber-500 to-orange-500">Rank</span>';
+                renderGlobalRanking(); 
+            } else if (tabName === 'history') {
+                historyArea.className = 'page-enter block';
+                document.getElementById('navIconBg').className = 'bg-gradient-to-br from-slate-600 to-slate-800 w-10 h-10 rounded-2xl flex items-center justify-center shadow-lg shadow-slate-300';
+                document.getElementById('navTitle').innerHTML = 'History<span class="text-slate-500">Data</span>';
+                renderHistory();
+            }
+        }
+
+        function populateSpvDropdown() {
+            const savedSpv = localStorage.getItem('lastSelectedSpv');
+            
+            spvSelect.innerHTML = '<option value="">Pilih Profil Anda...</option>';
+            const spvList = Object.keys(spvDataMapping).sort();
+            spvList.forEach(spv => {
+                const option = document.createElement('option');
+                option.value = spv; option.textContent = spv;
+                spvSelect.appendChild(option);
+            });
+            
+            if (savedSpv && spvList.includes(savedSpv)) {
+                spvSelect.value = savedSpv;
+            }
+            
+            if(spvSelect.value) handleSpvChange();
+        }
+
+        // FUNGSI KHUSUS UNTUK MENGUBAH KOMA MENJADI TITIK DAN MENGKONVERSI KE DESIMAL (DIPERKUAT ANTI-ERROR)
+        function parseCoord(coord) {
+            if (coord === null || coord === undefined) return NaN;
+            // 1. Jadikan string dan bersihkan spasi
+            let str = String(coord).trim();
+            if (str === '') return NaN;
+            // 2. Buang semua karakter selain angka, minus (-), koma (,), dan titik (.)
+            str = str.replace(/[^0-9.,-]/g, '');
+            // 3. Ganti koma (Indonesia) menjadi titik (Standar Internasional)
+            str = str.replace(',', '.');
+            return parseFloat(str);
+        }
+
+        function calculateDistance(lat1, lon1, lat2, lon2) {
+            const l1 = parseCoord(lat1);
+            const ln1 = parseCoord(lon1);
+            const l2 = parseCoord(lat2);
+            const ln2 = parseCoord(lon2);
+            
+            if (isNaN(l1) || isNaN(ln1) || isNaN(l2) || isNaN(ln2)) return null;
+
+            const R = 6371e3; 
+            const f1 = l1 * Math.PI/180;
+            const f2 = l2 * Math.PI/180;
+            const df = (l2-l1) * Math.PI/180;
+            const dl = (ln2-ln1) * Math.PI/180;
+            const a = Math.sin(df/2) * Math.sin(df/2) + Math.cos(f1) * Math.cos(f2) * Math.sin(dl/2) * Math.sin(dl/2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+            return R * c; 
+        }
+
+        function calculateGrowth(omsetBulanLaluTotal, omsetBulanIniHinggaKemarin) {
+            const today = new Date();
+            const daysInThisMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate();
+            let daysInThisMonthToYesterday = today.getDate() - 1;
+            if (daysInThisMonthToYesterday === 0) daysInThisMonthToYesterday = 1;
+
+            const avgDailyThisMonthBase = omsetBulanLaluTotal / daysInThisMonth;
+            const projectedLastMonth = avgDailyThisMonthBase * daysInThisMonthToYesterday;
+
+            let growthPercent = 0;
+            if (projectedLastMonth > 0) {
+                growthPercent = ((omsetBulanIniHinggaKemarin - projectedLastMonth) / projectedLastMonth) * 100;
+            } else if (omsetBulanIniHinggaKemarin > 0) {
+                growthPercent = 100; 
+            }
+
+            return {
+                percent: growthPercent,
+                projectedBase: projectedLastMonth,
+                actual: omsetBulanIniHinggaKemarin,
+                isPositive: growthPercent >= 0
+            };
+        }
+
+        function formatRupiah(number) { return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(number); }
+        function formatPoints(number) { return new Intl.NumberFormat('id-ID').format(number); }
+
+        function getTierInfo(points) {
+            const defaultStyles = {
+                "diamond": { bg: "from-slate-800 via-slate-900 to-black", border: "border-slate-700", text: "text-cyan-400", label: "text-slate-400" },
+                "platinum": { bg: "from-slate-400 via-slate-500 to-slate-600", border: "border-slate-300", text: "text-white", label: "text-slate-200" },
+                "gold": { bg: "from-yellow-400 via-yellow-500 to-yellow-600", border: "border-yellow-300", text: "text-white", label: "text-yellow-100" },
+                "silver": { bg: "from-gray-100 via-gray-200 to-gray-300", border: "border-white", text: "text-slate-800", label: "text-slate-600" },
+                "bronze": { bg: "from-amber-600 via-amber-700 to-amber-800", border: "border-amber-500", text: "text-white", label: "text-amber-200" }
+            };
+
+            let matchedTier = null;
+
+            if(tiersDataStore && tiersDataStore.length > 0) {
+                let sortedTiers = [...tiersDataStore].sort((a,b) => b.min - a.min);
+                for(let t of sortedTiers) {
+                    if(points >= t.min) {
+                        matchedTier = t;
+                        break;
+                    }
+                }
+                if (!matchedTier) matchedTier = sortedTiers[sortedTiers.length-1];
+            } else {
+                if (points >= 10000) matchedTier = { name: "Diamond" };
+                else if (points >= 5000) matchedTier = { name: "Platinum" };
+                else if (points >= 1000) matchedTier = { name: "Gold" };
+                else matchedTier = { name: "Silver" };
+            }
+
+            const normalizedTierName = String(matchedTier.name).toLowerCase().trim();
+            const fallbackStyle = defaultStyles[normalizedTierName] || defaultStyles["silver"];
+
+            const resolveStyle = (customVal, fallbackVal) => {
+                return (customVal && String(customVal).trim() !== "") ? String(customVal).trim() : fallbackVal;
+            };
+
+            return {
+                name: matchedTier.name,
+                bg: resolveStyle(matchedTier.bg, fallbackStyle.bg),
+                border: resolveStyle(matchedTier.border, fallbackStyle.border),
+                text: resolveStyle(matchedTier.text, fallbackStyle.text),
+                label: resolveStyle(matchedTier.label, fallbackStyle.label)
+            };
+        }
+
+        // FUNGSI GANTI TAB DIVISI
+        function setRankDivisi(divisi) {
+            currentRankDivisi = divisi;
+            
+            // Reset state
+            ['All', 'Direct', 'Indirect'].forEach(tab => {
+                const btn = document.getElementById('btnDiv' + tab);
+                if (btn) btn.className = "flex-1 py-2.5 rounded-lg text-[11px] font-extrabold text-slate-400 hover:text-slate-600 transition-all";
+            });
+            
+            // Aktifkan yang dipilih
+            const activeBtn = document.getElementById('btnDiv' + divisi.charAt(0).toUpperCase() + divisi.slice(1));
+            if (activeBtn) {
+                activeBtn.className = "flex-1 py-2.5 rounded-lg text-[11px] font-extrabold bg-white text-amber-500 shadow-sm border border-slate-200 transition-all";
+            }
+            
+            renderGlobalRanking();
+        }
+
+        // ================= RENDERING ================= //
+        function renderTrendProfile() {
+            const selectedSpv = spvSelect.value;
+            document.getElementById('trendSpvNameDisplay').innerText = selectedSpv ? `SPV: ${selectedSpv}` : "Harap Pilih SPV";
+            if (!selectedSpv) { trendContent.innerHTML = `<div class="bg-white rounded-[2rem] p-10 text-center col-span-full"><p class="text-slate-500 font-semibold">Pilih profil SPV di Check-In.</p></div>`; return; }
+
+            const outlets = spvDataMapping[selectedSpv];
+            if (!outlets || outlets.length === 0) { trendContent.innerHTML = `<p class="text-center text-slate-500 col-span-full">Tidak ada data.</p>`; return; }
+
+            let htmlCards = '';
+            outlets.forEach((outlet, index) => {
+                const rawOmset = omsetDataMapping[outlet.id] || {};
+                
+                const omsetInfo = { 
+                    omsetBulanLalu: parseFloat(rawOmset.omsetBulanLalu) || 0, 
+                    omsetBulanIni: parseFloat(rawOmset.omsetBulanIni) || 0, 
+                    sa: parseInt(rawOmset.sa) || 0, 
+                    vf: parseInt(rawOmset.vf) || 0, 
+                    linkaja: parseFloat(rawOmset.linkaja) || 0 
+                };
+                
+                const growthData = calculateGrowth(omsetInfo.omsetBulanLalu, omsetInfo.omsetBulanIni);
+                const points = parseInt(outlet.poinAktif) || 0;
+                
+                const popupIndex = popupDataStore.length;
+                popupDataStore.push({ ...outlet, spvName: selectedSpv, growthData, points });
+
+                const isPos = growthData.isPositive;
+                const percentStr = (isPos ? '+' : '') + growthData.percent.toFixed(1) + '%';
+                const nominalGrowth = growthData.actual - growthData.projectedBase;
+                const nominalStr = (nominalGrowth >= 0 ? '+ Rp ' : '- Rp ') + formatRupiah(Math.abs(nominalGrowth)).replace('Rp', '').trim();
+                const projectedStr = formatRupiah(growthData.projectedBase).split(',')[0];
+                const actualStr = formatRupiah(growthData.actual).split(',')[0];
+                
+                const tier = getTierInfo(points);
+                const chartStroke = isPos ? '#10b981' : '#f43f5e';
+                const chartFill = isPos ? `url(#greenGradient${index})` : `url(#redGradient${index})`;
+                
+                const textCol = isPos ? 'text-emerald-500' : 'text-rose-500';
+                const bgClass = isPos ? 'bg-emerald-50 text-emerald-600 border border-emerald-100' : 'bg-rose-50 text-rose-600 border border-rose-100';
+                const iconDir = isPos ? 'M13 7h8m0 0v8m0-8l-8 8-4-4-6 6' : 'M13 17h8m0 0v-8m0 8l-8-8-4 4-6-6';
+                
+                const stockChartSvg = `
+                    <svg viewBox="0 0 400 100" class="w-full h-24 drop-shadow-sm" preserveAspectRatio="none">
+                        <defs>
+                            <linearGradient id="greenGradient${index}" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#10b981" stop-opacity="0.3"/><stop offset="100%" stop-color="#10b981" stop-opacity="0"/></linearGradient>
+                            <linearGradient id="redGradient${index}" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#f43f5e" stop-opacity="0.3"/><stop offset="100%" stop-color="#f43f5e" stop-opacity="0"/></linearGradient>
+                        </defs>
+                        ${isPos 
+                            ? `<path d="M0,90 C50,80 100,90 150,50 C200,10 250,60 300,30 C350,0 400,20 400,20 L400,100 L0,100 Z" fill="${chartFill}" /><path d="M0,90 C50,80 100,90 150,50 C200,10 250,60 300,30 C350,0 400,20 400,20" fill="none" stroke="${chartStroke}" stroke-width="4" stroke-linecap="round"/>`
+                            : `<path d="M0,20 C50,10 100,50 150,40 C200,30 250,80 300,70 C350,60 400,90 400,90 L400,100 L0,100 Z" fill="${chartFill}" /><path d="M0,20 C50,10 100,50 150,40 C200,30 250,80 300,70 C350,60 400,90 400,90" fill="none" stroke="${chartStroke}" stroke-width="4" stroke-linecap="round"/>`
+                        }
+                    </svg>`;
+
+                htmlCards += `
+                    <div class="bg-white rounded-[2rem] p-5 shadow-xl shadow-slate-200/50 border border-slate-100 relative overflow-hidden page-enter cursor-pointer hover:scale-[1.02] transition-transform" style="animation-delay: ${index * 0.05}s" onclick="openAtmPopup(${popupIndex})">
+                        
+                        <div class="flex justify-between items-start gap-4 mb-4 relative z-10">
+                            <div class="flex-1">
+                                <h3 class="font-extrabold text-slate-800 text-lg uppercase tracking-tight leading-tight">${outlet.name}</h3>
+                                <p class="text-xs font-bold text-slate-400 mt-0.5">ID: ${outlet.id}</p>
+                                <div class="mt-3">
+                                    <div class="inline-flex items-center gap-1.5 ${bgClass} px-2.5 py-1 rounded-lg font-black text-sm tracking-wider shadow-sm">
+                                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="${iconDir}"></path></svg>
+                                        ${percentStr}
+                                    </div>
+                                    <div class="mt-1.5 ${textCol} font-extrabold text-[11px] tracking-wider flex items-center">
+                                        ${nominalStr}
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="w-36 h-24 rounded-2xl bg-gradient-to-tr ${tier.bg} p-3 relative overflow-hidden shadow-lg atm-card shrink-0 border ${tier.border}">
+                                <div class="flex justify-between items-start mb-2 relative z-10">
+                                    <div class="w-8 h-6 border border-yellow-500/50 rounded-md bg-gradient-to-br from-yellow-200/40 to-yellow-600/40 flex flex-col justify-evenly px-0.5"><div class="w-full h-[1px] bg-yellow-500/50"></div><div class="w-full h-[1px] bg-yellow-500/50"></div></div>
+                                    <span class="${tier.text} font-black text-[10px] italic tracking-widest uppercase drop-shadow-md text-right leading-tight">${tier.name}</span>
+                                </div>
+                                <div class="absolute bottom-3 left-3 right-3 z-10">
+                                    <p class="text-[7px] uppercase tracking-widest mb-0.5 ${tier.label}">Poin Aktif</p>
+                                    <p class="text-base font-black tracking-widest drop-shadow-md leading-none ${tier.text}" style="font-family: 'Courier New', monospace;">${formatPoints(points)}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Data SA, VF, LINKAJA -->
+                        <div class="grid grid-cols-3 gap-2 mb-4 relative z-10 border-t border-slate-100 pt-3">
+                            <div class="bg-indigo-50/50 rounded-xl p-2 text-center border border-indigo-100/50">
+                                <p class="text-[8px] font-extrabold text-indigo-400 uppercase tracking-widest">SA</p>
+                                <p class="text-sm font-black text-indigo-600">${omsetInfo.sa}</p>
+                            </div>
+                            <div class="bg-rose-50/50 rounded-xl p-2 text-center border border-rose-100/50">
+                                <p class="text-[8px] font-extrabold text-rose-400 uppercase tracking-widest">VF</p>
+                                <p class="text-sm font-black text-rose-600">${omsetInfo.vf}</p>
+                            </div>
+                            <div class="bg-emerald-50/50 rounded-xl p-2 text-center border border-emerald-100/50">
+                                <p class="text-[8px] font-extrabold text-emerald-400 uppercase tracking-widest">LinkAja</p>
+                                <p class="text-sm font-black text-emerald-600">${formatRupiah(omsetInfo.linkaja).replace('Rp','').trim()}</p>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-2 mb-4 relative z-10">
+                            <div class="flex-1 bg-slate-50 px-3 py-2 rounded-xl border border-slate-100">
+                                <p class="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Target Berjalan</p>
+                                <p class="text-[13px] font-extrabold text-slate-700 mt-0.5">${projectedStr}</p>
+                            </div>
+                            <div class="flex-1 bg-slate-50 px-3 py-2 rounded-xl border border-slate-100 text-right">
+                                <p class="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Omset Aktual</p>
+                                <p class="text-[13px] font-extrabold text-slate-800 mt-0.5">${actualStr}</p>
+                            </div>
+                        </div>
+
+                        <div class="-mx-5 -mb-5 mt-2 opacity-90 relative z-0">${stockChartSvg}</div>
+                    </div>`;
+            });
+            trendContent.innerHTML = htmlCards;
+        }
+
+        function renderGlobalRanking() {
+            dashboardContent.innerHTML = '';
+            let allOutlets = [];
+            
+            const searchInput = document.getElementById('rankSearchSpv');
+            const searchValue = searchInput ? searchInput.value.toLowerCase().trim() : '';
+
+            for (const spvName in spvDataMapping) {
+                if (searchValue && !spvName.toLowerCase().includes(searchValue)) continue;
+
+                spvDataMapping[spvName].forEach(outlet => {
+                    const outletDivisi = (outlet.divisi || "umum").toLowerCase();
+                    if (currentRankDivisi === 'direct' && outletDivisi !== 'direct') return;
+                    if (currentRankDivisi === 'indirect' && outletDivisi !== 'indirect') return;
+
+                    const omsetInfo = omsetDataMapping[outlet.id] || { omsetBulanLalu: 0, omsetBulanIni: 0 };
+                    const growthData = calculateGrowth(parseFloat(omsetInfo.omsetBulanLalu)||0, parseFloat(omsetInfo.omsetBulanIni)||0);
+                    const points = parseInt(outlet.poinAktif) || 0;
+                    allOutlets.push({ spvName: spvName, ...outlet, growthData, points });
+                });
+            }
+
+            allOutlets.sort((a, b) => b.growthData.percent - a.growthData.percent);
+            
+            if (allOutlets.length === 0) { 
+                dashboardContent.innerHTML = `<div class="bg-white rounded-[2rem] p-10 text-center col-span-full border border-slate-100 shadow-sm"><p class="text-slate-500 font-semibold text-sm">Tidak ada data yang cocok dengan filter tersebut.</p></div>`; 
+                return; 
+            }
+
+            let htmlCards = '';
+            allOutlets.forEach((outlet, index) => {
+                const rank = index + 1;
+                const popupIndex = popupDataStore.length;
+                popupDataStore.push(outlet); 
+                
+                const isPos = outlet.growthData.isPositive;
+                const percentStr = (isPos ? '+' : '') + outlet.growthData.percent.toFixed(1) + '%';
+                const nominalGrowth = outlet.growthData.actual - outlet.growthData.projectedBase;
+                const nominalStr = (nominalGrowth >= 0 ? '+ Rp ' : '- Rp ') + formatRupiah(Math.abs(nominalGrowth)).replace('Rp', '').trim();
+                
+                const textCol = isPos ? 'text-emerald-500' : 'text-rose-500';
+                const bgClass = isPos ? 'bg-emerald-50 text-emerald-600' : 'bg-rose-50 text-rose-600';
+                const iconDir = isPos ? 'M13 7h8m0 0v8m0-8l-8 8-4-4-6 6' : 'M13 17h8m0 0v-8m0 8l-8-8-4 4-6-6';
+
+                let rankIconHtml = `<div class="w-10 h-10 shrink-0 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-500 font-extrabold text-sm shadow-sm">${rank}</div>`;
+                let cardBorder = 'border-l-[6px] border-l-transparent'; 
+                let shadowClass = 'shadow-sm';
+
+                if (rank === 1) { cardBorder = 'border-l-[6px] border-l-amber-400'; shadowClass = 'shadow-md scale-[1.02] relative z-10'; rankIconHtml = `<div class="w-11 h-11 shrink-0 rounded-full bg-gradient-to-br from-amber-100 to-amber-200 flex items-center justify-center text-amber-500 shadow-inner relative"><svg class="w-6 h-6 z-10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 2.4 3.4-.6.6 3.4 2.4 2.4-2.4 2.4-.6 3.4-3.4-.6-2.4 2.4-2.4-2.4-3.4.6-.6-3.4-2.4-2.4 2.4-2.4.6-3.4 3.4.6L12 2z"/><circle cx="12" cy="12" r="4" fill="white"/><path d="M12 9l.9 2h2.1l-1.7 1.2.6 2.1-1.9-1.3-1.9 1.3.6-2.1-1.7-1.2h2.1L12 9z" fill="#f59e0b"/></svg></div>`; } 
+                else if (rank === 2) { cardBorder = 'border-l-[6px] border-l-slate-300'; shadowClass = 'shadow-md relative z-10'; rankIconHtml = `<div class="w-11 h-11 shrink-0 rounded-full bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center text-slate-500 shadow-inner relative"><svg class="w-6 h-6 z-10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 2.4 3.4-.6.6 3.4 2.4 2.4-2.4 2.4-.6 3.4-3.4-.6-2.4 2.4-2.4-2.4-3.4.6-.6-3.4-2.4-2.4 2.4-2.4.6-3.4 3.4.6L12 2z"/><circle cx="12" cy="12" r="4" fill="white"/><path d="M12 9l.9 2h2.1l-1.7 1.2.6 2.1-1.9-1.3-1.9 1.3.6-2.1-1.7-1.2h2.1L12 9z" fill="#64748b"/></svg></div>`; } 
+                else if (rank === 3) { cardBorder = 'border-l-[6px] border-l-orange-500'; shadowClass = 'shadow-md relative z-10'; rankIconHtml = `<div class="w-11 h-11 shrink-0 rounded-full bg-gradient-to-br from-orange-100 to-orange-200 flex items-center justify-center text-orange-600 shadow-inner relative"><svg class="w-6 h-6 z-10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 2.4 3.4-.6.6 3.4 2.4 2.4-2.4 2.4-.6 3.4-3.4-.6-2.4 2.4-2.4-2.4-3.4.6-.6-3.4-2.4-2.4 2.4-2.4.6-3.4 3.4.6L12 2z"/><circle cx="12" cy="12" r="4" fill="white"/><path d="M12 9l.9 2h2.1l-1.7 1.2.6 2.1-1.9-1.3-1.9 1.3.6-2.1-1.7-1.2h2.1L12 9z" fill="#ea580c"/></svg></div>`; }
+
+                const tier = getTierInfo(outlet.points);
+                const miniCardHtml = `<div class="w-11 h-7 shrink-0 rounded bg-gradient-to-br ${tier.bg} relative overflow-hidden shadow-sm border ${tier.border} mx-1.5 flex items-center px-1"><div class="w-2.5 h-1.5 border border-yellow-500/50 bg-yellow-200/30 rounded-[2px]"></div><span class="absolute bottom-0.5 right-1 text-[5px] font-black ${tier.text} uppercase drop-shadow-md tracking-wider">${tier.name}</span></div>`;
+                
+                htmlCards += `
+                    <div onclick="openAtmPopup(${popupIndex})" class="cursor-pointer bg-white rounded-[1.2rem] p-3 pl-3 pr-4 flex items-center gap-2 border border-slate-100/80 ${cardBorder} ${shadowClass} page-enter transition-transform hover:scale-[1.03]" style="animation-delay: ${index * 0.05}s">
+                        ${rankIconHtml}
+                        ${miniCardHtml}
+                        <div class="flex-1 min-w-0 ml-1">
+                            <h3 class="font-extrabold text-slate-800 text-[13px] leading-tight uppercase tracking-tight">${outlet.name}</h3>
+                            <div class="flex flex-col mt-0.5">
+                                <span class="text-slate-400 font-bold text-[9.5px] flex items-center gap-1"><svg class="w-2.5 h-2.5 opacity-70" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clip-rule="evenodd" /></svg>${outlet.id}</span>
+                                <span class="text-rose-500 font-semibold text-[8.5px] uppercase mt-0.5 flex items-center gap-1"><svg class="w-2.5 h-2.5 opacity-70" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" /></svg><span class="truncate">${outlet.spvName}</span></span>
+                            </div>
+                        </div>
+                        <div class="text-right flex flex-col items-end shrink-0 justify-center">
+                            <div class="${bgClass} px-2 py-[3px] rounded border border-white text-[11px] font-black flex items-center gap-1 shadow-sm"><svg class="w-[10px] h-[10px]" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="${iconDir}"></path></svg>${percentStr}</div>
+                            <div class="${textCol} font-extrabold text-[10px] mt-1 tracking-wider">${nominalStr}</div>
+                        </div>
+                    </div>`;
+            });
+            dashboardContent.innerHTML = htmlCards;
+        }
+
+        // ================= LOGIC HISTORY ================= //
+        function renderHistory() {
+            historyListContainer.innerHTML = '';
+            const selectedSpv = spvSelect.value;
+            let filterHistory = selectedSpv ? historyDataStore.filter(h => h.spv === selectedSpv) : historyDataStore;
+            
+            // Sort by timestamp descending (terbaru di baris atas)
+            filterHistory.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+
+            if (filterHistory.length === 0) {
+                historyListContainer.innerHTML = `<div class="bg-white rounded-[2rem] p-10 text-center shadow-sm border border-slate-100 col-span-full"><p class="text-slate-500 font-semibold">Belum ada history.</p></div>`;
+                return;
+            }
+
+            let html = '';
+            filterHistory.slice(0, 20).forEach((h, index) => {
+                const date = new Date(h.timestamp).toLocaleString('id-ID', {day: 'numeric', month: 'short', hour:'2-digit', minute:'2-digit'});
+                const photoSrc = h.fotoDepan || ""; 
+                const initial = h.outlet.substring(0, 2).toUpperCase();
+                
+                let avatarHtml = `<div class="w-12 h-12 rounded-[1rem] bg-gradient-to-br from-slate-200 to-slate-300 text-slate-500 flex items-center justify-center font-bold text-sm shrink-0 border border-slate-100">${initial}</div>`;
+                if (photoSrc && photoSrc.startsWith('http')) {
+                    avatarHtml = `<img src="${photoSrc}" class="w-12 h-12 rounded-[1rem] object-cover bg-slate-100 border border-slate-200 shrink-0" onerror="this.outerHTML='<div class=\\'w-12 h-12 rounded-[1rem] bg-gradient-to-br from-slate-200 to-slate-300 text-slate-500 flex items-center justify-center font-bold text-sm shrink-0\\'>${initial}</div>'">`;
+                }
+
+                html += `
+                <div onclick="openHistoryPopup(${historyDataStore.indexOf(h)})" class="cursor-pointer bg-white rounded-[1.2rem] p-3 shadow-sm border border-slate-100 flex items-center gap-3 page-enter transition-transform hover:scale-[1.02]" style="animation-delay: ${index * 0.05}s">
+                    ${avatarHtml}
+                    <div class="flex-1 min-w-0">
+                        <h4 class="font-extrabold text-slate-800 text-[13px] truncate uppercase">${h.outlet}</h4>
+                        <p class="text-[9.5px] text-rose-500 font-bold uppercase truncate">${h.spv}</p>
+                    </div>
+                    <div class="text-[10px] font-bold text-indigo-600 bg-indigo-50 px-2 py-1 rounded-lg shrink-0 flex items-center gap-1 border border-indigo-100">
+                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        ${date}
+                    </div>
+                </div>`;
+            });
+            historyListContainer.innerHTML = html;
+        }
+
+        // ================= LOGIC POPUP ATM ================= //
+        function openAtmPopup(idx) {
+            const data = popupDataStore[idx];
+            const tier = getTierInfo(data.points);
+            
+            document.getElementById('atmPopupCard').className = `w-full max-w-[340px] md:max-w-[420px] aspect-[1.58] rounded-[1.5rem] p-6 md:p-8 relative z-10 scale-90 opacity-0 transition-all duration-300 shadow-2xl border flex flex-col justify-between overflow-hidden bg-gradient-to-tr ${tier.bg} ${tier.border} atm-card`;
+            
+            document.getElementById('popupTier').className = `font-black text-sm md:text-base italic tracking-widest uppercase drop-shadow-md leading-tight ${tier.text}`;
+            document.getElementById('popupTier').innerText = tier.name;
+            document.getElementById('popupTierLabel').className = `text-[7px] md:text-[9px] uppercase tracking-widest opacity-80 mt-0.5 text-right ${tier.label}`;
+            
+            document.getElementById('popupPointsLabel').className = `text-[8px] md:text-[10px] uppercase tracking-widest mb-0.5 md:mb-1 opacity-80 ${tier.label}`;
+            document.getElementById('popupPoints').className = `text-[32px] md:text-[42px] font-black tracking-widest drop-shadow-md leading-none ${tier.text}`;
+            document.getElementById('popupPoints').innerText = formatPoints(data.points);
+            
+            document.getElementById('popupNameLabel').className = `text-[7px] md:text-[9px] uppercase tracking-widest mb-1 opacity-80 ${tier.label}`;
+            document.getElementById('popupName').className = `text-sm md:text-base font-bold tracking-wider uppercase drop-shadow-md truncate ${tier.text}`;
+            document.getElementById('popupName').innerText = data.name;
+            
+            document.getElementById('popupSpvName').className = `text-[9px] md:text-[11px] font-semibold tracking-wider uppercase mt-0.5 ${tier.label}`;
+            document.getElementById('popupSpvName').innerText = data.spvName;
+            
+            const isPos = data.growthData.isPositive;
+            const nominalGrowth = data.growthData.actual - data.growthData.projectedBase;
+            const nominalStr = (nominalGrowth >= 0 ? '+ Rp ' : '- Rp ') + formatRupiah(Math.abs(nominalGrowth)).replace('Rp', '').trim();
+            const percentStr = (isPos ? '+' : '') + data.growthData.percent.toFixed(1) + '%';
+            
+            const badge = document.getElementById('popupGrowthBadge');
+            badge.className = `flex flex-col items-end justify-center px-3 py-2 md:px-4 md:py-3 rounded-xl md:rounded-2xl backdrop-blur-md border border-white/40 text-right transform ${isPos ? 'bg-emerald-500 text-white animate-float-green' : 'bg-rose-500 text-white animate-float-red'}`;
+            
+            document.getElementById('popupGrowthPercent').innerText = percentStr;
+            document.getElementById('popupGrowthValue').innerText = nominalStr;
+            document.getElementById('popupGrowthIcon').setAttribute('d', isPos ? 'M13 7h8m0 0v8m0-8l-8 8-4-4-6 6' : 'M13 17h8m0 0v-8m0 8l-8-8-4 4-6-6');
+            
+            const popup = document.getElementById('atmPopup');
+            popup.classList.remove('hidden');
+            popup.classList.add('flex');
+            
+            setTimeout(() => {
+                document.getElementById('atmPopupOverlay').classList.remove('opacity-0');
+                document.getElementById('atmPopupOverlay').classList.add('opacity-100');
+                document.getElementById('atmPopupCard').classList.remove('scale-90', 'opacity-0');
+                document.getElementById('atmPopupCard').classList.add('scale-100', 'opacity-100');
+            }, 10);
+        }
+
+        function closeAtmPopup() {
+            document.getElementById('atmPopupOverlay').classList.remove('opacity-100');
+            document.getElementById('atmPopupOverlay').classList.add('opacity-0');
+            document.getElementById('atmPopupCard').classList.remove('scale-100', 'opacity-100');
+            document.getElementById('atmPopupCard').classList.add('scale-90', 'opacity-0');
+            setTimeout(() => {
+                document.getElementById('atmPopup').classList.add('hidden');
+                document.getElementById('atmPopup').classList.remove('flex');
+            }, 300);
+        }
+
+        // ================= LOGIC POPUP HISTORY ================= //
+        function openHistoryPopup(idx) {
+            const data = historyDataStore[idx];
+            const date = new Date(data.timestamp).toLocaleString('id-ID', {day: 'numeric', month: 'short', year:'numeric', hour:'2-digit', minute:'2-digit'});
+            
+            document.getElementById('histPopupOutlet').innerText = data.outlet;
+            document.getElementById('histPopupSpv').innerText = data.spv;
+            document.getElementById('histPopupDate').innerText = date;
+            document.getElementById('histPopupGps').innerText = data.statusGps || "Tidak ada data GPS";
+            
+            // Set 3 Foto
+            const setImg = (id, url) => {
+                const el = document.getElementById(id);
+                if(url && url.startsWith('http')) { el.src = url; el.parentElement.classList.remove('hidden'); }
+                else { el.src = ''; el.parentElement.classList.add('hidden'); }
+            };
+            setImg('histPopupImgDepan', data.fotoDepan);
+            setImg('histPopupImgBranding', data.fotoBranding);
+            setImg('histPopupImgEtalase', data.fotoEtalase);
+
+            // Set Checklist secara Grouped / Kategori
+            const clContainer = document.getElementById('histPopupChecklist');
+            clContainer.innerHTML = '';
+            clContainer.className = "space-y-3"; 
+            
+            if(data.checklist) {
+                let groupedHistory = {};
+                for (let key in data.checklist) {
+                    let category = key.includes('-') ? key.split('-')[0].trim() : 'Umum';
+                    let shortKey = key.includes('-') ? key.split('-').slice(1).join('-').trim() : key;
+                    if(!groupedHistory[category]) groupedHistory[category] = [];
+                    groupedHistory[category].push({ key: shortKey, val: data.checklist[key] });
+                }
+
+                let htmlContent = '';
+                for (let cat in groupedHistory) {
+                    htmlContent += `
+                    <div class="bg-white rounded-xl p-3 shadow-sm border border-slate-100">
+                        <h4 class="font-extrabold text-indigo-600 mb-2 text-[10px] flex items-center gap-1.5 border-b border-slate-100 pb-1.5">
+                            <span class="w-1 h-3 bg-indigo-500 rounded-full"></span>${cat}
+                        </h4>
+                        <div class="grid grid-cols-2 gap-2">`;
+
+                    groupedHistory[cat].forEach(item => {
+                        const isMatch = item.val.toLowerCase().includes('ada') && !item.val.toLowerCase().includes('tidak');
+                        const badgeClass = isMatch ? "bg-emerald-50 text-emerald-600 border-emerald-100" : "bg-rose-50 text-rose-600 border-rose-100";
+                        const icon = isMatch ? "👍" : "👎";
+
+                        htmlContent += `
+                            <div class="flex flex-col p-2 bg-slate-50 border border-slate-100 rounded-lg">
+                                <span class="text-[9px] font-bold text-slate-500 mb-1 leading-tight">${item.key}</span>
+                                <span class="text-[10px] font-black ${badgeClass} border px-1.5 py-0.5 rounded flex items-center justify-center gap-1">${icon} ${item.val}</span>
+                            </div>
+                        `;
+                    });
+                    htmlContent += `</div></div>`;
+                }
+                clContainer.innerHTML = htmlContent;
+            }
+
+            const popup = document.getElementById('historyPopup');
+            popup.classList.remove('hidden');
+            popup.classList.add('flex');
+            
+            setTimeout(() => {
+                document.getElementById('historyPopupOverlay').classList.remove('opacity-0');
+                document.getElementById('historyPopupOverlay').classList.add('opacity-100');
+                document.getElementById('historyPopupCard').classList.remove('scale-90', 'opacity-0');
+                document.getElementById('historyPopupCard').classList.add('scale-100', 'opacity-100');
+            }, 10);
+        }
+
+        function closeHistoryPopup() {
+            document.getElementById('historyPopupOverlay').classList.remove('opacity-100');
+            document.getElementById('historyPopupOverlay').classList.add('opacity-0');
+            document.getElementById('historyPopupCard').classList.remove('scale-100', 'opacity-100');
+            document.getElementById('historyPopupCard').classList.add('scale-90', 'opacity-0');
+            setTimeout(() => {
+                document.getElementById('historyPopup').classList.add('hidden');
+                document.getElementById('historyPopup').classList.remove('flex');
+            }, 300);
+        }
+
+        // ================= LOGIC CHECK-IN ================= //
+        function handleSpvChange() {
+            const selectedSpv = spvSelect.value;
+            // Menyimpan nama SPV ke memori peramban
+            localStorage.setItem('lastSelectedSpv', selectedSpv);
+            
+            const badge = document.getElementById('outletCountBadge');
+            if (!selectedSpv) { outletListContainer.innerHTML = ''; badge.innerText = "0 lokasi"; return; }
+
+            const outlets = spvDataMapping[selectedSpv];
+            if (outlets) {
+                badge.innerText = `${outlets.length} lokasi`; outletListContainer.innerHTML = ''; 
+                outlets.forEach((outletObj, index) => {
+                    const initials = String(outletObj.name).substring(0, 2).toUpperCase();
+                    
+                    const latNum = parseCoord(outletObj.lat);
+                    const lngNum = parseCoord(outletObj.lng);
+                    const hasLocation = !isNaN(latNum) && !isNaN(lngNum);
+                    const coordsText = hasLocation ? `${latNum.toFixed(4)}, ${lngNum.toFixed(4)}` : 'Maps Kosong';
+                    
+                    const outletPhoto = latestPhotosMap[outletObj.name] || outletObj.photoUrl;
+                    let avatarHtml = `<div class="h-16 w-16 md:w-20 md:h-20 rounded-[1.2rem] bg-gradient-to-br from-indigo-400 to-purple-500 text-white flex items-center justify-center font-extrabold text-xl md:text-2xl shadow-md shrink-0 border border-slate-100">${initials}</div>`;
+                    
+                    if (outletPhoto && outletPhoto.startsWith('http')) {
+                        avatarHtml = `<img src="${outletPhoto}" class="h-16 w-16 md:w-20 md:h-20 rounded-[1.2rem] object-cover shadow-md border border-slate-100 shrink-0" onerror="this.outerHTML='<div class=\\'h-16 w-16 md:w-20 md:h-20 rounded-[1.2rem] bg-gradient-to-br from-indigo-400 to-purple-500 text-white flex items-center justify-center font-extrabold text-xl shadow-md shrink-0\\'>${initials}</div>'">`;
+                    }
+                    
+                    const cardHtml = `
+                        <div onclick="selectOutletCard('${String(outletObj.name).replace(/'/g, "\\'")}', '${outletObj.lat}', '${outletObj.lng}')" 
+                             class="bg-white rounded-[2rem] p-4 flex items-center gap-4 hover:scale-[1.02] active:scale-95 transition-all cursor-pointer shadow-lg shadow-slate-200/50 border border-slate-100 page-enter" style="animation-delay: ${index * 0.05}s">
+                            ${avatarHtml}
+                            <div class="flex-1 min-w-0">
+                                <h3 class="font-extrabold text-slate-800 text-lg md:text-xl truncate">${outletObj.name}</h3>
+                                <div class="flex items-center gap-2 mt-1">
+                                    <span class="bg-slate-100 text-slate-500 text-[10px] md:text-[11px] px-2 py-0.5 rounded-md font-bold tracking-wide">${outletObj.id}</span>
+                                    <span class="flex items-center text-[11px] md:text-[12px] font-bold ${hasLocation ? 'text-emerald-500' : 'text-rose-500'}">
+                                        <span class="w-1.5 h-1.5 rounded-full mr-1 ${hasLocation ? 'bg-emerald-500' : 'bg-rose-500'}"></span>${coordsText}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>`;
+                    outletListContainer.insertAdjacentHTML('beforeend', cardHtml);
+                });
+            }
+        }
+
+        function selectOutletCard(outletName, lat, lng) {
+            selectionArea.className = 'hidden'; checklistForm.className = 'block'; window.scrollTo({ top: 0, behavior: 'smooth' });
+            document.getElementById('outletSelect').value = outletName; document.getElementById('spvHidden').value = document.getElementById('spvSelect').value;
+            document.getElementById('selectedOutletDisplay').innerText = outletName; document.getElementById('overlayOutlet').innerText = outletName;
+            currentOutletLat = lat; currentOutletLng = lng;
+            capturedPhotos = []; updatePhotoUI(); renderChecklistForm(); startCamera(); verifyLocation();
+        }
+
+        function renderChecklistForm() {
+            const container = document.getElementById('checklistItemsContainer'); container.innerHTML = ''; 
+            if (checklistHeaders.length === 0) { container.innerHTML = `<p class="text-rose-600 font-bold">⚠️ Form Kosong</p>`; return; }
+            
+            let grouped = {};
+            checklistHeaders.forEach(header => {
+                let category = header.includes('-') ? header.split('-')[0].trim() : 'Umum';
+                let question = header.includes('-') ? header.split('-').slice(1).join('-').trim() : header;
+                if(!grouped[category]) grouped[category] = [];
+                grouped[category].push({ id: header, question: question });
+            });
+
+            let htmlContent = '';
+            for (let category in grouped) {
+                htmlContent += `
+                <div class="bg-white rounded-2xl p-4 md:p-5 shadow-sm border border-slate-100 mb-3 md:mb-0 page-enter">
+                    <h4 class="font-extrabold text-indigo-600 mb-3 text-sm md:text-base flex items-center gap-2 border-b pb-2">
+                        <span class="w-1.5 h-4 md:h-5 bg-indigo-500 rounded-full"></span>${category}
+                    </h4>
+                    <div class="space-y-3 md:space-y-4">`;
+                grouped[category].forEach(item => {
+                    htmlContent += `
+                        <div class="flex justify-between items-center gap-2">
+                            <p class="font-bold text-slate-700 text-xs md:text-sm flex-1 leading-tight">${item.question}</p>
+                            <div class="flex gap-1 md:gap-2 shrink-0 w-[140px] md:w-[160px]">
+                                <label class="flex-1 cursor-pointer toggle-btn transition-transform">
+                                    <input type="radio" name="${item.id}" value="Ada" required class="peer sr-only">
+                                    <div class="match-btn py-2 md:py-2.5 rounded-xl border border-slate-100 text-slate-400 font-bold text-[10px] md:text-xs text-center bg-slate-50">👍 Ada</div>
+                                </label>
+                                <label class="flex-1 cursor-pointer toggle-btn transition-transform">
+                                    <input type="radio" name="${item.id}" value="Tidak Ada" required class="peer sr-only">
+                                    <div class="miss-btn py-2 md:py-2.5 rounded-xl border border-slate-100 text-slate-400 font-bold text-[10px] md:text-xs text-center bg-slate-50">👎 Tidak</div>
+                                </label>
+                            </div>
+                        </div>`;
+                });
+                htmlContent += `</div></div>`;
+            }
+            container.innerHTML = htmlContent;
+        }
+
+        function verifyLocation() {
+            const locTitle = document.getElementById('locationTitle');
+            const locDesc = document.getElementById('locationDesc');
+            const locIcon = document.getElementById('locationIconBg');
+            const dot = document.getElementById('locationStatusDot');
+            const badge = document.getElementById('matchMissBadge');
+
+            badge.classList.remove('flex', 'bg-emerald-500', 'bg-rose-500', 'animate-float-green', 'animate-float-red');
+            badge.classList.add('hidden');
+            document.getElementById('overlayAddress').innerText = "Mencari alamat...";
+
+            locTitle.innerText = "Mencari Sinyal GPS..."; locDesc.innerText = "Mohon tunggu sebentar...";
+            locIcon.innerText = "🛰️"; locIcon.className = "w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-indigo-50 text-indigo-500 flex items-center justify-center text-2xl md:text-3xl animate-pulse";
+            dot.classList.remove('hidden');
+
+            lockSubmitButton("Mencari GPS... ⏳");
+            isLocationValid = false;
+            lastGeocodeLat = null;
+            lastGeocodeLng = null;
+
+            if (watchId) { navigator.geolocation.clearWatch(watchId); watchId = null; }
+
+            // Menggunakan watchPosition untuk Real-time Tracking
+            if (navigator.geolocation) {
+                watchId = navigator.geolocation.watchPosition(
+                    (position) => {
+                        currentUserLat = position.coords.latitude;
+                        currentUserLng = position.coords.longitude;
+
+                        const locTitle = document.getElementById('locationTitle');
+                        const locIcon = document.getElementById('locationIconBg');
+                        const dot = document.getElementById('locationStatusDot');
+                        
+                        locTitle.innerText = "GPS Terkunci (Live)"; locIcon.innerText = "📍";
+                        locIcon.className = "w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-indigo-100 text-indigo-600 flex items-center justify-center text-2xl md:text-3xl shadow-inner";
+                        dot.classList.add('hidden');
+
+                        const outLat = parseCoord(currentOutletLat);
+                        const outLng = parseCoord(currentOutletLng);
+
+                        // Tampilkan Koordinat Anda vs Koordinat Outlet agar mudah dideteksi jika ada error dari database
+                        document.getElementById('overlayCoords').innerText = `Me: ${currentUserLat.toFixed(5)}, ${currentUserLng.toFixed(5)} | Trg: ${isNaN(outLat) ? '?' : outLat.toFixed(4)}, ${isNaN(outLng) ? '?' : outLng.toFixed(4)}`;
+
+                        // Memperbarui Reverse Geocoding jika bergerak lebih dari 20 meter
+                        const distFromLastGeocode = calculateDistance(currentUserLat, currentUserLng, lastGeocodeLat, lastGeocodeLng);
+                        if (lastGeocodeLat === null || distFromLastGeocode > 200) {
+                            lastGeocodeLat = currentUserLat;
+                            lastGeocodeLng = currentUserLng;
+                            fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${currentUserLat}&lon=${currentUserLng}`)
+                            .then(res => res.json())
+                            .then(data => {
+                                document.getElementById('overlayAddress').innerText = data.display_name || "Alamat tidak ditemukan";
+                            }).catch(() => {
+                                document.getElementById('overlayAddress').innerText = "Gagal memuat alamat";
+                            });
+                        }
+
+                        const distance = calculateDistance(currentUserLat, currentUserLng, currentOutletLat, currentOutletLng);
+                        
+                        const badge = document.getElementById('matchMissBadge');
+                        const badgeText = document.getElementById('matchMissText');
+                        const badgeIcon = document.getElementById('matchMissIcon');
+                        const badgeDesc = document.getElementById('matchMissDesc');
+                        const locDesc = document.getElementById('locationDesc');
+
+                        badge.classList.remove('hidden'); badge.classList.add('flex');
+                        badge.classList.remove('bg-emerald-500', 'bg-rose-500', 'animate-float-green', 'animate-float-red');
+                        
+                        if (distance === null || isNaN(distance)) {
+                            locDesc.innerText = "Koordinat Outlet Belum Diset";
+                            badge.classList.add('bg-rose-500', 'animate-float-red'); badgeText.innerText = 'NO DATA'; badgeIcon.innerText = '⚠️'; badgeDesc.innerText = 'Koordinat kosong';
+                            lockSubmitButton("Lokasi Outlet Belum Diset 🔒");
+                            isLocationValid = false;
+                        } else if (distance <= 200) {
+                            locDesc.innerText = "Lokasi Akurat Ditemukan";
+                            badge.classList.add('bg-emerald-500', 'animate-float-green'); badgeText.innerText = 'MATCH'; badgeIcon.innerText = '🎯'; badgeDesc.innerText = `Jarak: ${Math.round(distance)}m (Aman)`;
+                            isLocationValid = true; unlockSubmitButton(); 
+                        } else {
+                            locDesc.innerText = "Anda Berada di Luar Radius!";
+                            badge.classList.add('bg-rose-500', 'animate-float-red'); badgeText.innerText = 'MISS'; badgeIcon.innerText = '🚫'; badgeDesc.innerText = `Jarak: ${Math.round(distance)}m (Maks 200m)`;
+                            lockSubmitButton("Jarak Terlalu Jauh 🔒"); 
+                            isLocationValid = false;
+                        }
+                    },
+                    (error) => {
+                        const locTitle = document.getElementById('locationTitle');
+                        const locDesc = document.getElementById('locationDesc');
+                        const locIcon = document.getElementById('locationIconBg');
+                        const dot = document.getElementById('locationStatusDot');
+
+                        locTitle.innerText = "GPS Gagal"; locDesc.innerText = "Nyalakan GPS Anda"; locIcon.innerText = "⚠️";
+                        locIcon.className = "w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-rose-100 text-rose-600 flex items-center justify-center text-2xl md:text-3xl shadow-inner";
+                        dot.classList.add('hidden'); lockSubmitButton("GPS Gagal 🔒");
+                        isLocationValid = false;
+                        
+                        if(!window.gpsErrorShown) {
+                            showToast("Gagal mengunci lokasi. Izinkan akses GPS browser Anda.", "error");
+                            window.gpsErrorShown = true;
+                            setTimeout(() => { window.gpsErrorShown = false; }, 10000);
+                        }
+                    },
+                    { enableHighAccuracy: true, maximumAge: 0, timeout: 10000 }
+                );
+            } else {
+                document.getElementById('locationTitle').innerText = "Tidak Support GPS"; lockSubmitButton("GPS Tidak Support");
+            }
+
+            if (geoInterval) clearInterval(geoInterval);
+            geoInterval = setInterval(() => { document.getElementById('overlayTime').innerText = new Date().toLocaleString('id-ID'); }, 1000);
+        }
+
+        function startCamera() {
+            document.getElementById('cameraVideo').classList.remove('hidden');
+            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } }).then(stream => { cameraStream = stream; document.getElementById('cameraVideo').srcObject = stream; }).catch(error => { showToast("Kamera ditolak/Error", "error"); });
+            }
+        }
+
+        function takePhoto() {
+            if (!cameraStream) { showToast("Aktifkan Izin Kamera", "error"); return; }
+            if (capturedPhotos.length >= 3) return;
+            const video = document.getElementById('cameraVideo'); const canvas = document.getElementById('photoCanvas'); const context = canvas.getContext('2d');
+            canvas.width = video.videoWidth || 640; canvas.height = video.videoHeight || 480;
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            
+            context.shadowColor = "rgba(0,0,0,0.8)"; context.shadowBlur = 4; context.shadowOffsetX = 1; context.shadowOffsetY = 1;
+            
+            context.font = "bold 16px 'Courier New'"; context.fillStyle = "#34d399"; context.fillText(document.getElementById('overlayTime').innerText, 15, 30);
+            context.fillStyle = "white"; context.fillText("GPS: " + currentUserLat.toFixed(5) + ", " + currentUserLng.toFixed(5), 15, 55);
+            
+            context.font = "12px 'Courier New'";
+            let addr = document.getElementById('overlayAddress').innerText;
+            if(addr.length > 50) addr = addr.substring(0, 48) + "...";
+            context.fillText(addr, 15, 75);
+            
+            context.font = "bold 16px 'Courier New'"; context.fillStyle = "#fbbf24"; context.fillText(document.getElementById('overlayOutlet').innerText, 15, 95);
+            
+            context.shadowBlur = 0; 
+            
+            capturedPhotos.push(canvas.toDataURL('image/jpeg', 0.8)); updatePhotoUI();
+        }
+
+        function updatePhotoUI() {
+            const btnSpan = document.querySelector('#btnCapture span:first-child');
+            for (let i = 0; i < 3; i++) {
+                const imgThumb = document.getElementById('thumb' + i); const checkIcon = document.getElementById('check' + i);
+                if (capturedPhotos[i]) { imgThumb.src = capturedPhotos[i]; imgThumb.classList.remove('hidden'); checkIcon.classList.remove('hidden'); } 
+                else { imgThumb.src = ""; imgThumb.classList.add('hidden'); checkIcon.classList.add('hidden'); }
+            }
+            if (capturedPhotos.length === 0) { btnSpan.innerText = "Ambil Foto Depan"; document.getElementById('btnCapture').classList.remove('hidden'); document.getElementById('btnRetake').classList.add('hidden'); } 
+            else if (capturedPhotos.length === 1) { btnSpan.innerText = "Ambil Foto Branding"; } 
+            else if (capturedPhotos.length === 2) { btnSpan.innerText = "Ambil Foto Etalase"; } 
+            else if (capturedPhotos.length >= 3) { document.getElementById('btnCapture').classList.add('hidden'); document.getElementById('btnRetake').classList.remove('hidden'); }
+        }
+
+        function retakePhoto() { capturedPhotos = []; updatePhotoUI(); }
+        
+        function goBackToSelection() { 
+            checklistForm.className = 'hidden'; 
+            selectionArea.className = 'page-enter block'; 
+            if (watchId) { navigator.geolocation.clearWatch(watchId); watchId = null; }
+        }
+        
+        function lockSubmitButton(reasonText) { document.getElementById('submitBtn').disabled = true; document.getElementById('submitBtnText').innerText = reasonText; }
+        function unlockSubmitButton() { document.getElementById('submitBtn').disabled = false; document.getElementById('submitBtnText').innerText = "Kirim Check-In 🚀"; }
+        
+        function handleFormSubmit(event) {
+            event.preventDefault(); 
+            if (!isLocationValid) { showToast('Lokasi tidak valid / MISS! 🚫', 'error'); return; }
+            if (capturedPhotos.length < 3) { showToast('Harap ambil 3 Foto terlebih dahulu! 📸', 'error'); return; }
+            
+            lockSubmitButton("Mengirim Data... ⏳");
+            if (watchId) { navigator.geolocation.clearWatch(watchId); watchId = null; }
+            
+            const formData = new FormData(event.target);
+            const payload = {
+                spv: document.getElementById('spvHidden').value,
+                outlet: document.getElementById('outletSelect').value,
+                locationStatus: document.getElementById('matchMissText').innerText + " (" + document.getElementById('matchMissDesc').innerText + ")",
+                photoBase64_1: capturedPhotos[0],
+                photoBase64_2: capturedPhotos[1],
+                photoBase64_3: capturedPhotos[2],
+                items: {}
+            };
+
+            // Mengumpulkan data kriteria checklist secara dinamis
+            checklistHeaders.forEach(header => {
+                const val = formData.get(header);
+                if (val) payload.items[header] = val;
+            });
+
+            // Mengirim request POST ke Google Apps Script (Backend)
+            fetch(GAS_API_URL, {
+                method: 'POST',
+                body: JSON.stringify(payload)
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    showToast('Check-in Berhasil Disimpan! ✨', 'success'); 
+                    setTimeout(() => { 
+                        checklistForm.reset(); 
+                        capturedPhotos = [];
+                        updatePhotoUI();
+                        goBackToSelection(); 
+                        initializeApp(); // Refresh data untuk update history
+                    }, 1500);
+                } else {
+                    showToast('Gagal: ' + data.message, 'error');
+                    unlockSubmitButton();
+                }
+            })
+            .catch(err => {
+                showToast('Terjadi kesalahan jaringan', 'error');
+                unlockSubmitButton();
+            });
+        }
+
+        function showToast(message, type) {
+            const toast = document.getElementById('notificationArea');
+            toast.className = `fixed top-20 left-4 right-4 md:max-w-sm md:left-auto md:right-8 z-50 transition-all duration-400 ease-out transform translate-y-0 opacity-100 ${type === 'success' ? 'bg-emerald-500' : 'bg-rose-500'} text-white px-5 py-4 rounded-2xl shadow-2xl flex items-center gap-3 font-bold`;
+            toast.innerHTML = `<span class="text-xl">${type === 'success' ? '✨' : '⚠️'}</span> <span>${message}</span>`;
+            setTimeout(() => { toast.classList.add('opacity-0', '-translate-y-10'); }, 3000);
+        }
+    </script>
+</body>
+</html>
