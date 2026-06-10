@@ -9,7 +9,7 @@
     
     <style>
         body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-family: 'Plus Jakarta Sans', sns-serif;
             -webkit-tap-highlight-color: transparent;
             background-color: #f8fafc;
             background-image: 
@@ -105,10 +105,9 @@
     </style>
 </head>
 
-<!-- Tambahan pl-24 (tablet) & pl-[260px] (desktop) agar body tidak tertutup sidebar -->
 <body class="text-slate-800 min-h-screen pb-24 md:pb-6 md:pl-28 lg:pl-[280px] selection:bg-indigo-100 relative">
 
-    <!-- Top Navigation Bar (Menyesuaikan margin di Desktop) -->
+    <!-- Top Navigation Bar -->
     <nav class="sticky top-0 z-50 glass-card border-b border-white/40 px-5 py-4 mb-6 flex justify-between items-center md:mx-6 md:mt-6 md:rounded-3xl md:border md:shadow-sm">
         <div class="flex items-center gap-3">
             <div class="bg-gradient-to-br from-indigo-500 to-purple-600 w-10 h-10 rounded-2xl flex items-center justify-center shadow-lg shadow-indigo-200 transition-all" id="navIconBg">
@@ -124,78 +123,113 @@
         </button>
     </nav>
 
-    <!-- Bottom Navigation Bar (Mobile) -> Menjadi Sidebar Kiri (Desktop) -->
-    <div class="fixed bottom-0 left-0 right-0 z-50 px-4 pb-6 pt-2 pointer-events-none md:top-0 md:bottom-0 md:w-28 lg:w-[280px] md:h-screen md:px-5 md:py-6 md:right-auto md:border-r md:border-slate-200/50 md:bg-white/60 md:backdrop-blur-2xl">
-        <div class="glass-card mx-auto max-w-md md:max-w-none md:w-full md:h-full rounded-[2rem] p-2 md:p-6 md:pt-10 flex flex-row md:flex-col justify-between md:justify-start items-center md:items-stretch md:gap-4 shadow-2xl shadow-indigo-500/10 border border-white md:border-none pointer-events-auto md:bg-transparent md:shadow-none">
+    <!-- Bottom Navigation Bar (Mobile) -> Sidebar Kiri (Desktop) -->
+    <div class="fixed bottom-0 left-0 right-0 z-50 px-2 pb-6 pt-2 pointer-events-none md:top-0 md:bottom-0 md:w-28 lg:w-[280px] md:h-screen md:px-5 md:py-6 md:right-auto md:border-r md:border-slate-200/50 md:bg-white/60 md:backdrop-blur-2xl">
+        <div class="glass-card mx-auto max-w-[480px] md:max-w-none md:w-full md:h-full rounded-[2rem] p-2 md:p-6 md:pt-10 flex flex-row md:flex-col justify-between md:justify-start items-center md:items-stretch md:gap-4 shadow-2xl shadow-indigo-500/10 border border-white md:border-none pointer-events-auto md:bg-transparent md:shadow-none">
             
-            <!-- Logo Sidebar khusus Desktop -->
             <div class="hidden md:block mb-8 px-2 text-center lg:text-left">
                 <h1 class="text-2xl font-black tracking-tighter text-slate-800">SPV<span class="text-indigo-600">APP</span></h1>
                 <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-1">Management</p>
             </div>
 
-            <button onclick="switchTab('checkin')" id="tabCheckin" class="nav-tab active flex flex-col lg:flex-row items-center lg:justify-start gap-1 lg:gap-4 p-3 lg:px-5 lg:py-4 rounded-2xl lg:rounded-xl transition-all w-1/4 md:w-full text-slate-400 hover:text-indigo-600 hover:bg-white/80">
+            <button onclick="switchTab('checkin')" id="tabCheckin" class="nav-tab active flex flex-col lg:flex-row items-center lg:justify-start gap-1 lg:gap-4 p-2.5 lg:px-5 lg:py-4 rounded-2xl lg:rounded-xl transition-all w-1/5 md:w-full text-slate-400 hover:text-indigo-600 hover:bg-white/80">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 lg:h-5 lg:w-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
                 <span class="text-[9px] md:text-[10px] lg:text-[13px] font-bold tracking-wide mt-1 lg:mt-0">Check-In</span>
             </button>
-            <button onclick="switchTab('trend')" id="tabTrend" class="nav-tab flex flex-col lg:flex-row items-center lg:justify-start gap-1 lg:gap-4 p-3 lg:px-5 lg:py-4 rounded-2xl lg:rounded-xl transition-all w-1/4 md:w-full text-slate-400 hover:text-indigo-600 hover:bg-white/80">
+            <button onclick="switchTab('program')" id="tabProgram" class="nav-tab flex flex-col lg:flex-row items-center lg:justify-start gap-1 lg:gap-4 p-2.5 lg:px-5 lg:py-4 rounded-2xl lg:rounded-xl transition-all w-1/5 md:w-full text-slate-400 hover:text-indigo-600 hover:bg-white/80">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 lg:h-5 lg:w-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
+                <span class="text-[9px] md:text-[10px] lg:text-[13px] font-bold tracking-wide mt-1 lg:mt-0">Program</span>
+            </button>
+            <button onclick="switchTab('trend')" id="tabTrend" class="nav-tab flex flex-col lg:flex-row items-center lg:justify-start gap-1 lg:gap-4 p-2.5 lg:px-5 lg:py-4 rounded-2xl lg:rounded-xl transition-all w-1/5 md:w-full text-slate-400 hover:text-indigo-600 hover:bg-white/80">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 lg:h-5 lg:w-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z" /></svg>
                 <span class="text-[9px] md:text-[10px] lg:text-[13px] font-bold tracking-wide mt-1 lg:mt-0">Profile</span>
             </button>
-            <button onclick="switchTab('dashboard')" id="tabDashboard" class="nav-tab flex flex-col lg:flex-row items-center lg:justify-start gap-1 lg:gap-4 p-3 lg:px-5 lg:py-4 rounded-2xl lg:rounded-xl transition-all w-1/4 md:w-full text-slate-400 hover:text-indigo-600 hover:bg-white/80">
+            <button onclick="switchTab('dashboard')" id="tabDashboard" class="nav-tab flex flex-col lg:flex-row items-center lg:justify-start gap-1 lg:gap-4 p-2.5 lg:px-5 lg:py-4 rounded-2xl lg:rounded-xl transition-all w-1/5 md:w-full text-slate-400 hover:text-indigo-600 hover:bg-white/80">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 lg:h-5 lg:w-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg>
                 <span class="text-[9px] md:text-[10px] lg:text-[13px] font-bold tracking-wide mt-1 lg:mt-0">Rank</span>
             </button>
-            <button onclick="switchTab('history')" id="tabHistory" class="nav-tab flex flex-col lg:flex-row items-center lg:justify-start gap-1 lg:gap-4 p-3 lg:px-5 lg:py-4 rounded-2xl lg:rounded-xl transition-all w-1/4 md:w-full text-slate-400 hover:text-indigo-600 hover:bg-white/80">
+            <button onclick="switchTab('history')" id="tabHistory" class="nav-tab flex flex-col lg:flex-row items-center lg:justify-start gap-1 lg:gap-4 p-2.5 lg:px-5 lg:py-4 rounded-2xl lg:rounded-xl transition-all w-1/5 md:w-full text-slate-400 hover:text-indigo-600 hover:bg-white/80">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 lg:h-5 lg:w-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                 <span class="text-[9px] md:text-[10px] lg:text-[13px] font-bold tracking-wide mt-1 lg:mt-0">Riwayat</span>
             </button>
         </div>
     </div>
 
-    <!-- POPUP ATM CARD -->
+    <!-- POPUP ATM CARD & OWNER INFO -->
     <div id="atmPopup" class="fixed inset-0 z-[100] hidden items-center justify-center p-4">
         <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity opacity-0" id="atmPopupOverlay" onclick="closeAtmPopup()"></div>
-        <div id="atmPopupCard" class="w-full max-w-[340px] md:max-w-[420px] aspect-[1.58] rounded-3xl p-6 md:p-8 relative z-10 scale-90 opacity-0 transition-all duration-300 shadow-2xl border flex flex-col justify-between overflow-hidden atm-card">
-            <div class="absolute -right-10 -top-10 w-40 h-40 md:w-56 md:h-56 bg-white/10 rounded-full blur-2xl pointer-events-none"></div>
-            <div class="flex justify-between items-start relative z-10">
-                <div class="w-11 h-8 md:w-14 md:h-10 border border-yellow-500/50 rounded-md bg-gradient-to-br from-yellow-200/50 to-yellow-600/50 flex flex-col justify-evenly px-0.5 shadow-sm">
-                   <div class="w-full h-[1px] bg-yellow-500/50"></div><div class="w-full h-[1px] bg-yellow-500/50"></div>
+        
+        <div id="atmPopupContent" class="w-full max-w-[340px] md:max-w-[420px] relative z-10 scale-90 opacity-0 transition-all duration-300 flex flex-col gap-4">
+            
+            <div id="atmPopupCard" class="w-full aspect-[1.58] rounded-[1.5rem] p-6 md:p-8 shadow-2xl border flex flex-col justify-between overflow-hidden atm-card">
+                <div class="absolute -right-10 -top-10 w-40 h-40 md:w-56 md:h-56 bg-white/10 rounded-full blur-2xl pointer-events-none"></div>
+                <div class="flex justify-between items-start relative z-10">
+                    <div class="w-11 h-8 md:w-14 md:h-10 border border-yellow-500/50 rounded-md bg-gradient-to-br from-yellow-200/50 to-yellow-600/50 flex flex-col justify-evenly px-0.5 shadow-sm">
+                       <div class="w-full h-[1px] bg-yellow-500/50"></div><div class="w-full h-[1px] bg-yellow-500/50"></div>
+                    </div>
+                    <div class="text-right">
+                        <span id="popupTier" class="font-black text-sm md:text-base italic tracking-widest uppercase drop-shadow-md leading-tight"></span>
+                        <p id="popupTierLabel" class="text-[7px] md:text-[9px] uppercase tracking-widest opacity-80 mt-0.5">Membership</p>
+                    </div>
                 </div>
-                <div class="text-right">
-                    <span id="popupTier" class="font-black text-sm md:text-base italic tracking-widest uppercase drop-shadow-md leading-tight"></span>
-                    <p id="popupTierLabel" class="text-[7px] md:text-[9px] uppercase tracking-widest opacity-80 mt-0.5">Membership</p>
+                <div class="relative z-10 mt-2">
+                    <p id="popupPointsLabel" class="text-[8px] md:text-[10px] uppercase tracking-widest mb-0.5 md:mb-1 opacity-80">Reward Poin Aktif</p>
+                    <p id="popupPoints" class="text-[32px] md:text-[42px] font-black tracking-widest drop-shadow-md leading-none" style="font-family: 'Courier New', Courier, monospace;"></p>
                 </div>
-            </div>
-            <div class="relative z-10 mt-2">
-                <p id="popupPointsLabel" class="text-[8px] md:text-[10px] uppercase tracking-widest mb-0.5 md:mb-1 opacity-80">Reward Poin Aktif</p>
-                <p id="popupPoints" class="text-[32px] md:text-[42px] font-black tracking-widest drop-shadow-md leading-none" style="font-family: 'Courier New', Courier, monospace;"></p>
-            </div>
-            <div class="flex justify-between items-end relative z-10">
-                <div class="flex-1 pr-2">
-                    <p id="popupNameLabel" class="text-[7px] md:text-[9px] uppercase tracking-widest mb-1 opacity-80">Card Holder / Outlet</p>
-                    <p id="popupName" class="text-sm md:text-base font-bold tracking-wider uppercase drop-shadow-md truncate"></p>
-                    <p id="popupSpvName" class="text-[9px] md:text-[11px] font-semibold tracking-wider uppercase opacity-75 mt-0.5"></p>
-                </div>
-                <div class="text-right shrink-0 perspective-[1000px]">
-                    <div id="popupGrowthBadge" class="flex flex-col items-end justify-center px-3 py-2 md:px-4 md:py-3 rounded-xl md:rounded-2xl backdrop-blur-md border border-white/40 text-right transform">
-                        <div class="flex items-center gap-1">
-                            <svg class="w-3.5 h-3.5 md:w-5 md:h-5 drop-shadow-md" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
-                                <path id="popupGrowthIcon" stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
-                            </svg>
-                            <span id="popupGrowthPercent" class="text-[17px] md:text-xl font-black drop-shadow-lg tracking-tighter"></span>
+                <div class="flex justify-between items-end relative z-10">
+                    <div class="flex-1 pr-2">
+                        <p id="popupNameLabel" class="text-[7px] md:text-[9px] uppercase tracking-widest mb-1 opacity-80">Card Holder / Outlet</p>
+                        <p id="popupName" class="text-sm md:text-base font-bold tracking-wider uppercase drop-shadow-md truncate"></p>
+                        <p id="popupSpvName" class="text-[9px] md:text-[11px] font-semibold tracking-wider uppercase opacity-75 mt-0.5"></p>
+                    </div>
+                    <div class="text-right shrink-0 perspective-[1000px]">
+                        <div id="popupGrowthBadge" class="flex flex-col items-end justify-center px-3 py-2 md:px-4 md:py-3 rounded-xl md:rounded-2xl backdrop-blur-md border border-white/40 text-right transform">
+                            <div class="flex items-center gap-1">
+                                <svg class="w-3.5 h-3.5 md:w-5 md:h-5 drop-shadow-md" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+                                    <path id="popupGrowthIcon" stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                                </svg>
+                                <span id="popupGrowthPercent" class="text-[17px] md:text-xl font-black drop-shadow-lg tracking-tighter"></span>
+                            </div>
+                            <span id="popupGrowthValue" class="text-[8.5px] md:text-[10px] font-extrabold tracking-widest opacity-95 mt-0.5 drop-shadow-md"></span>
                         </div>
-                        <span id="popupGrowthValue" class="text-[8.5px] md:text-[10px] font-extrabold tracking-widest opacity-95 mt-0.5 drop-shadow-md"></span>
                     </div>
                 </div>
             </div>
+
+            <div class="bg-white rounded-3xl p-5 shadow-2xl border border-slate-100 flex flex-col gap-3 relative overflow-hidden">
+                <div class="absolute -right-10 -bottom-10 w-32 h-32 bg-indigo-50 rounded-full blur-2xl"></div>
+                
+                <div class="flex items-center gap-3 bg-slate-50 p-3 rounded-2xl border border-slate-100 relative z-10">
+                    <div class="w-10 h-10 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center text-lg shrink-0">👑</div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Nama Owner</p>
+                        <p id="popupOwnerName" class="font-extrabold text-slate-800 text-[13px] truncate">-</p>
+                    </div>
+                    <div class="text-right shrink-0">
+                        <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Ultah</p>
+                        <p id="popupOwnerBDay" class="font-bold text-indigo-600 text-[11px]">-</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-3 bg-slate-50 p-3 rounded-2xl border border-slate-100 relative z-10">
+                    <div class="w-10 h-10 rounded-full bg-pink-100 text-pink-600 flex items-center justify-center text-lg shrink-0">👩‍💼</div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Frontline (FL)</p>
+                        <p id="popupFlName" class="font-extrabold text-slate-800 text-[13px] truncate">-</p>
+                    </div>
+                    <div class="text-right shrink-0">
+                        <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Ultah</p>
+                        <p id="popupFlBDay" class="font-bold text-pink-600 text-[11px]">-</p>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 
     <!-- POPUP HISTORY DETAIL -->
     <div id="historyPopup" class="fixed inset-0 z-[100] hidden items-center justify-center p-4">
         <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity opacity-0" id="historyPopupOverlay" onclick="closeHistoryPopup()"></div>
-        <!-- Diperbesar max-width nya untuk Desktop -->
         <div id="historyPopupCard" class="w-full max-w-sm md:max-w-3xl bg-white rounded-3xl p-5 md:p-6 relative z-10 scale-90 opacity-0 transition-all duration-300 shadow-2xl flex flex-col max-h-[85vh] overflow-hidden">
             <!-- Header -->
             <div class="flex justify-between items-center mb-4 pb-3 border-b border-slate-100 shrink-0">
@@ -252,7 +286,7 @@
         </div>
     </div>
 
-    <!-- MAIN CONTENT CONTAINER (Lebar membesar di Desktop) -->
+    <!-- MAIN CONTENT CONTAINER -->
     <div class="max-w-md md:max-w-7xl mx-auto px-4 md:px-6 lg:px-8 relative pt-2 md:pt-0">
         
         <div id="notificationArea" class="fixed top-20 left-4 right-4 md:max-w-sm md:left-auto md:right-8 z-50 hidden transition-all duration-300 transform -translate-y-4 opacity-0"></div>
@@ -282,7 +316,6 @@
                 <h2 class="text-xl md:text-2xl font-extrabold text-slate-800">📍 Daftar Outlet</h2>
                 <span class="text-xs font-bold bg-slate-200 text-slate-500 px-3 py-1 rounded-full" id="outletCountBadge">0 lokasi</span>
             </div>
-            <!-- GRID SYSTEM DI DESKTOP: Maksimal 3 Kolom -->
             <div id="outletListContainer" class="space-y-4 md:space-y-0 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-5 pb-10"></div>
         </div>
 
@@ -304,10 +337,8 @@
             <input type="hidden" id="outletSelect" name="outlet" required>
             <input type="hidden" id="spvHidden" name="spv" required>
             
-            <!-- SPLIT SCREEN DESKTOP (Kiri GPS/Kamera, Kanan Form) -->
             <div class="md:grid md:grid-cols-12 md:gap-8 md:items-start">
                 
-                <!-- KOLOM KIRI (GPS & Kamera) -->
                 <div class="md:col-span-5 lg:col-span-4 md:sticky md:top-24 space-y-6">
                     <div id="locationCard" class="bg-white rounded-[2rem] p-5 shadow-xl border border-slate-100 flex items-center justify-between page-enter relative z-20">
                         <div class="flex items-center gap-4">
@@ -377,7 +408,6 @@
                     </div>
                 </div>
 
-                <!-- KOLOM KANAN (Checklist) -->
                 <div class="md:col-span-7 lg:col-span-8 mt-6 md:mt-0">
                     <div id="dynamicChecklistArea" class="page-enter">
                         <div class="flex items-center gap-3 mb-5 px-2">
@@ -385,7 +415,6 @@
                             <h3 class="font-extrabold text-slate-800 text-xl">Penilaian Kriteria</h3>
                         </div>
                         
-                        <!-- Grid untuk checklist kategori di Desktop -->
                         <div id="checklistItemsContainer" class="space-y-3 md:space-y-0 md:grid md:grid-cols-2 md:gap-4 lg:grid-cols-2"></div>
                         
                         <div class="sticky bottom-20 md:static md:mt-8 pt-4 pb-4 z-40">
@@ -399,6 +428,135 @@
             </div>
         </form>
 
+        <!-- ================= VIEW 1.8: PROGRAM & SUPPORT ================= -->
+        <div id="programArea" class="hidden pb-10">
+            <!-- Header Tab Program -->
+            <div class="bg-white rounded-[2rem] p-5 mb-6 md:mb-8 shadow-sm border border-slate-100 flex items-center justify-between relative overflow-hidden md:max-w-4xl md:mx-auto">
+                <div class="absolute -right-10 -top-10 w-32 h-32 bg-purple-50 rounded-full blur-2xl"></div>
+                <div class="flex items-center gap-4 relative z-10">
+                    <div class="w-12 h-12 bg-purple-100 text-purple-600 rounded-2xl flex items-center justify-center text-2xl shadow-inner">🎁</div>
+                    <div>
+                        <h2 class="text-lg md:text-xl font-extrabold text-slate-800 leading-tight">Program & Support</h2>
+                        <p class="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-widest mt-0.5">Input Banyak Program Sekaligus</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Riwayat Program (Dipindahkan ke Atas) -->
+            <div class="mb-10">
+                <div class="flex items-center justify-between mb-4 px-2 md:max-w-4xl md:mx-auto">
+                    <div class="flex items-center gap-3">
+                        <h3 class="font-extrabold text-slate-800 text-lg">Riwayat Program</h3>
+                        <span class="bg-slate-200 text-slate-500 text-[10px] font-bold px-2 py-0.5 rounded-full" id="programHistoryCount">0 Data</span>
+                    </div>
+                    <button type="button" onclick="toggleProgramHistory()" class="text-[11px] md:text-xs font-extrabold text-purple-600 bg-purple-50 px-3 py-1.5 rounded-lg flex items-center gap-1.5 hover:bg-purple-100 transition-all active:scale-95 border border-purple-100">
+                        <span id="textToggleHistory">Tampilkan</span>
+                        <svg id="iconToggleHistory" class="w-3.5 h-3.5 transition-transform duration-300" style="transform: rotate(180deg);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 15l7-7 7 7"></path></svg>
+                    </button>
+                </div>
+                <div id="programHistoryListContainer" class="hidden space-y-3 flex flex-col w-full md:max-w-5xl md:mx-auto transition-all duration-300">
+                    <!-- History masuk ke sini -->
+                </div>
+            </div>
+
+            <!-- Area Grid/Split Layout untuk Form & Keranjang -->
+            <div class="md:grid md:grid-cols-12 md:gap-8 md:max-w-4xl md:mx-auto items-start border-t border-slate-200 pt-8">
+                
+                <!-- KOLOM KIRI (Formulir Input) -->
+                <div id="programFormContainer" class="md:col-span-6 bg-white rounded-[2rem] p-6 shadow-xl shadow-slate-200/40 border border-slate-100 relative page-enter mb-8 md:mb-0">
+                    <div class="space-y-5">
+                        <!-- Pilihan SPV & Outlet -->
+                        <div class="space-y-3 border-b border-slate-100 pb-5">
+                            <div class="hidden">
+                                <label class="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest ml-1 mb-1 block">Profil SPV</label>
+                                <select id="programSpvSelect" onchange="handleProgramSpvChange()" class="w-full bg-slate-50 border border-slate-200 text-slate-800 font-bold rounded-xl px-4 py-3 focus:outline-none focus:border-purple-500 focus:bg-white transition-all">
+                                    <option value="">Pilih SPV...</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest ml-1 mb-1 block">Pilih Outlet</label>
+                                <select id="programOutletSelect" class="w-full bg-slate-50 border border-slate-200 text-slate-800 font-bold rounded-xl px-4 py-3 focus:outline-none focus:border-purple-500 focus:bg-white transition-all disabled:opacity-50">
+                                    <option value="">Pilih Outlet...</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Pilihan Nama Program -->
+                        <div class="space-y-3 border-b border-slate-100 pb-5">
+                            <div>
+                                <label class="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest ml-1 mb-1 block">Nama Program</label>
+                                <select id="programNameSelect" onchange="handleProgramNameChange()" class="w-full bg-slate-50 border border-slate-200 text-slate-800 font-bold rounded-xl px-4 py-3 focus:outline-none focus:border-purple-500 focus:bg-white transition-all">
+                                    <option value="">Pilih Program...</option>
+                                    <option value="LAINNYA" class="font-extrabold text-purple-600">+ Tambah Program Baru...</option>
+                                </select>
+                            </div>
+                            <div id="programNameCustomContainer" class="hidden">
+                                <input type="text" id="programNameCustom" placeholder="Ketik nama program baru..." class="w-full bg-white border-2 border-purple-200 text-slate-800 font-bold rounded-xl px-4 py-3 focus:outline-none focus:border-purple-500 shadow-sm transition-all placeholder:text-slate-300 placeholder:font-medium">
+                            </div>
+                        </div>
+
+                        <!-- Kolom Dinamis Tambahan -->
+                        <div id="dynamicProgramInputs" class="space-y-3 border-b border-slate-100 pb-5">
+                            <!-- Otomatis diisi oleh JS -->
+                        </div>
+
+                        <!-- Ambil Foto -->
+                        <div>
+                            <label class="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest ml-1 mb-2 block">Foto Dokumentasi Program</label>
+                            
+                            <div class="relative bg-slate-900 rounded-2xl overflow-hidden flex justify-center items-center h-[200px] mb-3">
+                                <video id="programCameraVideo" class="w-full h-full object-cover absolute inset-0" autoplay playsinline></video>
+                                <img id="programPhotoThumb" class="w-full h-full object-cover absolute inset-0 hidden z-20">
+                                
+                                <div id="programGeotag" class="absolute top-3 left-3 right-3 bg-transparent text-white font-mono text-[9px] pointer-events-none drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)] z-30">
+                                    <span id="progOverlayTime" class="font-bold text-emerald-400 block mb-0.5">Waktu...</span>
+                                    <span id="progOverlayCoords" class="block text-slate-100 truncate">Sinyal GPS...</span>
+                                </div>
+                            </div>
+
+                            <div class="flex gap-2">
+                                <button type="button" id="btnProgCapture" onclick="takeProgramPhoto()" class="flex-1 bg-indigo-50 text-indigo-600 border border-indigo-100 font-extrabold py-3 rounded-xl transition-all active:scale-95">
+                                    📸 Buka Kamera / Foto
+                                </button>
+                                <button type="button" id="btnProgRetake" onclick="retakeProgramPhoto()" class="hidden flex-1 bg-rose-50 text-rose-600 border border-rose-100 font-extrabold py-3 rounded-xl transition-all active:scale-95">
+                                    🔄 Ulangi Foto
+                                </button>
+                            </div>
+                            <canvas id="programPhotoCanvas" class="hidden"></canvas>
+                        </div>
+
+                        <!-- Tombol Tambah ke Daftar -->
+                        <button type="button" onclick="addProgramToCart()" class="w-full bg-purple-50 text-purple-600 border border-purple-200 hover:bg-purple-100 font-extrabold py-3.5 rounded-xl transition-all active:scale-95 mt-4">
+                            + Tambahkan ke Daftar 🛒
+                        </button>
+                    </div>
+                </div>
+
+                <!-- KOLOM KANAN (Keranjang Program & Submit Final) -->
+                <div class="md:col-span-6 flex flex-col h-full">
+                    <div id="programCartArea" class="hidden flex flex-col bg-white rounded-[2rem] p-6 shadow-xl shadow-slate-200/40 border border-slate-100 relative page-enter">
+                        <div class="flex items-center justify-between mb-4 border-b border-slate-100 pb-3">
+                            <h3 class="font-extrabold text-slate-800 text-sm">Daftar Program Siap Kirim</h3>
+                            <span id="cartCountBadge" class="bg-purple-100 text-purple-600 text-[10px] font-bold px-2 py-0.5 rounded-full">0 Program</span>
+                        </div>
+                        
+                        <!-- Grid Daftar Program yang sudah diinput -->
+                        <div id="programCartList" class="grid grid-cols-2 gap-3 mb-6 max-h-[400px] overflow-y-auto pr-1">
+                            <!-- Cart items here -->
+                        </div>
+                        
+                        <div class="mt-auto pt-4 border-t border-slate-100">
+                            <button type="button" id="btnProgSubmitAll" onclick="submitAllPrograms()" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-extrabold py-4 rounded-[1.2rem] shadow-lg shadow-purple-500/30 transition-all active:scale-95">
+                                Kirim Semua Laporan 🚀
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
         <!-- ================= VIEW 2: TREND OUTLET PROFILE ================= -->
         <div id="trendArea" class="hidden pb-10">
             <div class="bg-white rounded-[2rem] p-5 mb-6 md:mb-8 shadow-sm border border-slate-100 flex items-center justify-between relative overflow-hidden">
@@ -411,7 +569,6 @@
                     </div>
                 </div>
             </div>
-            <!-- GRID SYSTEM DI DESKTOP: Maksimal 3 Kolom -->
             <div id="trendContent" class="space-y-6 md:space-y-0 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-6"></div>
         </div>
 
@@ -427,15 +584,12 @@
                     </div>
                 </div>
                 
-                <!-- FILTER DIVISI & SEARCH SPV -->
                 <div class="relative z-10 space-y-3 border-t border-slate-100 pt-4">
-                    <!-- Tab Toggle Divisi -->
                     <div class="flex gap-2 bg-slate-50 p-1.5 rounded-xl border border-slate-100">
                         <button onclick="setRankDivisi('all')" id="btnDivAll" class="flex-1 py-2.5 rounded-lg text-[11px] font-extrabold bg-white text-amber-500 shadow-sm border border-slate-200 transition-all">🌍 Semua Divisi</button>
                         <button onclick="setRankDivisi('direct')" id="btnDivDirect" class="flex-1 py-2.5 rounded-lg text-[11px] font-extrabold text-slate-400 hover:text-slate-600 transition-all">Direct</button>
                         <button onclick="setRankDivisi('indirect')" id="btnDivIndirect" class="flex-1 py-2.5 rounded-lg text-[11px] font-extrabold text-slate-400 hover:text-slate-600 transition-all">Indirect</button>
                     </div>
-                    <!-- Search SPV -->
                     <div class="relative">
                         <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
                             <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
@@ -444,7 +598,6 @@
                     </div>
                 </div>
             </div>
-            <!-- GRID SYSTEM DI DESKTOP: Maksimal 3 Kolom -->
             <div id="dashboardContent" class="space-y-3 md:space-y-0 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-5"></div>
         </div>
 
@@ -460,7 +613,6 @@
                     </div>
                 </div>
             </div>
-            <!-- GRID SYSTEM DI DESKTOP: Maksimal 3 Kolom -->
             <div id="historyListContainer" class="space-y-3 md:space-y-0 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-5"></div>
         </div>
 
@@ -476,13 +628,21 @@
         let historyDataStore = [];
         let latestPhotosMap = {}; 
         
+        let programHeaders = [];
+        let programHistoryStore = [];
+        let programOptionsList = [];
+        let programCameraStream = null;
+        let programCapturedPhoto = null;
+        let progGeoInterval = null;
+        let pendingPrograms = []; // State array untuk menampung program yang siap dikirim
+        
         let currentUserLat = null, currentUserLng = null;
         let currentOutletLat = null, currentOutletLng = null;
         let isLocationValid = false;
         
         let cameraStream = null;
         let geoInterval = null;
-        let watchId = null; // Menggantikan gpsSyncInterval untuk Real-Time tracking
+        let watchId = null; 
         let lastGeocodeLat = null;
         let lastGeocodeLng = null;
 
@@ -490,23 +650,25 @@
         let popupDataStore = [];
         let isSyncing = false; 
         
-        let currentRankDivisi = 'all'; // State Filter Divisi
+        let currentRankDivisi = 'all'; 
 
         const selectionArea = document.getElementById('selectionArea');
         const checklistForm = document.getElementById('checklistForm');
         const trendArea = document.getElementById('trendArea');
         const dashboardArea = document.getElementById('dashboardArea');
         const historyArea = document.getElementById('historyArea');
+        const programArea = document.getElementById('programArea');
+        
         const globalLoader = document.getElementById('globalLoader');
         const spvSelect = document.getElementById('spvSelect');
         const outletListContainer = document.getElementById('outletListContainer');
         const dashboardContent = document.getElementById('dashboardContent');
         const trendContent = document.getElementById('trendContent');
         const historyListContainer = document.getElementById('historyListContainer');
+        const programHistoryListContainer = document.getElementById('programHistoryListContainer');
         
         document.addEventListener('DOMContentLoaded', initializeApp);
 
-        // Auto Sync setiap 3 menit
         setInterval(backgroundSync, 180000); 
 
         function backgroundSync() {
@@ -525,12 +687,20 @@
                         omsetDataMapping = data.omsetData || {};
                         tiersDataStore = data.tiersData || [];
                         historyDataStore = data.historyData || [];
+                        
+                        programHeaders = data.programHeaders || [];
+                        programHistoryStore = data.programHistoryData || [];
+                        
                         processLatestPhotos();
+                        extractProgramOptions();
                         
                         if(spvSelect.value) handleSpvChange(); 
                         if(document.getElementById('tabTrend').classList.contains('active')) renderTrendProfile();
                         if(document.getElementById('tabDashboard').classList.contains('active')) renderGlobalRanking();
                         if(document.getElementById('tabHistory').classList.contains('active')) renderHistory();
+                        if(document.getElementById('tabProgram').classList.contains('active')) {
+                            renderProgramHistory();
+                        }
                     }
                 })
                 .catch(error => console.warn('Background sync gagal.', error))
@@ -541,7 +711,8 @@
         }
 
         function initializeApp() {
-            selectionArea.className = 'hidden'; checklistForm.className = 'hidden'; trendArea.className = 'hidden'; dashboardArea.className = 'hidden'; historyArea.className = 'hidden';
+            selectionArea.className = 'hidden'; checklistForm.className = 'hidden'; trendArea.className = 'hidden'; 
+            dashboardArea.className = 'hidden'; historyArea.className = 'hidden'; programArea.className = 'hidden';
             globalLoader.className = 'flex flex-col justify-center items-center h-[50vh] bg-white rounded-[2rem] shadow-xl border border-slate-100 page-enter';
             document.getElementById('loadingText').innerText = "Syncing Vibes...";
 
@@ -555,7 +726,12 @@
                         omsetDataMapping = data.omsetData || {};
                         tiersDataStore = data.tiersData || [];
                         historyDataStore = data.historyData || [];
+                        
+                        programHeaders = data.programHeaders || [];
+                        programHistoryStore = data.programHistoryData || [];
+
                         processLatestPhotos();
+                        extractProgramOptions();
                         populateSpvDropdown();
                         switchTab('checkin');
                     } else throw new Error(data.message);
@@ -566,8 +742,14 @@
                     showToast("Mode Offline (Data Simulasi) 📴", "error");
                     
                     spvDataMapping = {
-                        "AGUS SUPRIYANTO": [{ name: "WEDUS CELL 1", lat: -6.2215, lng: 106.8054, id: "3200018648", poinAktif: 12500, photoUrl: "", divisi: "Indirect" }],
-                        "WAHYU FIRMANSYAH": [{ name: "MAHKOTA CELL", lat: -6.1950, lng: 106.8227, id: "3200002786", poinAktif: 1200, photoUrl: "", divisi: "Direct" }]
+                        "AGUS SUPRIYANTO": [{ 
+                            name: "WEDUS CELL 1", lat: -6.2215, lng: 106.8054, id: "3200018648", poinAktif: 12500, photoUrl: "", divisi: "Indirect",
+                            ownerName: "Bapak Agus", ownerBDay: "12-08-1980", flName: "Mbak Siti", flBDay: "05-01-1995"
+                        }],
+                        "WAHYU FIRMANSYAH": [{ 
+                            name: "MAHKOTA CELL", lat: -6.1950, lng: 106.8227, id: "3200002786", poinAktif: 1200, photoUrl: "", divisi: "Direct",
+                            ownerName: "Ibu Wahyu", ownerBDay: "22-11-1985", flName: "Mas Budi", flBDay: "15-09-1998"
+                        }]
                     };
                     checklistHeaders = ["Kebersihan - Kaca", "Staff - Seragam", "Promosi - Banner", "Promosi - Flyer"];
                     omsetDataMapping = {
@@ -582,16 +764,32 @@
                             checklist: {"Kebersihan - Kaca": "Ada", "Staff - Seragam": "Tidak Ada", "Promosi - Banner": "Ada"}
                         }
                     ];
+
+                    programHeaders = ["Keterangan Tambahan", "Feedback Outlet"];
+                    programHistoryStore = [
+                        { timestamp: new Date().toISOString(), spv: "AGUS SUPRIYANTO", outlet: "WEDUS CELL 1", programName: "Program Cashback SPV", photoUrl: "https://via.placeholder.com/150", items: {"Keterangan Tambahan": "Berjalan lancar"} }
+                    ];
+
                     processLatestPhotos();
+                    extractProgramOptions();
                     populateSpvDropdown();
                     switchTab('checkin');
                 });
         }
 
+        function extractProgramOptions() {
+            let optionsSet = new Set();
+            programHistoryStore.forEach(h => {
+                if (h.programName && h.programName.trim() !== "") {
+                    optionsSet.add(h.programName.trim());
+                }
+            });
+            programOptionsList = Array.from(optionsSet).sort();
+        }
+
         function processLatestPhotos() {
             latestPhotosMap = {};
             if (historyDataStore && historyDataStore.length > 0) {
-                // Diurutkan terlebih dahulu agar yang terbaru (teratas) yang diambil
                 let sortedHistory = [...historyDataStore].sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
                 sortedHistory.forEach(h => {
                     if(!latestPhotosMap[h.outlet] && h.fotoDepan && h.fotoDepan !== "Tidak Ada Foto" && h.fotoDepan !== "Error Upload") {
@@ -605,9 +803,13 @@
             document.querySelectorAll('.nav-tab').forEach(el => el.classList.remove('active'));
             document.getElementById('tab' + tabName.charAt(0).toUpperCase() + tabName.slice(1)).classList.add('active');
             
-            selectionArea.className = 'hidden'; checklistForm.className = 'hidden'; trendArea.className = 'hidden'; dashboardArea.className = 'hidden'; historyArea.className = 'hidden';
+            selectionArea.className = 'hidden'; checklistForm.className = 'hidden'; trendArea.className = 'hidden'; 
+            dashboardArea.className = 'hidden'; historyArea.className = 'hidden'; programArea.className = 'hidden';
+            
             if (cameraStream) { cameraStream.getTracks().forEach(track => track.stop()); cameraStream = null; }
-            if (watchId) { navigator.geolocation.clearWatch(watchId); watchId = null; } // Hentikan GPS Real-time saat ganti tab
+            if (programCameraStream) { programCameraStream.getTracks().forEach(track => track.stop()); programCameraStream = null; }
+            if (watchId) { navigator.geolocation.clearWatch(watchId); watchId = null; } 
+            if (progGeoInterval) { clearInterval(progGeoInterval); progGeoInterval = null; }
             popupDataStore = []; 
 
             if (tabName === 'checkin') {
@@ -629,9 +831,368 @@
                 document.getElementById('navIconBg').className = 'bg-gradient-to-br from-slate-600 to-slate-800 w-10 h-10 rounded-2xl flex items-center justify-center shadow-lg shadow-slate-300';
                 document.getElementById('navTitle').innerHTML = 'History<span class="text-slate-500">Data</span>';
                 renderHistory();
+            } else if (tabName === 'program') {
+                programArea.className = 'page-enter block';
+                document.getElementById('navIconBg').className = 'bg-gradient-to-br from-purple-500 to-pink-500 w-10 h-10 rounded-2xl flex items-center justify-center shadow-lg shadow-purple-200';
+                document.getElementById('navTitle').innerHTML = 'Prog<span class="text-purple-600">ram</span>';
+                renderProgramTab();
             }
         }
 
+        // ================= LOGIC PROGRAM & SUPPORT (MULTIPLE) ================= //
+        function renderProgramTab() {
+            const progSpvSelect = document.getElementById('programSpvSelect');
+            const savedSpv = localStorage.getItem('lastSelectedSpv');
+            progSpvSelect.innerHTML = '<option value="">Pilih Profil Anda...</option>';
+            Object.keys(spvDataMapping).sort().forEach(spv => {
+                progSpvSelect.innerHTML += `<option value="${spv}">${spv}</option>`;
+            });
+            if (savedSpv && Object.keys(spvDataMapping).includes(savedSpv)) {
+                progSpvSelect.value = savedSpv;
+            }
+            handleProgramSpvChange();
+
+            const progNameSelect = document.getElementById('programNameSelect');
+            progNameSelect.innerHTML = '<option value="">Pilih Program...</option>';
+            programOptionsList.forEach(opt => {
+                progNameSelect.innerHTML += `<option value="${opt}">${opt}</option>`;
+            });
+            progNameSelect.innerHTML += '<option value="LAINNYA" class="font-extrabold text-purple-600">+ Tambah Program Baru...</option>';
+
+            const dynamicContainer = document.getElementById('dynamicProgramInputs');
+            dynamicContainer.innerHTML = '';
+            programHeaders.forEach(header => {
+                if(!["Timestamp", "SPV", "Outlet", "Nama Program", "Foto Program"].includes(header)) {
+                    dynamicContainer.innerHTML += `
+                        <div>
+                            <label class="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest ml-1 mb-1 block">${header}</label>
+                            <input type="text" name="${header}" placeholder="Isi ${header}..." class="w-full bg-white border border-slate-200 text-slate-800 font-medium rounded-xl px-4 py-3 focus:outline-none focus:border-purple-500 shadow-sm transition-all">
+                        </div>
+                    `;
+                }
+            });
+
+            if (progGeoInterval) clearInterval(progGeoInterval);
+            progGeoInterval = setInterval(() => { document.getElementById('progOverlayTime').innerText = new Date().toLocaleString('id-ID'); }, 1000);
+            
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        const lat = position.coords.latitude;
+                        const lng = position.coords.longitude;
+                        document.getElementById('progOverlayCoords').innerText = `GPS: ${lat.toFixed(5)}, ${lng.toFixed(5)}`;
+                    },
+                    (error) => { document.getElementById('progOverlayCoords').innerText = "GPS Error"; },
+                    { enableHighAccuracy: false, maximumAge: 60000, timeout: 5000 }
+                );
+            }
+
+            renderProgramCart(); // Pastikan keranjang di-render ulang
+            renderProgramHistory();
+        }
+
+        function handleProgramSpvChange() {
+            const spv = document.getElementById('programSpvSelect').value;
+            const outletSelect = document.getElementById('programOutletSelect');
+            outletSelect.innerHTML = '<option value="">Pilih Outlet...</option>';
+            
+            if (spv && spvDataMapping[spv]) {
+                outletSelect.disabled = false;
+                spvDataMapping[spv].forEach(out => {
+                    outletSelect.innerHTML += `<option value="${out.name}">${out.name}</option>`;
+                });
+            } else {
+                outletSelect.disabled = true;
+            }
+        }
+
+        function handleProgramNameChange() {
+            const sel = document.getElementById('programNameSelect').value;
+            const customContainer = document.getElementById('programNameCustomContainer');
+            const customInput = document.getElementById('programNameCustom');
+            if (sel === 'LAINNYA') {
+                customContainer.classList.remove('hidden');
+            } else {
+                customContainer.classList.add('hidden');
+                customInput.value = '';
+            }
+        }
+
+        function takeProgramPhoto() {
+            const video = document.getElementById('programCameraVideo');
+            const thumb = document.getElementById('programPhotoThumb');
+            const btnCapture = document.getElementById('btnProgCapture');
+            const btnRetake = document.getElementById('btnProgRetake');
+            const canvas = document.getElementById('programPhotoCanvas');
+            const context = canvas.getContext('2d');
+
+            if (!programCameraStream) {
+                video.classList.remove('hidden');
+                thumb.classList.add('hidden');
+                if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                    navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
+                    .then(stream => { 
+                        programCameraStream = stream; 
+                        video.srcObject = stream; 
+                        btnCapture.innerHTML = "📸 Ambil Foto";
+                    })
+                    .catch(error => { showToast("Kamera ditolak/Error", "error"); });
+                }
+                return;
+            }
+
+            canvas.width = video.videoWidth || 640; 
+            canvas.height = video.videoHeight || 480;
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            
+            context.shadowColor = "rgba(0,0,0,0.8)"; context.shadowBlur = 4; context.shadowOffsetX = 1; context.shadowOffsetY = 1;
+            context.font = "bold 16px 'Courier New'"; context.fillStyle = "#34d399"; context.fillText(document.getElementById('progOverlayTime').innerText, 15, 30);
+            context.fillStyle = "white"; context.fillText(document.getElementById('progOverlayCoords').innerText, 15, 55);
+            context.font = "bold 16px 'Courier New'"; context.fillStyle = "#fbbf24"; context.fillText(document.getElementById('programOutletSelect').value || "Outlet Belum Dipilih", 15, 80);
+            context.shadowBlur = 0; 
+            
+            programCapturedPhoto = canvas.toDataURL('image/jpeg', 0.8);
+            
+            video.classList.add('hidden');
+            thumb.src = programCapturedPhoto;
+            thumb.classList.remove('hidden');
+            btnCapture.classList.add('hidden');
+            btnRetake.classList.remove('hidden');
+            
+            if (programCameraStream) { programCameraStream.getTracks().forEach(track => track.stop()); programCameraStream = null; }
+        }
+
+        function retakeProgramPhoto() {
+            programCapturedPhoto = null;
+            document.getElementById('programPhotoThumb').src = "";
+            document.getElementById('btnProgCapture').classList.remove('hidden');
+            document.getElementById('btnProgRetake').classList.add('hidden');
+            takeProgramPhoto(); 
+        }
+
+        // Fungsi menambah program ke keranjang (Bukan dikirim langsung)
+        function addProgramToCart() {
+            const spv = document.getElementById('programSpvSelect').value;
+            const outlet = document.getElementById('programOutletSelect').value;
+            let progName = document.getElementById('programNameSelect').value;
+            
+            if(progName === 'LAINNYA') progName = document.getElementById('programNameCustom').value;
+            
+            if(!spv || !outlet || !progName) { showToast("Lengkapi SPV, Outlet, dan Nama Program!", "error"); return; }
+            if(!programCapturedPhoto) { showToast("Wajib menyertakan 1 Foto Program!", "error"); return; }
+
+            let items = {};
+            programHeaders.forEach(header => {
+                if(!["Timestamp", "SPV", "Outlet", "Nama Program", "Foto Program"].includes(header)) {
+                    const inputEl = document.querySelector(`input[name="${header}"]`);
+                    if(inputEl) items[header] = inputEl.value;
+                }
+            });
+
+            // Masukkan ke array pending
+            pendingPrograms.push({
+                spv: spv,
+                outlet: outlet,
+                programName: progName,
+                photoBase64: programCapturedPhoto,
+                items: items
+            });
+
+            // Kosongkan bagian form program dan foto (tapi biarkan SPV & Outlet tetap)
+            document.getElementById('programNameSelect').value = "";
+            document.getElementById('programNameCustom').value = "";
+            document.getElementById('programNameCustomContainer').classList.add('hidden');
+            document.querySelectorAll('#dynamicProgramInputs input').forEach(el => el.value = '');
+            retakeProgramPhoto(); 
+
+            renderProgramCart();
+            showToast("Berhasil dimasukkan ke daftar! 🛒", "success");
+        }
+
+        function removeProgramFromCart(index) {
+            pendingPrograms.splice(index, 1);
+            renderProgramCart();
+        }
+
+        function renderProgramCart() {
+            const area = document.getElementById('programCartArea');
+            const list = document.getElementById('programCartList');
+            const badge = document.getElementById('cartCountBadge');
+
+            if(pendingPrograms.length === 0) {
+                area.classList.add('hidden');
+                return;
+            }
+
+            area.classList.remove('hidden');
+            badge.innerText = `${pendingPrograms.length} Program`;
+            list.innerHTML = '';
+
+            pendingPrograms.forEach((p, index) => {
+                list.innerHTML += `
+                    <div class="relative bg-slate-50 border border-slate-200 rounded-xl p-2 flex flex-col gap-2 page-enter">
+                        <button type="button" onclick="removeProgramFromCart(${index})" class="absolute -top-2 -right-2 bg-rose-500 text-white w-6 h-6 rounded-full font-bold text-xs flex items-center justify-center shadow-md hover:bg-rose-600 transition-all z-10">✕</button>
+                        <img src="${p.photoBase64}" class="w-full h-20 md:h-24 object-cover rounded-lg border border-slate-200">
+                        <div class="flex-1">
+                            <p class="text-[10px] font-extrabold text-slate-800 leading-tight line-clamp-2">${p.programName}</p>
+                            <p class="text-[9px] font-bold text-slate-400 mt-1 truncate">📍 ${p.outlet}</p>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function submitAllPrograms() {
+            if(pendingPrograms.length === 0) {
+                showToast('Daftar program masih kosong!', 'error');
+                return;
+            }
+
+            const btnSubmit = document.getElementById('btnProgSubmitAll');
+            btnSubmit.disabled = true;
+            btnSubmit.innerText = "Mengirim Semua Data... ⏳";
+
+            const payload = {
+                action: 'submitMultiplePrograms',
+                programs: pendingPrograms
+            };
+
+            fetch(GAS_API_URL, {
+                method: 'POST',
+                body: JSON.stringify(payload)
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    showToast('Semua Laporan Program Tersimpan! ✨', 'success'); 
+                    setTimeout(() => { 
+                        pendingPrograms = [];
+                        renderProgramCart();
+                        btnSubmit.disabled = false;
+                        btnSubmit.innerText = "Kirim Semua Laporan 🚀";
+                        backgroundSync(); 
+                    }, 1500);
+                } else {
+                    showToast('Gagal: ' + data.message, 'error');
+                    btnSubmit.disabled = false;
+                    btnSubmit.innerText = "Kirim Semua Laporan 🚀";
+                }
+            })
+            .catch(err => {
+                showToast('Terjadi kesalahan jaringan', 'error');
+                btnSubmit.disabled = false;
+                btnSubmit.innerText = "Kirim Semua Laporan 🚀";
+            });
+        }
+
+        function renderProgramHistory() {
+            programHistoryListContainer.innerHTML = '';
+            
+            let sortedHistory = [...programHistoryStore].sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+            document.getElementById('programHistoryCount').innerText = `${sortedHistory.length} Data`;
+
+            if (sortedHistory.length === 0) {
+                programHistoryListContainer.innerHTML = `<div class="bg-white rounded-[2rem] p-10 text-center shadow-sm border border-slate-100 col-span-full"><p class="text-slate-500 font-semibold">Belum ada history program.</p></div>`;
+                return;
+            }
+
+            // MENGELOMPOKKAN BERDASARKAN TANGGAL & OUTLET
+            let groupedHistory = [];
+            let groupMap = new Map();
+
+            sortedHistory.forEach(h => {
+                const dateObj = new Date(h.timestamp);
+                const dateKey = dateObj.toLocaleDateString('id-ID'); // Format: DD/MM/YYYY
+                const key = `${dateKey}_${h.outlet}`;
+
+                if (!groupMap.has(key)) {
+                    const group = {
+                        dateKey: dateKey,
+                        displayDate: dateObj.toLocaleDateString('id-ID', {day: 'numeric', month: 'short', year: 'numeric'}),
+                        outlet: h.outlet,
+                        spv: h.spv,
+                        programs: []
+                    };
+                    groupMap.set(key, group);
+                    groupedHistory.push(group);
+                }
+                groupMap.get(key).programs.push(h);
+            });
+
+            let html = '';
+            // Mengambil 20 Grup teratas
+            groupedHistory.slice(0, 20).forEach((group, index) => {
+                
+                let itemsHtml = '';
+                group.programs.forEach(h => {
+                    const time = new Date(h.timestamp).toLocaleTimeString('id-ID', {hour:'2-digit', minute:'2-digit'});
+                    const photoSrc = h.photoUrl || ""; 
+                    const initial = h.programName ? h.programName.substring(0, 2).toUpperCase() : "PR";
+                    
+                    let avatarHtml = `<div class="w-10 h-10 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center font-extrabold text-xs shrink-0 border border-purple-100">${initial}</div>`;
+                    if (photoSrc && photoSrc.startsWith('http')) {
+                        avatarHtml = `<img src="${photoSrc}" class="w-10 h-10 rounded-xl object-cover bg-slate-100 border border-slate-200 shrink-0 shadow-sm cursor-pointer hover:opacity-80 transition" onclick="window.open('${photoSrc}', '_blank')">`;
+                    }
+
+                    let extraInfo = '';
+                    if(h.items) {
+                        const keys = Object.keys(h.items);
+                        if(keys.length > 0 && h.items[keys[0]]) {
+                            extraInfo = `<div class="w-full mt-2 pt-2 border-t border-slate-200/70"><p class="text-[8.5px] text-slate-500 line-clamp-2 leading-snug">${keys[0]}: ${h.items[keys[0]]}</p></div>`;
+                        }
+                    }
+
+                    // CLASS DIUBAH: Hapus "snap-center", ubah lebar agar responsive dan flex-auto
+                    itemsHtml += `
+                    <div class="flex flex-col items-start p-3 rounded-xl bg-slate-50 border border-slate-100 w-full sm:w-[220px] flex-auto hover:bg-slate-100/50 transition-colors">
+                        <div class="flex gap-2.5 items-center w-full">
+                            ${avatarHtml}
+                            <div class="flex-1 min-w-0">
+                                <h4 class="font-extrabold text-slate-700 text-[11px] leading-tight line-clamp-2">${h.programName}</h4>
+                                <p class="text-[8.5px] text-slate-400 font-bold mt-0.5">⏱️ ${time.replace('.', ':')}</p>
+                            </div>
+                        </div>
+                        ${extraInfo}
+                    </div>`;
+                });
+
+                html += `
+                <div class="bg-white rounded-[1.5rem] p-4 shadow-sm border border-slate-100 flex flex-col md:flex-row md:items-stretch gap-3 md:gap-5 page-enter transition-transform hover:shadow-md w-full" style="animation-delay: ${index * 0.05}s">
+                    <div class="flex justify-between items-center md:items-start md:flex-col md:w-1/4 lg:w-1/5 shrink-0 border-b md:border-b-0 md:border-r border-slate-100 pb-3 md:pb-0 md:pr-4">
+                        <div class="flex-1 min-w-0 pr-2 md:pr-0">
+                            <h4 class="font-black text-slate-800 text-[13px] leading-tight truncate uppercase flex items-center gap-1"><span class="text-base shrink-0">📍</span> <span class="truncate">${group.outlet}</span></h4>
+                            <p class="text-[9px] text-indigo-500 font-extrabold uppercase mt-1 pl-5 md:pl-0 md:mt-1.5 truncate">${group.spv}</p>
+                        </div>
+                        <div class="text-[9px] font-bold text-slate-500 bg-slate-100 px-2 py-1 md:mt-3 rounded-md border border-slate-200 shrink-0">
+                            ${group.displayDate}
+                        </div>
+                    </div>
+                    <!-- CLASS DIUBAH: Hapus overflow-x-auto & snap-x, ganti jadi flex-wrap -->
+                    <div class="flex-1 flex flex-wrap gap-3 pb-2 md:pb-0">
+                        ${itemsHtml}
+                    </div>
+                </div>`;
+            });
+            programHistoryListContainer.innerHTML = html;
+        }
+
+        function toggleProgramHistory() {
+            const container = document.getElementById('programHistoryListContainer');
+            const textEl = document.getElementById('textToggleHistory');
+            const iconEl = document.getElementById('iconToggleHistory');
+            
+            if (container.classList.contains('hidden')) {
+                container.classList.remove('hidden');
+                textEl.innerText = 'Sembunyikan';
+                iconEl.style.transform = 'rotate(0deg)';
+            } else {
+                container.classList.add('hidden');
+                textEl.innerText = 'Tampilkan';
+                iconEl.style.transform = 'rotate(180deg)';
+            }
+        }
+
+        // ================= GENERAL APP LOGIC ================= //
         function populateSpvDropdown() {
             const savedSpv = localStorage.getItem('lastSelectedSpv');
             
@@ -650,15 +1211,11 @@
             if(spvSelect.value) handleSpvChange();
         }
 
-        // FUNGSI KHUSUS UNTUK MENGUBAH KOMA MENJADI TITIK DAN MENGKONVERSI KE DESIMAL (DIPERKUAT ANTI-ERROR)
         function parseCoord(coord) {
             if (coord === null || coord === undefined) return NaN;
-            // 1. Jadikan string dan bersihkan spasi
             let str = String(coord).trim();
             if (str === '') return NaN;
-            // 2. Buang semua karakter selain angka, minus (-), koma (,), dan titik (.)
             str = str.replace(/[^0-9.,-]/g, '');
-            // 3. Ganti koma (Indonesia) menjadi titik (Standar Internasional)
             str = str.replace(',', '.');
             return parseFloat(str);
         }
@@ -707,6 +1264,15 @@
 
         function formatRupiah(number) { return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(number); }
         function formatPoints(number) { return new Intl.NumberFormat('id-ID').format(number); }
+        
+        function formatTanggalPendek(tglString) {
+            if (!tglString || tglString === "-" || tglString === "") return "-";
+            const dt = new Date(tglString);
+            if (!isNaN(dt.getTime())) {
+                return dt.toLocaleDateString('id-ID', {day: 'numeric', month: 'short', year: 'numeric'});
+            }
+            return tglString; 
+        }
 
         function getTierInfo(points) {
             const defaultStyles = {
@@ -751,396 +1317,20 @@
             };
         }
 
-        // FUNGSI GANTI TAB DIVISI
         function setRankDivisi(divisi) {
             currentRankDivisi = divisi;
             
-            // Reset state
             ['All', 'Direct', 'Indirect'].forEach(tab => {
                 const btn = document.getElementById('btnDiv' + tab);
                 if (btn) btn.className = "flex-1 py-2.5 rounded-lg text-[11px] font-extrabold text-slate-400 hover:text-slate-600 transition-all";
             });
             
-            // Aktifkan yang dipilih
             const activeBtn = document.getElementById('btnDiv' + divisi.charAt(0).toUpperCase() + divisi.slice(1));
             if (activeBtn) {
                 activeBtn.className = "flex-1 py-2.5 rounded-lg text-[11px] font-extrabold bg-white text-amber-500 shadow-sm border border-slate-200 transition-all";
             }
             
             renderGlobalRanking();
-        }
-
-        // ================= RENDERING ================= //
-        function renderTrendProfile() {
-            const selectedSpv = spvSelect.value;
-            document.getElementById('trendSpvNameDisplay').innerText = selectedSpv ? `SPV: ${selectedSpv}` : "Harap Pilih SPV";
-            if (!selectedSpv) { trendContent.innerHTML = `<div class="bg-white rounded-[2rem] p-10 text-center col-span-full"><p class="text-slate-500 font-semibold">Pilih profil SPV di Check-In.</p></div>`; return; }
-
-            const outlets = spvDataMapping[selectedSpv];
-            if (!outlets || outlets.length === 0) { trendContent.innerHTML = `<p class="text-center text-slate-500 col-span-full">Tidak ada data.</p>`; return; }
-
-            let htmlCards = '';
-            outlets.forEach((outlet, index) => {
-                const rawOmset = omsetDataMapping[outlet.id] || {};
-                
-                const omsetInfo = { 
-                    omsetBulanLalu: parseFloat(rawOmset.omsetBulanLalu) || 0, 
-                    omsetBulanIni: parseFloat(rawOmset.omsetBulanIni) || 0, 
-                    sa: parseInt(rawOmset.sa) || 0, 
-                    vf: parseInt(rawOmset.vf) || 0, 
-                    linkaja: parseFloat(rawOmset.linkaja) || 0 
-                };
-                
-                const growthData = calculateGrowth(omsetInfo.omsetBulanLalu, omsetInfo.omsetBulanIni);
-                const points = parseInt(outlet.poinAktif) || 0;
-                
-                const popupIndex = popupDataStore.length;
-                popupDataStore.push({ ...outlet, spvName: selectedSpv, growthData, points });
-
-                const isPos = growthData.isPositive;
-                const percentStr = (isPos ? '+' : '') + growthData.percent.toFixed(1) + '%';
-                const nominalGrowth = growthData.actual - growthData.projectedBase;
-                const nominalStr = (nominalGrowth >= 0 ? '+ Rp ' : '- Rp ') + formatRupiah(Math.abs(nominalGrowth)).replace('Rp', '').trim();
-                const projectedStr = formatRupiah(growthData.projectedBase).split(',')[0];
-                const actualStr = formatRupiah(growthData.actual).split(',')[0];
-                
-                const tier = getTierInfo(points);
-                const chartStroke = isPos ? '#10b981' : '#f43f5e';
-                const chartFill = isPos ? `url(#greenGradient${index})` : `url(#redGradient${index})`;
-                
-                const textCol = isPos ? 'text-emerald-500' : 'text-rose-500';
-                const bgClass = isPos ? 'bg-emerald-50 text-emerald-600 border border-emerald-100' : 'bg-rose-50 text-rose-600 border border-rose-100';
-                const iconDir = isPos ? 'M13 7h8m0 0v8m0-8l-8 8-4-4-6 6' : 'M13 17h8m0 0v-8m0 8l-8-8-4 4-6-6';
-                
-                const stockChartSvg = `
-                    <svg viewBox="0 0 400 100" class="w-full h-24 drop-shadow-sm" preserveAspectRatio="none">
-                        <defs>
-                            <linearGradient id="greenGradient${index}" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#10b981" stop-opacity="0.3"/><stop offset="100%" stop-color="#10b981" stop-opacity="0"/></linearGradient>
-                            <linearGradient id="redGradient${index}" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#f43f5e" stop-opacity="0.3"/><stop offset="100%" stop-color="#f43f5e" stop-opacity="0"/></linearGradient>
-                        </defs>
-                        ${isPos 
-                            ? `<path d="M0,90 C50,80 100,90 150,50 C200,10 250,60 300,30 C350,0 400,20 400,20 L400,100 L0,100 Z" fill="${chartFill}" /><path d="M0,90 C50,80 100,90 150,50 C200,10 250,60 300,30 C350,0 400,20 400,20" fill="none" stroke="${chartStroke}" stroke-width="4" stroke-linecap="round"/>`
-                            : `<path d="M0,20 C50,10 100,50 150,40 C200,30 250,80 300,70 C350,60 400,90 400,90 L400,100 L0,100 Z" fill="${chartFill}" /><path d="M0,20 C50,10 100,50 150,40 C200,30 250,80 300,70 C350,60 400,90 400,90" fill="none" stroke="${chartStroke}" stroke-width="4" stroke-linecap="round"/>`
-                        }
-                    </svg>`;
-
-                htmlCards += `
-                    <div class="bg-white rounded-[2rem] p-5 shadow-xl shadow-slate-200/50 border border-slate-100 relative overflow-hidden page-enter cursor-pointer hover:scale-[1.02] transition-transform" style="animation-delay: ${index * 0.05}s" onclick="openAtmPopup(${popupIndex})">
-                        
-                        <div class="flex justify-between items-start gap-4 mb-4 relative z-10">
-                            <div class="flex-1">
-                                <h3 class="font-extrabold text-slate-800 text-lg uppercase tracking-tight leading-tight">${outlet.name}</h3>
-                                <p class="text-xs font-bold text-slate-400 mt-0.5">ID: ${outlet.id}</p>
-                                <div class="mt-3">
-                                    <div class="inline-flex items-center gap-1.5 ${bgClass} px-2.5 py-1 rounded-lg font-black text-sm tracking-wider shadow-sm">
-                                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="${iconDir}"></path></svg>
-                                        ${percentStr}
-                                    </div>
-                                    <div class="mt-1.5 ${textCol} font-extrabold text-[11px] tracking-wider flex items-center">
-                                        ${nominalStr}
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="w-36 h-24 rounded-2xl bg-gradient-to-tr ${tier.bg} p-3 relative overflow-hidden shadow-lg atm-card shrink-0 border ${tier.border}">
-                                <div class="flex justify-between items-start mb-2 relative z-10">
-                                    <div class="w-8 h-6 border border-yellow-500/50 rounded-md bg-gradient-to-br from-yellow-200/40 to-yellow-600/40 flex flex-col justify-evenly px-0.5"><div class="w-full h-[1px] bg-yellow-500/50"></div><div class="w-full h-[1px] bg-yellow-500/50"></div></div>
-                                    <span class="${tier.text} font-black text-[10px] italic tracking-widest uppercase drop-shadow-md text-right leading-tight">${tier.name}</span>
-                                </div>
-                                <div class="absolute bottom-3 left-3 right-3 z-10">
-                                    <p class="text-[7px] uppercase tracking-widest mb-0.5 ${tier.label}">Poin Aktif</p>
-                                    <p class="text-base font-black tracking-widest drop-shadow-md leading-none ${tier.text}" style="font-family: 'Courier New', monospace;">${formatPoints(points)}</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Data SA, VF, LINKAJA -->
-                        <div class="grid grid-cols-3 gap-2 mb-4 relative z-10 border-t border-slate-100 pt-3">
-                            <div class="bg-indigo-50/50 rounded-xl p-2 text-center border border-indigo-100/50">
-                                <p class="text-[8px] font-extrabold text-indigo-400 uppercase tracking-widest">SA</p>
-                                <p class="text-sm font-black text-indigo-600">${omsetInfo.sa}</p>
-                            </div>
-                            <div class="bg-rose-50/50 rounded-xl p-2 text-center border border-rose-100/50">
-                                <p class="text-[8px] font-extrabold text-rose-400 uppercase tracking-widest">VF</p>
-                                <p class="text-sm font-black text-rose-600">${omsetInfo.vf}</p>
-                            </div>
-                            <div class="bg-emerald-50/50 rounded-xl p-2 text-center border border-emerald-100/50">
-                                <p class="text-[8px] font-extrabold text-emerald-400 uppercase tracking-widest">LinkAja</p>
-                                <p class="text-sm font-black text-emerald-600">${formatRupiah(omsetInfo.linkaja).replace('Rp','').trim()}</p>
-                            </div>
-                        </div>
-
-                        <div class="flex gap-2 mb-4 relative z-10">
-                            <div class="flex-1 bg-slate-50 px-3 py-2 rounded-xl border border-slate-100">
-                                <p class="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Target Berjalan</p>
-                                <p class="text-[13px] font-extrabold text-slate-700 mt-0.5">${projectedStr}</p>
-                            </div>
-                            <div class="flex-1 bg-slate-50 px-3 py-2 rounded-xl border border-slate-100 text-right">
-                                <p class="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Omset Aktual</p>
-                                <p class="text-[13px] font-extrabold text-slate-800 mt-0.5">${actualStr}</p>
-                            </div>
-                        </div>
-
-                        <div class="-mx-5 -mb-5 mt-2 opacity-90 relative z-0">${stockChartSvg}</div>
-                    </div>`;
-            });
-            trendContent.innerHTML = htmlCards;
-        }
-
-        function renderGlobalRanking() {
-            dashboardContent.innerHTML = '';
-            let allOutlets = [];
-            
-            const searchInput = document.getElementById('rankSearchSpv');
-            const searchValue = searchInput ? searchInput.value.toLowerCase().trim() : '';
-
-            for (const spvName in spvDataMapping) {
-                if (searchValue && !spvName.toLowerCase().includes(searchValue)) continue;
-
-                spvDataMapping[spvName].forEach(outlet => {
-                    const outletDivisi = (outlet.divisi || "umum").toLowerCase();
-                    if (currentRankDivisi === 'direct' && outletDivisi !== 'direct') return;
-                    if (currentRankDivisi === 'indirect' && outletDivisi !== 'indirect') return;
-
-                    const omsetInfo = omsetDataMapping[outlet.id] || { omsetBulanLalu: 0, omsetBulanIni: 0 };
-                    const growthData = calculateGrowth(parseFloat(omsetInfo.omsetBulanLalu)||0, parseFloat(omsetInfo.omsetBulanIni)||0);
-                    const points = parseInt(outlet.poinAktif) || 0;
-                    allOutlets.push({ spvName: spvName, ...outlet, growthData, points });
-                });
-            }
-
-            allOutlets.sort((a, b) => b.growthData.percent - a.growthData.percent);
-            
-            if (allOutlets.length === 0) { 
-                dashboardContent.innerHTML = `<div class="bg-white rounded-[2rem] p-10 text-center col-span-full border border-slate-100 shadow-sm"><p class="text-slate-500 font-semibold text-sm">Tidak ada data yang cocok dengan filter tersebut.</p></div>`; 
-                return; 
-            }
-
-            let htmlCards = '';
-            allOutlets.forEach((outlet, index) => {
-                const rank = index + 1;
-                const popupIndex = popupDataStore.length;
-                popupDataStore.push(outlet); 
-                
-                const isPos = outlet.growthData.isPositive;
-                const percentStr = (isPos ? '+' : '') + outlet.growthData.percent.toFixed(1) + '%';
-                const nominalGrowth = outlet.growthData.actual - outlet.growthData.projectedBase;
-                const nominalStr = (nominalGrowth >= 0 ? '+ Rp ' : '- Rp ') + formatRupiah(Math.abs(nominalGrowth)).replace('Rp', '').trim();
-                
-                const textCol = isPos ? 'text-emerald-500' : 'text-rose-500';
-                const bgClass = isPos ? 'bg-emerald-50 text-emerald-600' : 'bg-rose-50 text-rose-600';
-                const iconDir = isPos ? 'M13 7h8m0 0v8m0-8l-8 8-4-4-6 6' : 'M13 17h8m0 0v-8m0 8l-8-8-4 4-6-6';
-
-                let rankIconHtml = `<div class="w-10 h-10 shrink-0 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-500 font-extrabold text-sm shadow-sm">${rank}</div>`;
-                let cardBorder = 'border-l-[6px] border-l-transparent'; 
-                let shadowClass = 'shadow-sm';
-
-                if (rank === 1) { cardBorder = 'border-l-[6px] border-l-amber-400'; shadowClass = 'shadow-md scale-[1.02] relative z-10'; rankIconHtml = `<div class="w-11 h-11 shrink-0 rounded-full bg-gradient-to-br from-amber-100 to-amber-200 flex items-center justify-center text-amber-500 shadow-inner relative"><svg class="w-6 h-6 z-10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 2.4 3.4-.6.6 3.4 2.4 2.4-2.4 2.4-.6 3.4-3.4-.6-2.4 2.4-2.4-2.4-3.4.6-.6-3.4-2.4-2.4 2.4-2.4.6-3.4 3.4.6L12 2z"/><circle cx="12" cy="12" r="4" fill="white"/><path d="M12 9l.9 2h2.1l-1.7 1.2.6 2.1-1.9-1.3-1.9 1.3.6-2.1-1.7-1.2h2.1L12 9z" fill="#f59e0b"/></svg></div>`; } 
-                else if (rank === 2) { cardBorder = 'border-l-[6px] border-l-slate-300'; shadowClass = 'shadow-md relative z-10'; rankIconHtml = `<div class="w-11 h-11 shrink-0 rounded-full bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center text-slate-500 shadow-inner relative"><svg class="w-6 h-6 z-10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 2.4 3.4-.6.6 3.4 2.4 2.4-2.4 2.4-.6 3.4-3.4-.6-2.4 2.4-2.4-2.4-3.4.6-.6-3.4-2.4-2.4 2.4-2.4.6-3.4 3.4.6L12 2z"/><circle cx="12" cy="12" r="4" fill="white"/><path d="M12 9l.9 2h2.1l-1.7 1.2.6 2.1-1.9-1.3-1.9 1.3.6-2.1-1.7-1.2h2.1L12 9z" fill="#64748b"/></svg></div>`; } 
-                else if (rank === 3) { cardBorder = 'border-l-[6px] border-l-orange-500'; shadowClass = 'shadow-md relative z-10'; rankIconHtml = `<div class="w-11 h-11 shrink-0 rounded-full bg-gradient-to-br from-orange-100 to-orange-200 flex items-center justify-center text-orange-600 shadow-inner relative"><svg class="w-6 h-6 z-10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 2.4 3.4-.6.6 3.4 2.4 2.4-2.4 2.4-.6 3.4-3.4-.6-2.4 2.4-2.4-2.4-3.4.6-.6-3.4-2.4-2.4 2.4-2.4.6-3.4 3.4.6L12 2z"/><circle cx="12" cy="12" r="4" fill="white"/><path d="M12 9l.9 2h2.1l-1.7 1.2.6 2.1-1.9-1.3-1.9 1.3.6-2.1-1.7-1.2h2.1L12 9z" fill="#ea580c"/></svg></div>`; }
-
-                const tier = getTierInfo(outlet.points);
-                const miniCardHtml = `<div class="w-11 h-7 shrink-0 rounded bg-gradient-to-br ${tier.bg} relative overflow-hidden shadow-sm border ${tier.border} mx-1.5 flex items-center px-1"><div class="w-2.5 h-1.5 border border-yellow-500/50 bg-yellow-200/30 rounded-[2px]"></div><span class="absolute bottom-0.5 right-1 text-[5px] font-black ${tier.text} uppercase drop-shadow-md tracking-wider">${tier.name}</span></div>`;
-                
-                htmlCards += `
-                    <div onclick="openAtmPopup(${popupIndex})" class="cursor-pointer bg-white rounded-[1.2rem] p-3 pl-3 pr-4 flex items-center gap-2 border border-slate-100/80 ${cardBorder} ${shadowClass} page-enter transition-transform hover:scale-[1.03]" style="animation-delay: ${index * 0.05}s">
-                        ${rankIconHtml}
-                        ${miniCardHtml}
-                        <div class="flex-1 min-w-0 ml-1">
-                            <h3 class="font-extrabold text-slate-800 text-[13px] leading-tight uppercase tracking-tight">${outlet.name}</h3>
-                            <div class="flex flex-col mt-0.5">
-                                <span class="text-slate-400 font-bold text-[9.5px] flex items-center gap-1"><svg class="w-2.5 h-2.5 opacity-70" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clip-rule="evenodd" /></svg>${outlet.id}</span>
-                                <span class="text-rose-500 font-semibold text-[8.5px] uppercase mt-0.5 flex items-center gap-1"><svg class="w-2.5 h-2.5 opacity-70" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" /></svg><span class="truncate">${outlet.spvName}</span></span>
-                            </div>
-                        </div>
-                        <div class="text-right flex flex-col items-end shrink-0 justify-center">
-                            <div class="${bgClass} px-2 py-[3px] rounded border border-white text-[11px] font-black flex items-center gap-1 shadow-sm"><svg class="w-[10px] h-[10px]" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="${iconDir}"></path></svg>${percentStr}</div>
-                            <div class="${textCol} font-extrabold text-[10px] mt-1 tracking-wider">${nominalStr}</div>
-                        </div>
-                    </div>`;
-            });
-            dashboardContent.innerHTML = htmlCards;
-        }
-
-        // ================= LOGIC HISTORY ================= //
-        function renderHistory() {
-            historyListContainer.innerHTML = '';
-            const selectedSpv = spvSelect.value;
-            let filterHistory = selectedSpv ? historyDataStore.filter(h => h.spv === selectedSpv) : historyDataStore;
-            
-            // Sort by timestamp descending (terbaru di baris atas)
-            filterHistory.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-
-            if (filterHistory.length === 0) {
-                historyListContainer.innerHTML = `<div class="bg-white rounded-[2rem] p-10 text-center shadow-sm border border-slate-100 col-span-full"><p class="text-slate-500 font-semibold">Belum ada history.</p></div>`;
-                return;
-            }
-
-            let html = '';
-            filterHistory.slice(0, 20).forEach((h, index) => {
-                const date = new Date(h.timestamp).toLocaleString('id-ID', {day: 'numeric', month: 'short', hour:'2-digit', minute:'2-digit'});
-                const photoSrc = h.fotoDepan || ""; 
-                const initial = h.outlet.substring(0, 2).toUpperCase();
-                
-                let avatarHtml = `<div class="w-12 h-12 rounded-[1rem] bg-gradient-to-br from-slate-200 to-slate-300 text-slate-500 flex items-center justify-center font-bold text-sm shrink-0 border border-slate-100">${initial}</div>`;
-                if (photoSrc && photoSrc.startsWith('http')) {
-                    avatarHtml = `<img src="${photoSrc}" class="w-12 h-12 rounded-[1rem] object-cover bg-slate-100 border border-slate-200 shrink-0" onerror="this.outerHTML='<div class=\\'w-12 h-12 rounded-[1rem] bg-gradient-to-br from-slate-200 to-slate-300 text-slate-500 flex items-center justify-center font-bold text-sm shrink-0\\'>${initial}</div>'">`;
-                }
-
-                html += `
-                <div onclick="openHistoryPopup(${historyDataStore.indexOf(h)})" class="cursor-pointer bg-white rounded-[1.2rem] p-3 shadow-sm border border-slate-100 flex items-center gap-3 page-enter transition-transform hover:scale-[1.02]" style="animation-delay: ${index * 0.05}s">
-                    ${avatarHtml}
-                    <div class="flex-1 min-w-0">
-                        <h4 class="font-extrabold text-slate-800 text-[13px] truncate uppercase">${h.outlet}</h4>
-                        <p class="text-[9.5px] text-rose-500 font-bold uppercase truncate">${h.spv}</p>
-                    </div>
-                    <div class="text-[10px] font-bold text-indigo-600 bg-indigo-50 px-2 py-1 rounded-lg shrink-0 flex items-center gap-1 border border-indigo-100">
-                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                        ${date}
-                    </div>
-                </div>`;
-            });
-            historyListContainer.innerHTML = html;
-        }
-
-        // ================= LOGIC POPUP ATM ================= //
-        function openAtmPopup(idx) {
-            const data = popupDataStore[idx];
-            const tier = getTierInfo(data.points);
-            
-            document.getElementById('atmPopupCard').className = `w-full max-w-[340px] md:max-w-[420px] aspect-[1.58] rounded-[1.5rem] p-6 md:p-8 relative z-10 scale-90 opacity-0 transition-all duration-300 shadow-2xl border flex flex-col justify-between overflow-hidden bg-gradient-to-tr ${tier.bg} ${tier.border} atm-card`;
-            
-            document.getElementById('popupTier').className = `font-black text-sm md:text-base italic tracking-widest uppercase drop-shadow-md leading-tight ${tier.text}`;
-            document.getElementById('popupTier').innerText = tier.name;
-            document.getElementById('popupTierLabel').className = `text-[7px] md:text-[9px] uppercase tracking-widest opacity-80 mt-0.5 text-right ${tier.label}`;
-            
-            document.getElementById('popupPointsLabel').className = `text-[8px] md:text-[10px] uppercase tracking-widest mb-0.5 md:mb-1 opacity-80 ${tier.label}`;
-            document.getElementById('popupPoints').className = `text-[32px] md:text-[42px] font-black tracking-widest drop-shadow-md leading-none ${tier.text}`;
-            document.getElementById('popupPoints').innerText = formatPoints(data.points);
-            
-            document.getElementById('popupNameLabel').className = `text-[7px] md:text-[9px] uppercase tracking-widest mb-1 opacity-80 ${tier.label}`;
-            document.getElementById('popupName').className = `text-sm md:text-base font-bold tracking-wider uppercase drop-shadow-md truncate ${tier.text}`;
-            document.getElementById('popupName').innerText = data.name;
-            
-            document.getElementById('popupSpvName').className = `text-[9px] md:text-[11px] font-semibold tracking-wider uppercase mt-0.5 ${tier.label}`;
-            document.getElementById('popupSpvName').innerText = data.spvName;
-            
-            const isPos = data.growthData.isPositive;
-            const nominalGrowth = data.growthData.actual - data.growthData.projectedBase;
-            const nominalStr = (nominalGrowth >= 0 ? '+ Rp ' : '- Rp ') + formatRupiah(Math.abs(nominalGrowth)).replace('Rp', '').trim();
-            const percentStr = (isPos ? '+' : '') + data.growthData.percent.toFixed(1) + '%';
-            
-            const badge = document.getElementById('popupGrowthBadge');
-            badge.className = `flex flex-col items-end justify-center px-3 py-2 md:px-4 md:py-3 rounded-xl md:rounded-2xl backdrop-blur-md border border-white/40 text-right transform ${isPos ? 'bg-emerald-500 text-white animate-float-green' : 'bg-rose-500 text-white animate-float-red'}`;
-            
-            document.getElementById('popupGrowthPercent').innerText = percentStr;
-            document.getElementById('popupGrowthValue').innerText = nominalStr;
-            document.getElementById('popupGrowthIcon').setAttribute('d', isPos ? 'M13 7h8m0 0v8m0-8l-8 8-4-4-6 6' : 'M13 17h8m0 0v-8m0 8l-8-8-4 4-6-6');
-            
-            const popup = document.getElementById('atmPopup');
-            popup.classList.remove('hidden');
-            popup.classList.add('flex');
-            
-            setTimeout(() => {
-                document.getElementById('atmPopupOverlay').classList.remove('opacity-0');
-                document.getElementById('atmPopupOverlay').classList.add('opacity-100');
-                document.getElementById('atmPopupCard').classList.remove('scale-90', 'opacity-0');
-                document.getElementById('atmPopupCard').classList.add('scale-100', 'opacity-100');
-            }, 10);
-        }
-
-        function closeAtmPopup() {
-            document.getElementById('atmPopupOverlay').classList.remove('opacity-100');
-            document.getElementById('atmPopupOverlay').classList.add('opacity-0');
-            document.getElementById('atmPopupCard').classList.remove('scale-100', 'opacity-100');
-            document.getElementById('atmPopupCard').classList.add('scale-90', 'opacity-0');
-            setTimeout(() => {
-                document.getElementById('atmPopup').classList.add('hidden');
-                document.getElementById('atmPopup').classList.remove('flex');
-            }, 300);
-        }
-
-        // ================= LOGIC POPUP HISTORY ================= //
-        function openHistoryPopup(idx) {
-            const data = historyDataStore[idx];
-            const date = new Date(data.timestamp).toLocaleString('id-ID', {day: 'numeric', month: 'short', year:'numeric', hour:'2-digit', minute:'2-digit'});
-            
-            document.getElementById('histPopupOutlet').innerText = data.outlet;
-            document.getElementById('histPopupSpv').innerText = data.spv;
-            document.getElementById('histPopupDate').innerText = date;
-            document.getElementById('histPopupGps').innerText = data.statusGps || "Tidak ada data GPS";
-            
-            // Set 3 Foto
-            const setImg = (id, url) => {
-                const el = document.getElementById(id);
-                if(url && url.startsWith('http')) { el.src = url; el.parentElement.classList.remove('hidden'); }
-                else { el.src = ''; el.parentElement.classList.add('hidden'); }
-            };
-            setImg('histPopupImgDepan', data.fotoDepan);
-            setImg('histPopupImgBranding', data.fotoBranding);
-            setImg('histPopupImgEtalase', data.fotoEtalase);
-
-            // Set Checklist secara Grouped / Kategori
-            const clContainer = document.getElementById('histPopupChecklist');
-            clContainer.innerHTML = '';
-            clContainer.className = "space-y-3"; 
-            
-            if(data.checklist) {
-                let groupedHistory = {};
-                for (let key in data.checklist) {
-                    let category = key.includes('-') ? key.split('-')[0].trim() : 'Umum';
-                    let shortKey = key.includes('-') ? key.split('-').slice(1).join('-').trim() : key;
-                    if(!groupedHistory[category]) groupedHistory[category] = [];
-                    groupedHistory[category].push({ key: shortKey, val: data.checklist[key] });
-                }
-
-                let htmlContent = '';
-                for (let cat in groupedHistory) {
-                    htmlContent += `
-                    <div class="bg-white rounded-xl p-3 shadow-sm border border-slate-100">
-                        <h4 class="font-extrabold text-indigo-600 mb-2 text-[10px] flex items-center gap-1.5 border-b border-slate-100 pb-1.5">
-                            <span class="w-1 h-3 bg-indigo-500 rounded-full"></span>${cat}
-                        </h4>
-                        <div class="grid grid-cols-2 gap-2">`;
-
-                    groupedHistory[cat].forEach(item => {
-                        const isMatch = item.val.toLowerCase().includes('ada') && !item.val.toLowerCase().includes('tidak');
-                        const badgeClass = isMatch ? "bg-emerald-50 text-emerald-600 border-emerald-100" : "bg-rose-50 text-rose-600 border-rose-100";
-                        const icon = isMatch ? "👍" : "👎";
-
-                        htmlContent += `
-                            <div class="flex flex-col p-2 bg-slate-50 border border-slate-100 rounded-lg">
-                                <span class="text-[9px] font-bold text-slate-500 mb-1 leading-tight">${item.key}</span>
-                                <span class="text-[10px] font-black ${badgeClass} border px-1.5 py-0.5 rounded flex items-center justify-center gap-1">${icon} ${item.val}</span>
-                            </div>
-                        `;
-                    });
-                    htmlContent += `</div></div>`;
-                }
-                clContainer.innerHTML = htmlContent;
-            }
-
-            const popup = document.getElementById('historyPopup');
-            popup.classList.remove('hidden');
-            popup.classList.add('flex');
-            
-            setTimeout(() => {
-                document.getElementById('historyPopupOverlay').classList.remove('opacity-0');
-                document.getElementById('historyPopupOverlay').classList.add('opacity-100');
-                document.getElementById('historyPopupCard').classList.remove('scale-90', 'opacity-0');
-                document.getElementById('historyPopupCard').classList.add('scale-100', 'opacity-100');
-            }, 10);
-        }
-
-        function closeHistoryPopup() {
-            document.getElementById('historyPopupOverlay').classList.remove('opacity-100');
-            document.getElementById('historyPopupOverlay').classList.add('opacity-0');
-            document.getElementById('historyPopupCard').classList.remove('scale-100', 'opacity-100');
-            document.getElementById('historyPopupCard').classList.add('scale-90', 'opacity-0');
-            setTimeout(() => {
-                document.getElementById('historyPopup').classList.add('hidden');
-                document.getElementById('historyPopup').classList.remove('flex');
-            }, 300);
         }
 
         // ================= LOGIC CHECK-IN ================= //
@@ -1260,7 +1450,6 @@
 
             if (watchId) { navigator.geolocation.clearWatch(watchId); watchId = null; }
 
-            // Menggunakan watchPosition untuk Real-time Tracking
             if (navigator.geolocation) {
                 watchId = navigator.geolocation.watchPosition(
                     (position) => {
@@ -1278,10 +1467,8 @@
                         const outLat = parseCoord(currentOutletLat);
                         const outLng = parseCoord(currentOutletLng);
 
-                        // Tampilkan Koordinat Anda vs Koordinat Outlet agar mudah dideteksi jika ada error dari database
                         document.getElementById('overlayCoords').innerText = `Me: ${currentUserLat.toFixed(5)}, ${currentUserLng.toFixed(5)} | Trg: ${isNaN(outLat) ? '?' : outLat.toFixed(4)}, ${isNaN(outLng) ? '?' : outLng.toFixed(4)}`;
 
-                        // Memperbarui Reverse Geocoding jika bergerak lebih dari 20 meter
                         const distFromLastGeocode = calculateDistance(currentUserLat, currentUserLng, lastGeocodeLat, lastGeocodeLng);
                         if (lastGeocodeLat === null || distFromLastGeocode > 200) {
                             lastGeocodeLat = currentUserLat;
@@ -1366,7 +1553,7 @@
             context.shadowColor = "rgba(0,0,0,0.8)"; context.shadowBlur = 4; context.shadowOffsetX = 1; context.shadowOffsetY = 1;
             
             context.font = "bold 16px 'Courier New'"; context.fillStyle = "#34d399"; context.fillText(document.getElementById('overlayTime').innerText, 15, 30);
-            context.fillStyle = "white"; context.fillText("GPS: " + currentUserLat.toFixed(5) + ", " + currentUserLng.toFixed(5), 15, 55);
+            context.fillStyle = "white"; context.fillText(document.getElementById('overlayCoords').innerText, 15, 55);
             
             context.font = "12px 'Courier New'";
             let addr = document.getElementById('overlayAddress').innerText;
@@ -1403,7 +1590,381 @@
         
         function lockSubmitButton(reasonText) { document.getElementById('submitBtn').disabled = true; document.getElementById('submitBtnText').innerText = reasonText; }
         function unlockSubmitButton() { document.getElementById('submitBtn').disabled = false; document.getElementById('submitBtnText').innerText = "Kirim Check-In 🚀"; }
-        
+
+        // ================= RENDERING ================= //
+        function renderTrendProfile() {
+            const selectedSpv = spvSelect.value;
+            document.getElementById('trendSpvNameDisplay').innerText = selectedSpv ? `SPV: ${selectedSpv}` : "Harap Pilih SPV";
+            if (!selectedSpv) { trendContent.innerHTML = `<div class="bg-white rounded-[2rem] p-10 text-center col-span-full"><p class="text-slate-500 font-semibold">Pilih profil SPV di Check-In.</p></div>`; return; }
+
+            const outlets = spvDataMapping[selectedSpv];
+            if (!outlets || outlets.length === 0) { trendContent.innerHTML = `<p class="text-center text-slate-500 col-span-full">Tidak ada data.</p>`; return; }
+
+            let htmlCards = '';
+            outlets.forEach((outlet, index) => {
+                const rawOmset = omsetDataMapping[outlet.id] || {};
+                
+                const omsetInfo = { 
+                    omsetBulanLalu: parseFloat(rawOmset.omsetBulanLalu) || 0, 
+                    omsetBulanIni: parseFloat(rawOmset.omsetBulanIni) || 0, 
+                    sa: parseInt(rawOmset.sa) || 0, 
+                    vf: parseInt(rawOmset.vf) || 0, 
+                    linkaja: parseFloat(rawOmset.linkaja) || 0 
+                };
+                
+                const growthData = calculateGrowth(omsetInfo.omsetBulanLalu, omsetInfo.omsetBulanIni);
+                const points = parseInt(outlet.poinAktif) || 0;
+                
+                const popupIndex = popupDataStore.length;
+                popupDataStore.push({ ...outlet, spvName: selectedSpv, growthData, points });
+
+                const isPos = growthData.isPositive;
+                const percentStr = (isPos ? '+' : '') + growthData.percent.toFixed(1) + '%';
+                const nominalGrowth = growthData.actual - growthData.projectedBase;
+                const nominalStr = (nominalGrowth >= 0 ? '+ Rp ' : '- Rp ') + formatRupiah(Math.abs(nominalGrowth)).replace('Rp', '').trim();
+                const projectedStr = formatRupiah(growthData.projectedBase).split(',')[0];
+                const actualStr = formatRupiah(growthData.actual).split(',')[0];
+                
+                const tier = getTierInfo(points);
+                const chartStroke = isPos ? '#10b981' : '#f43f5e';
+                const chartFill = isPos ? `url(#greenGradient${index})` : `url(#redGradient${index})`;
+                
+                const textCol = isPos ? 'text-emerald-500' : 'text-rose-500';
+                const bgClass = isPos ? 'bg-emerald-50 text-emerald-600 border border-emerald-100' : 'bg-rose-50 text-rose-600 border border-rose-100';
+                const iconDir = isPos ? 'M13 7h8m0 0v8m0-8l-8 8-4-4-6 6' : 'M13 17h8m0 0v-8m0 8l-8-8-4 4-6-6';
+                
+                const stockChartSvg = `
+                    <svg viewBox="0 0 400 100" class="w-full h-24 drop-shadow-sm" preserveAspectRatio="none">
+                        <defs>
+                            <linearGradient id="greenGradient${index}" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#10b981" stop-opacity="0.3"/><stop offset="100%" stop-color="#10b981" stop-opacity="0"/></linearGradient>
+                            <linearGradient id="redGradient${index}" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#f43f5e" stop-opacity="0.3"/><stop offset="100%" stop-color="#f43f5e" stop-opacity="0"/></linearGradient>
+                        </defs>
+                        ${isPos 
+                            ? `<path d="M0,90 C50,80 100,90 150,50 C200,10 250,60 300,30 C350,0 400,20 400,20 L400,100 L0,100 Z" fill="${chartFill}" /><path d="M0,90 C50,80 100,90 150,50 C200,10 250,60 300,30 C350,0 400,20 400,20" fill="none" stroke="${chartStroke}" stroke-width="4" stroke-linecap="round"/>`
+                            : `<path d="M0,20 C50,10 100,50 150,40 C200,30 250,80 300,70 C350,60 400,90 400,90 L400,100 L0,100 Z" fill="${chartFill}" /><path d="M0,20 C50,10 100,50 150,40 C200,30 250,80 300,70 C350,60 400,90 400,90" fill="none" stroke="${chartStroke}" stroke-width="4" stroke-linecap="round"/>`
+                        }
+                    </svg>`;
+
+                htmlCards += `
+                    <div class="bg-white rounded-[2rem] p-5 shadow-xl shadow-slate-200/50 border border-slate-100 relative overflow-hidden page-enter cursor-pointer hover:scale-[1.02] transition-transform" style="animation-delay: ${index * 0.05}s" onclick="openAtmPopup(${popupIndex})">
+                        
+                        <div class="flex justify-between items-start gap-4 mb-4 relative z-10">
+                            <div class="flex-1">
+                                <h3 class="font-extrabold text-slate-800 text-lg uppercase tracking-tight leading-tight">${outlet.name}</h3>
+                                <p class="text-xs font-bold text-slate-400 mt-0.5">ID: ${outlet.id}</p>
+                                <div class="mt-3">
+                                    <div class="inline-flex items-center gap-1.5 ${bgClass} px-2.5 py-1 rounded-lg font-black text-sm tracking-wider shadow-sm">
+                                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="${iconDir}"></path></svg>
+                                        ${percentStr}
+                                    </div>
+                                    <div class="mt-1.5 ${textCol} font-extrabold text-[11px] tracking-wider flex items-center">
+                                        ${nominalStr}
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="w-36 h-24 rounded-2xl bg-gradient-to-tr ${tier.bg} p-3 relative overflow-hidden shadow-lg atm-card shrink-0 border ${tier.border}">
+                                <div class="flex justify-between items-start mb-2 relative z-10">
+                                    <div class="w-8 h-6 border border-yellow-500/50 rounded-md bg-gradient-to-br from-yellow-200/40 to-yellow-600/40 flex flex-col justify-evenly px-0.5"><div class="w-full h-[1px] bg-yellow-500/50"></div><div class="w-full h-[1px] bg-yellow-500/50"></div></div>
+                                    <span class="${tier.text} font-black text-[10px] italic tracking-widest uppercase drop-shadow-md text-right leading-tight">${tier.name}</span>
+                                </div>
+                                <div class="absolute bottom-3 left-3 right-3 z-10">
+                                    <p class="text-[7px] uppercase tracking-widest mb-0.5 ${tier.label}">Poin Aktif</p>
+                                    <p class="text-base font-black tracking-widest drop-shadow-md leading-none ${tier.text}" style="font-family: 'Courier New', monospace;">${formatPoints(points)}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-3 gap-2 mb-4 relative z-10 border-t border-slate-100 pt-3">
+                            <div class="bg-indigo-50/50 rounded-xl p-2 text-center border border-indigo-100/50">
+                                <p class="text-[8px] font-extrabold text-indigo-400 uppercase tracking-widest">SA</p>
+                                <p class="text-sm font-black text-indigo-600">${omsetInfo.sa}</p>
+                            </div>
+                            <div class="bg-rose-50/50 rounded-xl p-2 text-center border border-rose-100/50">
+                                <p class="text-[8px] font-extrabold text-rose-400 uppercase tracking-widest">VF</p>
+                                <p class="text-sm font-black text-rose-600">${omsetInfo.vf}</p>
+                            </div>
+                            <div class="bg-emerald-50/50 rounded-xl p-2 text-center border border-emerald-100/50">
+                                <p class="text-[8px] font-extrabold text-emerald-400 uppercase tracking-widest">LinkAja</p>
+                                <p class="text-sm font-black text-emerald-600">${formatRupiah(omsetInfo.linkaja).replace('Rp','').trim()}</p>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-2 mb-4 relative z-10">
+                            <div class="flex-1 bg-slate-50 px-3 py-2 rounded-xl border border-slate-100">
+                                <p class="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Target Berjalan</p>
+                                <p class="text-[13px] font-extrabold text-slate-700 mt-0.5">${projectedStr}</p>
+                            </div>
+                            <div class="flex-1 bg-slate-50 px-3 py-2 rounded-xl border border-slate-100 text-right">
+                                <p class="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Omset Aktual</p>
+                                <p class="text-[13px] font-extrabold text-slate-800 mt-0.5">${actualStr}</p>
+                            </div>
+                        </div>
+
+                        <div class="-mx-5 -mb-5 mt-2 opacity-90 relative z-0">${stockChartSvg}</div>
+                    </div>`;
+            });
+            trendContent.innerHTML = htmlCards;
+        }
+
+        function renderGlobalRanking() {
+            dashboardContent.innerHTML = '';
+            let allOutlets = [];
+            
+            const searchInput = document.getElementById('rankSearchSpv');
+            const searchValue = searchInput ? searchInput.value.toLowerCase().trim() : '';
+
+            for (const spvName in spvDataMapping) {
+                if (searchValue && !spvName.toLowerCase().includes(searchValue)) continue;
+
+                spvDataMapping[spvName].forEach(outlet => {
+                    const outletDivisi = (outlet.divisi || "umum").toLowerCase();
+                    if (currentRankDivisi === 'direct' && outletDivisi !== 'direct') return;
+                    if (currentRankDivisi === 'indirect' && outletDivisi !== 'indirect') return;
+
+                    const omsetInfo = omsetDataMapping[outlet.id] || { omsetBulanLalu: 0, omsetBulanIni: 0 };
+                    const growthData = calculateGrowth(parseFloat(omsetInfo.omsetBulanLalu)||0, parseFloat(omsetInfo.omsetBulanIni)||0);
+                    const points = parseInt(outlet.poinAktif) || 0;
+                    allOutlets.push({ spvName: spvName, ...outlet, growthData, points });
+                });
+            }
+
+            allOutlets.sort((a, b) => b.growthData.percent - a.growthData.percent);
+            
+            if (allOutlets.length === 0) { 
+                dashboardContent.innerHTML = `<div class="bg-white rounded-[2rem] p-10 text-center col-span-full border border-slate-100 shadow-sm"><p class="text-slate-500 font-semibold text-sm">Tidak ada data yang cocok dengan filter tersebut.</p></div>`; 
+                return; 
+            }
+
+            let htmlCards = '';
+            allOutlets.forEach((outlet, index) => {
+                const rank = index + 1;
+                const popupIndex = popupDataStore.length;
+                popupDataStore.push(outlet); 
+                
+                const isPos = outlet.growthData.isPositive;
+                const percentStr = (isPos ? '+' : '') + outlet.growthData.percent.toFixed(1) + '%';
+                const nominalGrowth = outlet.growthData.actual - outlet.growthData.projectedBase;
+                const nominalStr = (nominalGrowth >= 0 ? '+ Rp ' : '- Rp ') + formatRupiah(Math.abs(nominalGrowth)).replace('Rp', '').trim();
+                
+                const textCol = isPos ? 'text-emerald-500' : 'text-rose-500';
+                const bgClass = isPos ? 'bg-emerald-50 text-emerald-600' : 'bg-rose-50 text-rose-600';
+                const iconDir = isPos ? 'M13 7h8m0 0v8m0-8l-8 8-4-4-6 6' : 'M13 17h8m0 0v-8m0 8l-8-8-4 4-6-6';
+
+                let rankIconHtml = `<div class="w-10 h-10 shrink-0 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-500 font-extrabold text-sm shadow-sm">${rank}</div>`;
+                let cardBorder = 'border-l-[6px] border-l-transparent'; 
+                let shadowClass = 'shadow-sm';
+
+                if (rank === 1) { cardBorder = 'border-l-[6px] border-l-amber-400'; shadowClass = 'shadow-md scale-[1.02] relative z-10'; rankIconHtml = `<div class="w-11 h-11 shrink-0 rounded-full bg-gradient-to-br from-amber-100 to-amber-200 flex items-center justify-center text-amber-500 shadow-inner relative"><svg class="w-6 h-6 z-10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 2.4 3.4-.6.6 3.4 2.4 2.4-2.4 2.4-.6 3.4-3.4-.6-2.4 2.4-2.4-2.4-3.4.6-.6-3.4-2.4-2.4 2.4-2.4.6-3.4 3.4.6L12 2z"/><circle cx="12" cy="12" r="4" fill="white"/><path d="M12 9l.9 2h2.1l-1.7 1.2.6 2.1-1.9-1.3-1.9 1.3.6-2.1-1.7-1.2h2.1L12 9z" fill="#f59e0b"/></svg></div>`; } 
+                else if (rank === 2) { cardBorder = 'border-l-[6px] border-l-slate-300'; shadowClass = 'shadow-md relative z-10'; rankIconHtml = `<div class="w-11 h-11 shrink-0 rounded-full bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center text-slate-500 shadow-inner relative"><svg class="w-6 h-6 z-10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 2.4 3.4-.6.6 3.4 2.4 2.4-2.4 2.4-.6 3.4-3.4-.6-2.4 2.4-2.4-2.4-3.4.6-.6-3.4-2.4-2.4 2.4-2.4.6-3.4 3.4.6L12 2z"/><circle cx="12" cy="12" r="4" fill="white"/><path d="M12 9l.9 2h2.1l-1.7 1.2.6 2.1-1.9-1.3-1.9 1.3.6-2.1-1.7-1.2h2.1L12 9z" fill="#64748b"/></svg></div>`; } 
+                else if (rank === 3) { cardBorder = 'border-l-[6px] border-l-orange-500'; shadowClass = 'shadow-md relative z-10'; rankIconHtml = `<div class="w-11 h-11 shrink-0 rounded-full bg-gradient-to-br from-orange-100 to-orange-200 flex items-center justify-center text-orange-600 shadow-inner relative"><svg class="w-6 h-6 z-10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 2.4 3.4-.6.6 3.4 2.4 2.4-2.4 2.4-.6 3.4-3.4-.6-2.4 2.4-2.4-2.4-3.4.6-.6-3.4-2.4-2.4 2.4-2.4.6-3.4 3.4.6L12 2z"/><circle cx="12" cy="12" r="4" fill="white"/><path d="M12 9l.9 2h2.1l-1.7 1.2.6 2.1-1.9-1.3-1.9 1.3.6-2.1-1.7-1.2h2.1L12 9z" fill="#ea580c"/></svg></div>`; }
+
+                const tier = getTierInfo(outlet.points);
+                const miniCardHtml = `<div class="w-11 h-7 shrink-0 rounded bg-gradient-to-br ${tier.bg} relative overflow-hidden shadow-sm border ${tier.border} mx-1.5 flex items-center px-1"><div class="w-2.5 h-1.5 border border-yellow-500/50 bg-yellow-200/30 rounded-[2px]"></div><span class="absolute bottom-0.5 right-1 text-[5px] font-black ${tier.text} uppercase drop-shadow-md tracking-wider">${tier.name}</span></div>`;
+                
+                htmlCards += `
+                    <div onclick="openAtmPopup(${popupIndex})" class="cursor-pointer bg-white rounded-[1.2rem] p-3 pl-3 pr-4 flex items-center gap-2 border border-slate-100/80 ${cardBorder} ${shadowClass} page-enter transition-transform hover:scale-[1.03]" style="animation-delay: ${index * 0.05}s">
+                        ${rankIconHtml}
+                        ${miniCardHtml}
+                        <div class="flex-1 min-w-0 ml-1">
+                            <h3 class="font-extrabold text-slate-800 text-[13px] leading-tight uppercase tracking-tight">${outlet.name}</h3>
+                            <div class="flex flex-col mt-0.5">
+                                <span class="text-slate-400 font-bold text-[9.5px] flex items-center gap-1"><svg class="w-2.5 h-2.5 opacity-70" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clip-rule="evenodd" /></svg>${outlet.id}</span>
+                                <span class="text-rose-500 font-semibold text-[8.5px] uppercase mt-0.5 flex items-center gap-1"><svg class="w-2.5 h-2.5 opacity-70" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" /></svg><span class="truncate">${outlet.spvName}</span></span>
+                            </div>
+                        </div>
+                        <div class="text-right flex flex-col items-end shrink-0 justify-center">
+                            <div class="${bgClass} px-2 py-[3px] rounded border border-white text-[11px] font-black flex items-center gap-1 shadow-sm"><svg class="w-[10px] h-[10px]" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="${iconDir}"></path></svg>${percentStr}</div>
+                            <div class="${textCol} font-extrabold text-[10px] mt-1 tracking-wider">${nominalStr}</div>
+                        </div>
+                    </div>`;
+            });
+            dashboardContent.innerHTML = htmlCards;
+        }
+
+        // ================= LOGIC HISTORY ================= //
+        function renderHistory() {
+            historyListContainer.innerHTML = '';
+            const selectedSpv = spvSelect.value;
+            let filterHistory = selectedSpv ? historyDataStore.filter(h => h.spv === selectedSpv) : historyDataStore;
+            
+            filterHistory.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+
+            if (filterHistory.length === 0) {
+                historyListContainer.innerHTML = `<div class="bg-white rounded-[2rem] p-10 text-center shadow-sm border border-slate-100 col-span-full"><p class="text-slate-500 font-semibold">Belum ada history.</p></div>`;
+                return;
+            }
+
+            let html = '';
+            filterHistory.slice(0, 20).forEach((h, index) => {
+                const date = new Date(h.timestamp).toLocaleString('id-ID', {day: 'numeric', month: 'short', hour:'2-digit', minute:'2-digit'});
+                const photoSrc = h.fotoDepan || ""; 
+                const initial = h.outlet.substring(0, 2).toUpperCase();
+                
+                let avatarHtml = `<div class="w-12 h-12 rounded-[1rem] bg-gradient-to-br from-slate-200 to-slate-300 text-slate-500 flex items-center justify-center font-bold text-sm shrink-0 border border-slate-100">${initial}</div>`;
+                if (photoSrc && photoSrc.startsWith('http')) {
+                    avatarHtml = `<img src="${photoSrc}" class="w-12 h-12 rounded-[1rem] object-cover bg-slate-100 border border-slate-200 shrink-0" onerror="this.outerHTML='<div class=\\'w-12 h-12 rounded-[1rem] bg-gradient-to-br from-slate-200 to-slate-300 text-slate-500 flex items-center justify-center font-bold text-sm shrink-0\\'>${initial}</div>'">`;
+                }
+
+                html += `
+                <div onclick="openHistoryPopup(${historyDataStore.indexOf(h)})" class="cursor-pointer bg-white rounded-[1.2rem] p-3 shadow-sm border border-slate-100 flex items-center gap-3 page-enter transition-transform hover:scale-[1.02]" style="animation-delay: ${index * 0.05}s">
+                    ${avatarHtml}
+                    <div class="flex-1 min-w-0">
+                        <h4 class="font-extrabold text-slate-800 text-[13px] truncate uppercase">${h.outlet}</h4>
+                        <p class="text-[9.5px] text-rose-500 font-bold uppercase truncate">${h.spv}</p>
+                    </div>
+                    <div class="text-[10px] font-bold text-indigo-600 bg-indigo-50 px-2 py-1 rounded-lg shrink-0 flex items-center gap-1 border border-indigo-100">
+                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        ${date}
+                    </div>
+                </div>`;
+            });
+            historyListContainer.innerHTML = html;
+        }
+
+        // ================= LOGIC POPUP ATM ================= //
+        function openAtmPopup(idx) {
+            const data = popupDataStore[idx];
+            const tier = getTierInfo(data.points);
+            
+            document.getElementById('atmPopupCard').className = `w-full aspect-[1.58] rounded-[1.5rem] p-6 md:p-8 shadow-2xl border flex flex-col justify-between overflow-hidden bg-gradient-to-tr ${tier.bg} ${tier.border} atm-card`;
+            
+            document.getElementById('popupTier').className = `font-black text-sm md:text-base italic tracking-widest uppercase drop-shadow-md leading-tight ${tier.text}`;
+            document.getElementById('popupTier').innerText = tier.name;
+            document.getElementById('popupTierLabel').className = `text-[7px] md:text-[9px] uppercase tracking-widest opacity-80 mt-0.5 text-right ${tier.label}`;
+            
+            document.getElementById('popupPointsLabel').className = `text-[8px] md:text-[10px] uppercase tracking-widest mb-0.5 md:mb-1 opacity-80 ${tier.label}`;
+            document.getElementById('popupPoints').className = `text-[32px] md:text-[42px] font-black tracking-widest drop-shadow-md leading-none ${tier.text}`;
+            document.getElementById('popupPoints').innerText = formatPoints(data.points);
+            
+            document.getElementById('popupNameLabel').className = `text-[7px] md:text-[9px] uppercase tracking-widest mb-1 opacity-80 ${tier.label}`;
+            document.getElementById('popupName').className = `text-sm md:text-base font-bold tracking-wider uppercase drop-shadow-md truncate ${tier.text}`;
+            document.getElementById('popupName').innerText = data.name;
+            
+            document.getElementById('popupSpvName').className = `text-[9px] md:text-[11px] font-semibold tracking-wider uppercase mt-0.5 ${tier.label}`;
+            document.getElementById('popupSpvName').innerText = data.spvName;
+            
+            const isPos = data.growthData.isPositive;
+            const nominalGrowth = data.growthData.actual - data.growthData.projectedBase;
+            const nominalStr = (nominalGrowth >= 0 ? '+ Rp ' : '- Rp ') + formatRupiah(Math.abs(nominalGrowth)).replace('Rp', '').trim();
+            const percentStr = (isPos ? '+' : '') + data.growthData.percent.toFixed(1) + '%';
+            
+            const badge = document.getElementById('popupGrowthBadge');
+            badge.className = `flex flex-col items-end justify-center px-3 py-2 md:px-4 md:py-3 rounded-xl md:rounded-2xl backdrop-blur-md border border-white/40 text-right transform ${isPos ? 'bg-emerald-500 text-white animate-float-green' : 'bg-rose-500 text-white animate-float-red'}`;
+            
+            document.getElementById('popupGrowthPercent').innerText = percentStr;
+            document.getElementById('popupGrowthValue').innerText = nominalStr;
+            document.getElementById('popupGrowthIcon').setAttribute('d', isPos ? 'M13 7h8m0 0v8m0-8l-8 8-4-4-6 6' : 'M13 17h8m0 0v-8m0 8l-8-8-4 4-6-6');
+            
+            document.getElementById('popupOwnerName').innerText = data.ownerName || "-";
+            document.getElementById('popupOwnerBDay').innerText = formatTanggalPendek(data.ownerBDay) || "-";
+            document.getElementById('popupFlName').innerText = data.flName || "-";
+            document.getElementById('popupFlBDay').innerText = formatTanggalPendek(data.flBDay) || "-";
+
+            const popup = document.getElementById('atmPopup');
+            popup.classList.remove('hidden');
+            popup.classList.add('flex');
+            
+            setTimeout(() => {
+                document.getElementById('atmPopupOverlay').classList.remove('opacity-0');
+                document.getElementById('atmPopupOverlay').classList.add('opacity-100');
+                document.getElementById('atmPopupContent').classList.remove('scale-90', 'opacity-0');
+                document.getElementById('atmPopupContent').classList.add('scale-100', 'opacity-100');
+            }, 10);
+        }
+
+        function closeAtmPopup() {
+            document.getElementById('atmPopupOverlay').classList.remove('opacity-100');
+            document.getElementById('atmPopupOverlay').classList.add('opacity-0');
+            document.getElementById('atmPopupContent').classList.remove('scale-100', 'opacity-100');
+            document.getElementById('atmPopupContent').classList.add('scale-90', 'opacity-0');
+            setTimeout(() => {
+                document.getElementById('atmPopup').classList.add('hidden');
+                document.getElementById('atmPopup').classList.remove('flex');
+            }, 300);
+        }
+
+        // ================= LOGIC POPUP HISTORY ================= //
+        function openHistoryPopup(idx) {
+            const data = historyDataStore[idx];
+            const date = new Date(data.timestamp).toLocaleString('id-ID', {day: 'numeric', month: 'short', year:'numeric', hour:'2-digit', minute:'2-digit'});
+            
+            document.getElementById('histPopupOutlet').innerText = data.outlet;
+            document.getElementById('histPopupSpv').innerText = data.spv;
+            document.getElementById('histPopupDate').innerText = date;
+            document.getElementById('histPopupGps').innerText = data.statusGps || "Tidak ada data GPS";
+            
+            const setImg = (id, url) => {
+                const el = document.getElementById(id);
+                if(url && url.startsWith('http')) { el.src = url; el.parentElement.classList.remove('hidden'); }
+                else { el.src = ''; el.parentElement.classList.add('hidden'); }
+            };
+            setImg('histPopupImgDepan', data.fotoDepan);
+            setImg('histPopupImgBranding', data.fotoBranding);
+            setImg('histPopupImgEtalase', data.fotoEtalase);
+
+            const clContainer = document.getElementById('histPopupChecklist');
+            clContainer.innerHTML = '';
+            clContainer.className = "space-y-3"; 
+            
+            if(data.checklist) {
+                let groupedHistory = {};
+                for (let key in data.checklist) {
+                    let category = key.includes('-') ? key.split('-')[0].trim() : 'Umum';
+                    let shortKey = key.includes('-') ? key.split('-').slice(1).join('-').trim() : key;
+                    if(!groupedHistory[category]) groupedHistory[category] = [];
+                    groupedHistory[category].push({ key: shortKey, val: data.checklist[key] });
+                }
+
+                let htmlContent = '';
+                for (let cat in groupedHistory) {
+                    htmlContent += `
+                    <div class="bg-white rounded-xl p-3 shadow-sm border border-slate-100">
+                        <h4 class="font-extrabold text-indigo-600 mb-2 text-[10px] flex items-center gap-1.5 border-b border-slate-100 pb-1.5">
+                            <span class="w-1 h-3 bg-indigo-500 rounded-full"></span>${cat}
+                        </h4>
+                        <div class="grid grid-cols-2 gap-2">`;
+
+                    groupedHistory[cat].forEach(item => {
+                        const isMatch = item.val.toLowerCase().includes('ada') && !item.val.toLowerCase().includes('tidak');
+                        const badgeClass = isMatch ? "bg-emerald-50 text-emerald-600 border-emerald-100" : "bg-rose-50 text-rose-600 border-rose-100";
+                        const icon = isMatch ? "👍" : "👎";
+
+                        htmlContent += `
+                            <div class="flex flex-col p-2 bg-slate-50 border border-slate-100 rounded-lg">
+                                <span class="text-[9px] font-bold text-slate-500 mb-1 leading-tight">${item.key}</span>
+                                <span class="text-[10px] font-black ${badgeClass} border px-1.5 py-0.5 rounded flex items-center justify-center gap-1">${icon} ${item.val}</span>
+                            </div>
+                        `;
+                    });
+                    htmlContent += `</div></div>`;
+                }
+                clContainer.innerHTML = htmlContent;
+            }
+
+            const popup = document.getElementById('historyPopup');
+            popup.classList.remove('hidden');
+            popup.classList.add('flex');
+            
+            setTimeout(() => {
+                document.getElementById('historyPopupOverlay').classList.remove('opacity-0');
+                document.getElementById('historyPopupOverlay').classList.add('opacity-100');
+                document.getElementById('historyPopupCard').classList.remove('scale-90', 'opacity-0');
+                document.getElementById('historyPopupCard').classList.add('scale-100', 'opacity-100');
+            }, 10);
+        }
+
+        function closeHistoryPopup() {
+            document.getElementById('historyPopupOverlay').classList.remove('opacity-100');
+            document.getElementById('historyPopupOverlay').classList.add('opacity-0');
+            document.getElementById('historyPopupCard').classList.remove('scale-100', 'opacity-100');
+            document.getElementById('historyPopupCard').classList.add('scale-90', 'opacity-0');
+            setTimeout(() => {
+                document.getElementById('historyPopup').classList.add('hidden');
+                document.getElementById('historyPopup').classList.remove('flex');
+            }, 300);
+        }
+
         function handleFormSubmit(event) {
             event.preventDefault(); 
             if (!isLocationValid) { showToast('Lokasi tidak valid / MISS! 🚫', 'error'); return; }
@@ -1414,6 +1975,7 @@
             
             const formData = new FormData(event.target);
             const payload = {
+                action: 'submitCheckin',
                 spv: document.getElementById('spvHidden').value,
                 outlet: document.getElementById('outletSelect').value,
                 locationStatus: document.getElementById('matchMissText').innerText + " (" + document.getElementById('matchMissDesc').innerText + ")",
@@ -1423,13 +1985,11 @@
                 items: {}
             };
 
-            // Mengumpulkan data kriteria checklist secara dinamis
             checklistHeaders.forEach(header => {
                 const val = formData.get(header);
                 if (val) payload.items[header] = val;
             });
 
-            // Mengirim request POST ke Google Apps Script (Backend)
             fetch(GAS_API_URL, {
                 method: 'POST',
                 body: JSON.stringify(payload)
@@ -1443,7 +2003,7 @@
                         capturedPhotos = [];
                         updatePhotoUI();
                         goBackToSelection(); 
-                        initializeApp(); // Refresh data untuk update history
+                        initializeApp(); 
                     }, 1500);
                 } else {
                     showToast('Gagal: ' + data.message, 'error');
